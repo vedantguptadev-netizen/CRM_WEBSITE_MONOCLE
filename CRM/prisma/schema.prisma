@@ -1,0 +1,66 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+  companyId String
+  company   Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+}
+
+model Company {
+  id           String        @id @default(cuid())
+  name         String
+  users        User[]
+  enquiries    Enquiry[]
+  applications Application[]
+  createdAt    DateTime      @default(now())
+}
+
+model Enquiry {
+  id           String       @id @default(cuid())
+  clientName   String
+  email        String?
+  phone        String?
+  enquiryType  String
+  notes        String?
+  followUpDate DateTime?
+  companyId    String
+  company      Company      @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  application  Application? @relation("EnquiryApplication")
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+}
+
+model Application {
+  id                 String    @id @default(cuid())
+  clientFullName     String
+  applicationType    String?
+  email              String?
+  phone              String?
+  notes              String?
+  paymentStatus      String    @default("PENDING") // PENDING, PAID, PARTIAL_PAYMENT_DONE
+  currentStatus      String    @default("IN_PROCESS") // IN_PROCESS, SUBMITTED, PENDING_INFO
+  dueDate            DateTime?
+  assignedEmployeeId String?
+  companyId          String
+  company            Company   @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  enquiryId          String?   @unique
+  enquiry            Enquiry?  @relation("EnquiryApplication", fields: [enquiryId], references: [id], onDelete: SetNull)
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime  @updatedAt
+}
