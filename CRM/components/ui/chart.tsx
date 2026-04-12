@@ -120,12 +120,12 @@ function ChartTooltipContent({
   labelKey,
 }: // eslint-disable-next-line @typescript-eslint/no-explicit-any
 any & {
-    hideLabel?: boolean;
-    hideIndicator?: boolean;
-    indicator?: "line" | "dot" | "dashed";
-    nameKey?: string;
-    labelKey?: string;
-  }) {
+  hideLabel?: boolean;
+  hideIndicator?: boolean;
+  indicator?: "line" | "dot" | "dashed";
+  nameKey?: string;
+  labelKey?: string;
+}) {
   const { config } = useChart();
 
   const tooltipLabel = React.useMemo(() => {
@@ -257,9 +257,9 @@ function ChartLegendContent({
   verticalAlign = "bottom",
   nameKey,
 }: any & {
-    hideIcon?: boolean;
-    nameKey?: string;
-  }) {
+  hideIcon?: boolean;
+  nameKey?: string;
+}) {
   const { config } = useChart();
 
   if (!payload?.length) {

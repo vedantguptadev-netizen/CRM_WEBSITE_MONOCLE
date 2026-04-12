@@ -362,7 +362,7 @@ export default function ApplicationsPageClient({
             ) : (
               <ApplicationTable
                 applications={pagedApplications}
-                onView={(a) => router.push(`/applications/${a.id}`)}
+                onView={(a) => router.push(`/crm/applications/${a.id}`)}
                 onEdit={(a) => setEditingApplication(a)}
                 onDelete={handleDelete}
               />

@@ -152,7 +152,7 @@ export default function EnquiryPageClient({ enquiries, companyId }: Props) {
       if (!response.ok) {
         throw new Error(data.message || "Failed to create application");
       }
-      router.push(`/applications/${data.data.id}`);
+      router.push(`/crm/applications/${data.data.id}`);
     } catch (error) {
       alert(
         error instanceof Error ? error.message : "Failed to create application",
@@ -161,7 +161,7 @@ export default function EnquiryPageClient({ enquiries, companyId }: Props) {
   };
 
   const handleViewApplication = (applicationId: string) => {
-    router.push(`/applications/${applicationId}`);
+    router.push(`/crm/applications/${applicationId}`);
   };
 
   const clearFilters = () => {

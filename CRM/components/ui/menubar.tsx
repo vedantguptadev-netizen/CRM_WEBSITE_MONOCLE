@@ -22,7 +22,9 @@ function Menubar({
   );
 }
 
-function MenubarMenu(props: React.ComponentProps<typeof MenubarPrimitive.Menu>) {
+function MenubarMenu(
+  props: React.ComponentProps<typeof MenubarPrimitive.Menu>,
+) {
   return <MenubarPrimitive.Menu data-slot="menubar-menu" {...props} />;
 }
 
@@ -189,7 +191,11 @@ function MenubarLabel({
   return (
     <div
       data-slot="menubar-label"
-      className={cn("px-2 py-1.5 text-sm font-semibold", inset && "pl-8", className)}
+      className={cn(
+        "px-2 py-1.5 text-sm font-semibold",
+        inset && "pl-8",
+        className,
+      )}
       {...props}
     />
   );
@@ -215,7 +221,10 @@ function MenubarShortcut({
   return (
     <span
       data-slot="menubar-shortcut"
-      className={cn("ml-auto text-xs tracking-widest text-muted-foreground", className)}
+      className={cn(
+        "ml-auto text-xs tracking-widest text-muted-foreground",
+        className,
+      )}
       {...props}
     />
   );

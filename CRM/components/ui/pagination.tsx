@@ -1,7 +1,11 @@
 "use client";
 
 import * as React from "react";
-import { ChevronLeftIcon, ChevronRightIcon, MoreHorizontalIcon } from "lucide-react";
+import {
+  ChevronLeftIcon,
+  ChevronRightIcon,
+  MoreHorizontalIcon,
+} from "lucide-react";
 
 import { cn } from "./utils";
 import { buttonVariants } from "./button";
@@ -18,7 +22,10 @@ function Pagination({ className, ...props }: React.ComponentProps<"nav">) {
   );
 }
 
-function PaginationContent({ className, ...props }: React.ComponentProps<"ul">) {
+function PaginationContent({
+  className,
+  ...props
+}: React.ComponentProps<"ul">) {
   return (
     <ul
       data-slot="pagination-content"
@@ -30,11 +37,7 @@ function PaginationContent({ className, ...props }: React.ComponentProps<"ul">) 
 
 function PaginationItem({ className, ...props }: React.ComponentProps<"li">) {
   return (
-    <li
-      data-slot="pagination-item"
-      className={cn("", className)}
-      {...props}
-    />
+    <li data-slot="pagination-item" className={cn("", className)} {...props} />
   );
 }
 

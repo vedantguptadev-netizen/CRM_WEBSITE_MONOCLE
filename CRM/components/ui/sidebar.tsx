@@ -23,7 +23,9 @@ type SidebarContext = {
   toggleSidebar: () => void;
 };
 
-const SidebarContext = React.createContext<SidebarContext | undefined>(undefined);
+const SidebarContext = React.createContext<SidebarContext | undefined>(
+  undefined,
+);
 
 function useSidebar() {
   const context = React.useContext(SidebarContext);
@@ -103,7 +105,10 @@ const SidebarProvider = React.forwardRef<HTMLDivElement, SidebarProviderProps>(
               ...style,
             } as React.CSSProperties
           }
-          className={cn("group/sidebar-wrapper flex h-screen w-full has-data-[variant=inset]:bg-sidebar", className)}
+          className={cn(
+            "group/sidebar-wrapper flex h-screen w-full has-data-[variant=inset]:bg-sidebar",
+            className,
+          )}
           ref={ref}
           {...props}
         >
@@ -235,34 +240,36 @@ const SidebarTrigger = React.forwardRef<
 });
 SidebarTrigger.displayName = "SidebarTrigger";
 
-const SidebarRail = React.forwardRef<HTMLButtonElement, React.HTMLAttributes<HTMLButtonElement>>(
-  ({ className, ...props }, ref) => (
-    <button
-      data-slot="sidebar-rail"
-      ref={ref}
-      className={cn(
-        "absolute inset-y-0 z-20 hidden w-1 bg-sidebar transition-colors hover:bg-sidebar-accent group-data-[side=left]/sidebar:-right-1 group-data-[side=right]/sidebar:-left-1 group-data-[state=collapsed]/sidebar:block",
-        className,
-      )}
-      {...props}
-    />
-  ),
-);
+const SidebarRail = React.forwardRef<
+  HTMLButtonElement,
+  React.HTMLAttributes<HTMLButtonElement>
+>(({ className, ...props }, ref) => (
+  <button
+    data-slot="sidebar-rail"
+    ref={ref}
+    className={cn(
+      "absolute inset-y-0 z-20 hidden w-1 bg-sidebar transition-colors hover:bg-sidebar-accent group-data-[side=left]/sidebar:-right-1 group-data-[side=right]/sidebar:-left-1 group-data-[state=collapsed]/sidebar:block",
+      className,
+    )}
+    {...props}
+  />
+));
 SidebarRail.displayName = "SidebarRail";
 
-const SidebarInset = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
-  ({ className, ...props }, ref) => (
-    <main
-      data-slot="sidebar-inset"
-      ref={ref}
-      className={cn(
-        "flex w-full flex-col bg-background transition-[margin,padding] duration-300 ease-in-out group-data-[state=collapsed]/sidebar:col-start-1 group-data-[state=collapsed]/sidebar:w-full group-data-[side=right]/sidebar:ml-0 group-data-[side=left]/sidebar:md:ml-auto group-data-[side=right]/sidebar:md:ml-0 lg:group-data-[state=collapsed]/sidebar:ml-[--sidebar-width-icon]",
-        className,
-      )}
-      {...props}
-    />
-  ),
-);
+const SidebarInset = React.forwardRef<
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement>
+>(({ className, ...props }, ref) => (
+  <main
+    data-slot="sidebar-inset"
+    ref={ref}
+    className={cn(
+      "flex w-full flex-col bg-background transition-[margin,padding] duration-300 ease-in-out group-data-[state=collapsed]/sidebar:col-start-1 group-data-[state=collapsed]/sidebar:w-full group-data-[side=right]/sidebar:ml-0 group-data-[side=left]/sidebar:md:ml-auto group-data-[side=right]/sidebar:md:ml-0 lg:group-data-[state=collapsed]/sidebar:ml-[--sidebar-width-icon]",
+      className,
+    )}
+    {...props}
+  />
+));
 SidebarInset.displayName = "SidebarInset";
 
 const sidebarMenuButtonVariants = cva(
@@ -289,10 +296,11 @@ const sidebarMenuButtonVariants = cva(
 
 const SidebarMenuButton = React.forwardRef<
   HTMLButtonElement,
-  React.ComponentPropsWithoutRef<"button"> & VariantProps<typeof sidebarMenuButtonVariants> & {
-    asChild?: boolean;
-    isActive?: boolean;
-  }
+  React.ComponentPropsWithoutRef<"button"> &
+    VariantProps<typeof sidebarMenuButtonVariants> & {
+      asChild?: boolean;
+      isActive?: boolean;
+    }
 >(
   (
     {
@@ -320,28 +328,30 @@ const SidebarMenuButton = React.forwardRef<
 );
 SidebarMenuButton.displayName = "SidebarMenuButton";
 
-const SidebarMenu = React.forwardRef<HTMLUListElement, React.HTMLAttributes<HTMLUListElement>>(
-  ({ className, ...props }, ref) => (
-    <ul
-      data-slot="sidebar-menu"
-      ref={ref}
-      className={cn("flex w-full min-w-0 flex-col gap-1", className)}
-      {...props}
-    />
-  ),
-);
+const SidebarMenu = React.forwardRef<
+  HTMLUListElement,
+  React.HTMLAttributes<HTMLUListElement>
+>(({ className, ...props }, ref) => (
+  <ul
+    data-slot="sidebar-menu"
+    ref={ref}
+    className={cn("flex w-full min-w-0 flex-col gap-1", className)}
+    {...props}
+  />
+));
 SidebarMenu.displayName = "SidebarMenu";
 
-const SidebarMenuItem = React.forwardRef<HTMLLIElement, React.HTMLAttributes<HTMLLIElement>>(
-  ({ className, ...props }, ref) => (
-    <li
-      data-slot="sidebar-menu-item"
-      ref={ref}
-      className={cn("group/sidebar-menu-item relative", className)}
-      {...props}
-    />
-  ),
-);
+const SidebarMenuItem = React.forwardRef<
+  HTMLLIElement,
+  React.HTMLAttributes<HTMLLIElement>
+>(({ className, ...props }, ref) => (
+  <li
+    data-slot="sidebar-menu-item"
+    ref={ref}
+    className={cn("group/sidebar-menu-item relative", className)}
+    {...props}
+  />
+));
 SidebarMenuItem.displayName = "SidebarMenuItem";
 
 const SidebarMenuSkeleton = React.forwardRef<
@@ -350,7 +360,12 @@ const SidebarMenuSkeleton = React.forwardRef<
     showIcon?: boolean;
   }
 >(({ className, showIcon = false, ...props }, ref) => (
-  <div data-slot="sidebar-menu-skeleton" ref={ref} className={cn("space-y-2", className)} {...props}>
+  <div
+    data-slot="sidebar-menu-skeleton"
+    ref={ref}
+    className={cn("space-y-2", className)}
+    {...props}
+  >
     {Array.from({ length: 3 }).map((_, index) => (
       <div key={index} className="flex gap-2">
         {showIcon && <div className="bg-sidebar-accent size-4 rounded-md" />}
@@ -385,102 +400,118 @@ const SidebarMenuSubButton = React.forwardRef<
 ));
 SidebarMenuSubButton.displayName = "SidebarMenuSubButton";
 
-const SidebarMenuSub = React.forwardRef<HTMLUListElement, React.HTMLAttributes<HTMLUListElement>>(
-  ({ className, ...props }, ref) => (
-    <ul
-      data-slot="sidebar-menu-sub"
-      ref={ref}
-      className={cn(
-        "space-y-1 border-l border-sidebar-border px-2 py-0.5 group-data-[collapsible=icon]/sidebar:hidden",
-        className,
-      )}
-      {...props}
-    />
-  ),
-);
+const SidebarMenuSub = React.forwardRef<
+  HTMLUListElement,
+  React.HTMLAttributes<HTMLUListElement>
+>(({ className, ...props }, ref) => (
+  <ul
+    data-slot="sidebar-menu-sub"
+    ref={ref}
+    className={cn(
+      "space-y-1 border-l border-sidebar-border px-2 py-0.5 group-data-[collapsible=icon]/sidebar:hidden",
+      className,
+    )}
+    {...props}
+  />
+));
 SidebarMenuSub.displayName = "SidebarMenuSub";
 
-const SidebarMenuSubItem = React.forwardRef<HTMLLIElement, React.HTMLAttributes<HTMLLIElement>>(
-  ({ ...props }, ref) => <li data-slot="sidebar-menu-sub-item" ref={ref} {...props} />,
-);
+const SidebarMenuSubItem = React.forwardRef<
+  HTMLLIElement,
+  React.HTMLAttributes<HTMLLIElement>
+>(({ ...props }, ref) => (
+  <li data-slot="sidebar-menu-sub-item" ref={ref} {...props} />
+));
 SidebarMenuSubItem.displayName = "SidebarMenuSubItem";
 
-const SidebarMenuBadge = React.forwardRef<HTMLSpanElement, React.HTMLAttributes<HTMLSpanElement>>(
-  ({ className, ...props }, ref) => (
-    <span
-      data-slot="sidebar-menu-badge"
-      ref={ref}
-      className={cn(
-        "ring-offset-sidebar-background ml-auto inline-flex h-5 items-center rounded-md border border-sidebar-border bg-sidebar px-1 text-xs font-medium text-sidebar-foreground transition-transform group-data-[collapsible=icon]/sidebar:opacity-0",
-        className,
-      )}
-      {...props}
-    />
-  ),
-);
+const SidebarMenuBadge = React.forwardRef<
+  HTMLSpanElement,
+  React.HTMLAttributes<HTMLSpanElement>
+>(({ className, ...props }, ref) => (
+  <span
+    data-slot="sidebar-menu-badge"
+    ref={ref}
+    className={cn(
+      "ring-offset-sidebar-background ml-auto inline-flex h-5 items-center rounded-md border border-sidebar-border bg-sidebar px-1 text-xs font-medium text-sidebar-foreground transition-transform group-data-[collapsible=icon]/sidebar:opacity-0",
+      className,
+    )}
+    {...props}
+  />
+));
 SidebarMenuBadge.displayName = "SidebarMenuBadge";
 
-const SidebarFooter = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
-  ({ className, ...props }, ref) => (
-    <div
-      data-slot="sidebar-footer"
-      ref={ref}
-      className={cn("mt-auto flex flex-col gap-2 p-4", className)}
-      {...props}
-    />
-  ),
-);
+const SidebarFooter = React.forwardRef<
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement>
+>(({ className, ...props }, ref) => (
+  <div
+    data-slot="sidebar-footer"
+    ref={ref}
+    className={cn("mt-auto flex flex-col gap-2 p-4", className)}
+    {...props}
+  />
+));
 SidebarFooter.displayName = "SidebarFooter";
 
-const SidebarHeader = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
-  ({ className, ...props }, ref) => (
-    <div
-      data-slot="sidebar-header"
-      ref={ref}
-      className={cn("flex flex-col gap-2 p-4", className)}
-      {...props}
-    />
-  ),
-);
+const SidebarHeader = React.forwardRef<
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement>
+>(({ className, ...props }, ref) => (
+  <div
+    data-slot="sidebar-header"
+    ref={ref}
+    className={cn("flex flex-col gap-2 p-4", className)}
+    {...props}
+  />
+));
 SidebarHeader.displayName = "SidebarHeader";
 
-const SidebarContent = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
-  ({ className, ...props }, ref) => (
-    <div
-      data-slot="sidebar-content"
-      ref={ref}
-      className={cn("flex flex-1 flex-col gap-0 overflow-auto px-4 group-data-[collapsible=icon]/sidebar:overflow-hidden group-data-[collapsible=icon]/sidebar:px-2", className)}
-      {...props}
-    />
-  ),
-);
+const SidebarContent = React.forwardRef<
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement>
+>(({ className, ...props }, ref) => (
+  <div
+    data-slot="sidebar-content"
+    ref={ref}
+    className={cn(
+      "flex flex-1 flex-col gap-0 overflow-auto px-4 group-data-[collapsible=icon]/sidebar:overflow-hidden group-data-[collapsible=icon]/sidebar:px-2",
+      className,
+    )}
+    {...props}
+  />
+));
 SidebarContent.displayName = "SidebarContent";
 
-const SidebarSeparator = React.forwardRef<HTMLHRElement, React.HTMLAttributes<HTMLHRElement>>(
-  ({ className, ...props }, ref) => (
-    <hr
-      data-slot="sidebar-separator"
-      ref={ref}
-      className={cn("my-2 -mx-2 border-sidebar-border bg-sidebar-border/40 group-data-[collapsible=icon]/sidebar:my-2", className)}
-      {...props}
-    />
-  ),
-);
+const SidebarSeparator = React.forwardRef<
+  HTMLHRElement,
+  React.HTMLAttributes<HTMLHRElement>
+>(({ className, ...props }, ref) => (
+  <hr
+    data-slot="sidebar-separator"
+    ref={ref}
+    className={cn(
+      "my-2 -mx-2 border-sidebar-border bg-sidebar-border/40 group-data-[collapsible=icon]/sidebar:my-2",
+      className,
+    )}
+    {...props}
+  />
+));
 SidebarSeparator.displayName = "SidebarSeparator";
 
-const SidebarGroupAction = React.forwardRef<HTMLButtonElement, React.ComponentPropsWithoutRef<"button">>(
-  ({ className, ...props }, ref) => (
-    <button
-      data-slot="sidebar-group-action"
-      ref={ref}
-      className={cn(
-        "ring-offset-sidebar-background focus-visible:ring-ring/50 relative ml-auto inline-flex size-5 items-center justify-center rounded-md text-sidebar-foreground outline-none transition-transform hover:bg-sidebar-accent focus-visible:ring-2 focus-visible:ring-offset-2 [&>svg]:size-4",
-        className,
-      )}
-      {...props}
-    />
-  ),
-);
+const SidebarGroupAction = React.forwardRef<
+  HTMLButtonElement,
+  React.ComponentPropsWithoutRef<"button">
+>(({ className, ...props }, ref) => (
+  <button
+    data-slot="sidebar-group-action"
+    ref={ref}
+    className={cn(
+      "ring-offset-sidebar-background focus-visible:ring-ring/50 relative ml-auto inline-flex size-5 items-center justify-center rounded-md text-sidebar-foreground outline-none transition-transform hover:bg-sidebar-accent focus-visible:ring-2 focus-visible:ring-offset-2 [&>svg]:size-4",
+      className,
+    )}
+    {...props}
+  />
+));
 SidebarGroupAction.displayName = "SidebarGroupAction";
 
 const sidebarGroupActionButtonVariants = cva(
@@ -518,16 +549,17 @@ const SidebarGroupLabel = React.forwardRef<
 ));
 SidebarGroupLabel.displayName = "SidebarGroupLabel";
 
-const SidebarGroup = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
-  ({ className, ...props }, ref) => (
-    <div
-      data-slot="sidebar-group"
-      ref={ref}
-      className={cn("relative flex w-full min-w-0 flex-col gap-2", className)}
-      {...props}
-    />
-  ),
-);
+const SidebarGroup = React.forwardRef<
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement>
+>(({ className, ...props }, ref) => (
+  <div
+    data-slot="sidebar-group"
+    ref={ref}
+    className={cn("relative flex w-full min-w-0 flex-col gap-2", className)}
+    {...props}
+  />
+));
 SidebarGroup.displayName = "SidebarGroup";
 
 export {

@@ -25,7 +25,8 @@ export function middleware(request: NextRequest) {
 
 export const config = {
   matcher: [
-    // Only protect /crm routes (except /crm/login)
+    // Protect /crm exactly and /crm/* routes (except /crm/login)
+    "/crm",
     "/crm/((?!login).*)",
   ],
 };
