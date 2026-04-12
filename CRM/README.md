@@ -1,6 +1,6 @@
-# Immigration CRM Dashboard
+# Monocle Immigration — Unified Platform
 
-A professional, fully responsive CRM built with Next.js, TypeScript, Tailwind CSS, and Prisma ORM.
+A single Next.js application combining a **public marketing website** and a **protected CRM dashboard**, built with TypeScript, Tailwind CSS v4, and Prisma ORM.
 
 ## ⚡ Quick Start
 
@@ -8,9 +8,12 @@ A professional, fully responsive CRM built with Next.js, TypeScript, Tailwind CS
 # Install dependencies
 npm install
 
-# Set environment (create .env.local)
+# Set environment (create .env)
 DATABASE_URL="postgresql://..."
 JWT_SECRET="your-secret-key"
+
+# Generate Prisma client
+npx prisma generate
 
 # Migrate database
 npx prisma migrate deploy
@@ -19,7 +22,8 @@ npx prisma migrate deploy
 npm run dev
 ```
 
-Open **[http://localhost:3000](http://localhost:3000)** in your browser.
+Open **[http://localhost:3000](http://localhost:3000)** — marketing site.  
+Open **[http://localhost:3000/crm](http://localhost:3000/crm)** — CRM dashboard.
 
 ## 🔐 Authentication
 
@@ -29,7 +33,7 @@ Open **[http://localhost:3000](http://localhost:3000)** in your browser.
   Email: admin@globalimsolutions.com
   Password: password123
   ```
-- **Middleware protection** on all routes except `/login`
+- **Middleware protection** on `/crm/*` routes (except `/crm/login`)
 
 ## 📋 Core Features
 
@@ -46,12 +50,24 @@ Open **[http://localhost:3000](http://localhost:3000)** in your browser.
 
 ## 📱 Routes
 
-| Route           | Purpose                 |
-| --------------- | ----------------------- |
-| `/login`        | Authentication page     |
-| `/dashboard`    | Main dashboard          |
-| `/enquiries`    | Manage client enquiries |
-| `/applications` | Manage applications     |
+### Marketing (Public)
+
+| Route       | Purpose              |
+| ----------- | -------------------- |
+| `/`         | Homepage             |
+| `/about`    | About page           |
+| `/services` | Services page        |
+| `/contact`  | Contact page         |
+
+### CRM (Protected — requires login)
+
+| Route                  | Purpose                 |
+| ---------------------- | ----------------------- |
+| `/crm/login`           | Authentication page     |
+| `/crm/dashboard`       | Main dashboard          |
+| `/crm/enquiries`       | Manage client enquiries |
+| `/crm/applications`    | Manage applications     |
+| `/crm/applications/[id]` | Application detail    |
 
 ## 🚀 Database Schema
 
@@ -92,10 +108,12 @@ See [TEST_PLAN.md](TEST_PLAN.md) for detailed test coverage.
 - **Next.js 14** - App Router, SSR, API routes
 - **React 18** - UI components
 - **TypeScript** - Type safety
-- **Tailwind CSS** - Styling
-- **Prisma 6.19.2** - PostgreSQL ORM
+- **Tailwind CSS v4** - Styling (CSS-based config)
+- **shadcn/ui** - UI component library
+- **Prisma 6.19.2** - PostgreSQL ORM (Neon)
 - **Zod** - Input validation
 - **JWT** - Authentication
+- **Geist** - Font family
 - **Jest + RTL** - Testing
 
 ## 🎨 Design
@@ -187,33 +205,42 @@ Check **Browser console** for client-side activity.
 
 ```
 app/
-├── api/
-│   ├── auth/            # Authentication endpoints
-│   ├── companies/       # Company endpoints
-│   ├── enquiries/       # Enquiry endpoints
-│   └── applications/    # Application endpoints
-├── applications/        # Application pages
-├── dashboard/          # Dashboard page
-├── enquiries/          # Enquiry pages
-└── login/              # Login page
+├── (marketing)/             # Public marketing website (route group)
+│   ├── layout.tsx           # Marketing layout (Header + Footer)
+│   ├── page.tsx             # Homepage
+│   ├── about/page.tsx
+│   ├── services/page.tsx
+│   └── contact/page.tsx
+├── crm/                     # Protected CRM dashboard
+│   ├── layout.tsx           # CRM layout (Sidebar + Auth)
+│   ├── page.tsx             # CRM welcome page
+│   ├── dashboard/page.tsx
+│   ├── enquiries/page.tsx
+│   ├── applications/page.tsx
+│   ├── applications/[id]/page.tsx
+│   └── login/page.tsx
+├── api/                     # REST API endpoints
+│   ├── auth/                # Login, logout, me
+│   ├── companies/
+│   ├── enquiries/
+│   └── applications/
+├── layout.tsx               # Root layout (minimal shell)
+├── globals.css              # Tailwind v4 + shadcn theme
+└── not-found.tsx
 
 components/
-├── applications/
-│   ├── ApplicationTableNew.tsx      # Data table with badges, actions, skeleton
-│   ├── ApplicationsPageClient.tsx   # Page orchestrator (search, filter, pagination)
-│   ├── AddApplicationModal.tsx      # Create application modal
-│   ├── EditApplicationModal.tsx     # Edit application modal
-│   └── ApplicationDetailClient.tsx  # Full detail page (/applications/[id])
-├── enquiries/
-│   ├── EnquiryTableNew.tsx      # Data table with badges, actions, skeleton
-│   ├── EnquiryPageClient.tsx    # Page orchestrator (search, filter, pagination)
-│   ├── AddEnquiryModal.tsx      # Create enquiry modal
-│   ├── EditEnquiryModal.tsx     # Edit enquiry modal
-│   └── ViewEnquirySlideOver.tsx # Enquiry detail slide-over panel
-├── DashboardClient.tsx   # Dashboard client component (stats + pipeline)
-├── Sidebar.tsx           # Desktop sidebar
-├── MobileHeader.tsx      # Mobile header
-└── ResponsiveLayout.tsx  # Responsive controller
+├── marketing/               # Marketing site components
+│   ├── Header.tsx
+│   └── Footer.tsx
+├── ui/                      # shadcn/ui component library
+├── applications/            # CRM application components
+├── enquiries/               # CRM enquiry components
+├── DashboardClient.tsx
+├── Sidebar.tsx
+├── MobileHeader.tsx
+├── MobileSidebar.tsx
+├── ClientLayout.tsx
+└── ResponsiveLayout.tsx
 
 lib/
 ├── auth-server.ts     # Server-side auth utilities
@@ -231,4 +258,4 @@ lib/
 
 ---
 
-**Version**: 1.1 | **Last Updated**: April 2026
+**Version**: 2.0 | **Last Updated**: April 2026
