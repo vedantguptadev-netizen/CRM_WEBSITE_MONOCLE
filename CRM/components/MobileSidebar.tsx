@@ -22,17 +22,17 @@ interface MobileSidebarProps {
 const navItems: NavItem[] = [
   {
     label: "Dashboard",
-    href: "/dashboard",
+    href: "/crm/dashboard",
     icon: <LayoutDashboard className="w-5 h-5" />,
   },
   {
     label: "Enquiries",
-    href: "/enquiries",
+    href: "/crm/enquiries",
     icon: <FileText className="w-5 h-5" />,
   },
   {
     label: "Applications",
-    href: "/applications",
+    href: "/crm/applications",
     icon: <Briefcase className="w-5 h-5" />,
   },
 ];
@@ -47,7 +47,7 @@ export default function MobileSidebar({ isOpen, onClose }: MobileSidebarProps) {
   const [isLoggingOut, setIsLoggingOut] = useState(false);
 
   const isActive = (href: string) => {
-    if (href === "/dashboard") return pathname === "/dashboard";
+    if (href === "/crm/dashboard") return pathname === "/crm/dashboard";
     return pathname === href || pathname.startsWith(href + "/");
   };
 

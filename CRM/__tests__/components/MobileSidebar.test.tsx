@@ -4,7 +4,7 @@ import MobileSidebar from "@/components/MobileSidebar";
 
 // Mock next/navigation
 jest.mock("next/navigation", () => ({
-  usePathname: () => "/dashboard",
+  usePathname: () => "/crm/dashboard",
 }));
 
 // Mock SidebarHeader component

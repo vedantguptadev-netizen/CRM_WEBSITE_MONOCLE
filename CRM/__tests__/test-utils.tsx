@@ -21,7 +21,7 @@ jest.mock("next/navigation", () => ({
     replace: jest.fn(),
     refresh: jest.fn(),
   }),
-  usePathname: () => "/dashboard",
+  usePathname: () => "/crm/dashboard",
 }));
 
 // Add any providers your components might need

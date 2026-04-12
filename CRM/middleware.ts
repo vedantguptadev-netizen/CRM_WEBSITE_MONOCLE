@@ -1,32 +1,31 @@
 import { NextRequest, NextResponse } from "next/server";
 
-// Routes that don't require authentication
-const publicRoutes = ["/login"];
+// Routes under /crm that don't require authentication
+const publicCrmRoutes = ["/crm/login"];
 
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
-  // Allow public routes
-  if (publicRoutes.includes(pathname)) {
+  // Allow public CRM routes (e.g. /crm/login)
+  if (publicCrmRoutes.includes(pathname)) {
     return NextResponse.next();
   }
 
   // Get token from cookie
   const token = request.cookies.get("authToken")?.value;
 
-  // If no token, redirect to login
+  // If no token, redirect to CRM login
   if (!token) {
-    return NextResponse.redirect(new URL("/login", request.url));
+    return NextResponse.redirect(new URL("/crm/login", request.url));
   }
 
   // Token exists, allow the request
-  // (Full verification happens in API routes if needed)
   return NextResponse.next();
 }
 
 export const config = {
   matcher: [
-    // Protect all routes except public ones
-    "/((?!login|api/auth/login|_next/static|_next/image|images|favicon.ico).*)",
+    // Only protect /crm routes (except /crm/login)
+    "/crm/((?!login).*)",
   ],
 };

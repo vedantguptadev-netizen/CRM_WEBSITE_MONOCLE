@@ -36,7 +36,7 @@ export default function LoginPage() {
         // Token is automatically set as HTTP-only cookie by the API
         // Refresh the page to trigger AuthProvider's useEffect
         // This will call /api/auth/me and populate the context
-        window.location.href = "/";
+        window.location.href = "/crm/dashboard";
       } else {
         setError(data.message || "Invalid credentials");
       }

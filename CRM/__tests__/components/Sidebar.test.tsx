@@ -5,7 +5,7 @@ import "@testing-library/jest-dom";
 
 // Mock next/navigation
 jest.mock("next/navigation", () => ({
-  usePathname: () => "/dashboard",
+  usePathname: () => "/crm/dashboard",
 }));
 
 // Mock SidebarHeader component
@@ -32,7 +32,7 @@ describe("Sidebar Component", () => {
   it("renders navigation links with correct hrefs", () => {
     render(<Sidebar />);
     const dashboardLink = screen.getByRole("link", { name: /dashboard/i });
-    expect(dashboardLink).toHaveAttribute("href", "/dashboard");
+    expect(dashboardLink).toHaveAttribute("href", "/crm/dashboard");
   });
 
   it("highlights active navigation item", () => {

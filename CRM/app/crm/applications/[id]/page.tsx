@@ -17,7 +17,7 @@ export default async function ApplicationDetailPage({
 
   // Redirect to login if not authenticated
   if (!user) {
-    redirect("/login");
+    redirect("/crm/login");
   }
 
   // Fetch application directly from database

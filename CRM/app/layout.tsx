@@ -1,10 +1,9 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import ClientLayout from "@/components/ClientLayout";
 
 export const metadata: Metadata = {
-  title: "Immigration CRM",
-  description: "CRM Dashboard for Immigration Services",
+  title: "Monocle Immigration",
+  description: "Immigration Services & CRM",
 };
 
 export default function RootLayout({
@@ -14,9 +13,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="bg-gray-50">
-        <ClientLayout>{children}</ClientLayout>
-      </body>
+      <body>{children}</body>
     </html>
   );
 }

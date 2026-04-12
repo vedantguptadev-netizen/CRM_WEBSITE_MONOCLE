@@ -9,7 +9,7 @@ export default async function ApplicationsPage() {
 
   // Redirect to login if not authenticated
   if (!user) {
-    redirect("/login");
+    redirect("/crm/login");
   }
 
   // Fetch all applications for the company

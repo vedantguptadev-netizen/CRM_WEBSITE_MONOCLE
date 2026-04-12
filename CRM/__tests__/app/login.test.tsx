@@ -1,6 +1,6 @@
 import { render, screen, fireEvent, waitFor } from "@/__tests__/test-utils";
 import userEvent from "@testing-library/user-event";
-import LoginPage from "@/app/login/page.tsx";
+import LoginPage from "@/app/crm/login/page.tsx";
 
 // Mock window.location.href
 delete (window as any).location;
@@ -126,7 +126,7 @@ describe("LoginPage", () => {
     await user.click(submitButton);
 
     await waitFor(() => {
-      expect((window as any).location.href).toBe("/dashboard");
+      expect((window as any).location.href).toBe("/crm/dashboard");
     });
   });
 
@@ -220,7 +220,7 @@ describe("LoginPage", () => {
     await user.click(submitButton);
 
     await waitFor(() => {
-      expect((window as any).location.href).not.toBe("/dashboard");
+      expect((window as any).location.href).not.toBe("/crm/dashboard");
     });
   });
 
@@ -310,7 +310,7 @@ describe("LoginPage", () => {
     await user.click(submitButton);
 
     await waitFor(() => {
-      expect((window as any).location.href).toBe("/dashboard");
+      expect((window as any).location.href).toBe("/crm/dashboard");
     });
   });
 });

@@ -6,7 +6,7 @@ import DashboardClient from "@/components/DashboardClient";
 export default async function DashboardPage() {
   const user = await getCurrentUser();
   if (!user) {
-    redirect("/login");
+    redirect("/crm/login");
   }
 
   const companyId = user.companyId;

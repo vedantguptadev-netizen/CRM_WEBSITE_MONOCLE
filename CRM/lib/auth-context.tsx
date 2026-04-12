@@ -66,11 +66,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setUser(null);
 
       // Redirect to login
-      router.push("/login");
+      router.push("/crm/login");
     } catch (error) {
       console.error("Logout error:", error);
       setUser(null);
-      router.push("/login");
+      router.push("/crm/login");
     }
   };
 

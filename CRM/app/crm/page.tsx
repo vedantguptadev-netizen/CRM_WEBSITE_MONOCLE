@@ -15,7 +15,7 @@ export default function Home() {
       {/* Quick Start Cards */}
       <div className="grid grid-cols-2 gap-6">
         <a
-          href="/dashboard"
+          href="/crm/dashboard"
           className="bg-white rounded-xl border border-gray-200 p-8 shadow-sm hover:shadow-md hover:border-red-200 transition-all duration-200"
         >
           <h3 className="text-lg font-semibold text-gray-900 mb-2">
@@ -27,7 +27,7 @@ export default function Home() {
         </a>
 
         <a
-          href="/enquiries"
+          href="/crm/enquiries"
           className="bg-white rounded-xl border border-gray-200 p-8 shadow-sm hover:shadow-md hover:border-red-200 transition-all duration-200"
         >
           <h3 className="text-lg font-semibold text-gray-900 mb-2">
@@ -39,7 +39,7 @@ export default function Home() {
         </a>
 
         <a
-          href="/applications"
+          href="/crm/applications"
           className="bg-white rounded-xl border border-gray-200 p-8 shadow-sm hover:shadow-md hover:border-red-200 transition-all duration-200"
         >
           <h3 className="text-lg font-semibold text-gray-900 mb-2">

@@ -19,7 +19,7 @@ interface ResponsiveLayoutProps {
 export default function ResponsiveLayout({ children }: ResponsiveLayoutProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const pathname = usePathname();
-  const isLoginPage = pathname === "/login";
+  const isLoginPage = pathname === "/crm/login";
 
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!mobileMenuOpen);

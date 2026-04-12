@@ -11,7 +11,7 @@ jest.mock("next/navigation", () => ({
     replace: jest.fn(),
     refresh: jest.fn(),
   }),
-  usePathname: () => "/dashboard",
+  usePathname: () => "/crm/dashboard",
 }));
 
 describe("AuthContext", () => {

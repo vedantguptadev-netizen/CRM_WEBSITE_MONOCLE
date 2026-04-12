@@ -4,7 +4,7 @@ import ResponsiveLayout from "@/components/ResponsiveLayout";
 
 // Mock next/navigation
 jest.mock("next/navigation", () => ({
-  usePathname: () => "/dashboard",
+  usePathname: () => "/crm/dashboard",
 }));
 
 // Mock child components

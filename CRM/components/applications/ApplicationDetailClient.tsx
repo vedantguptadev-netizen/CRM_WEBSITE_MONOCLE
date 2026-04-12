@@ -114,7 +114,7 @@ export default function ApplicationDetailClient({
         const data = await res.json();
         throw new Error(data.message || "Failed to delete");
       }
-      router.push("/applications");
+      router.push("/crm/applications");
     } catch (error) {
       alert(
         error instanceof Error ? error.message : "Failed to delete application",

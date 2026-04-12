@@ -9,7 +9,7 @@ export default async function EnquiriesPage() {
 
   // Redirect to login if not authenticated
   if (!user) {
-    redirect("/login");
+    redirect("/crm/login");
   }
 
   const enquiries = await prisma.enquiry.findMany({
