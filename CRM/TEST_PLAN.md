@@ -37,7 +37,7 @@ Comprehensive testing strategy with 200 passing tests across Jest and React Test
 | Submit button is disabled during loading | ✅ Pass |
 | Error message displays on failed login   | ✅ Pass |
 | Error message clears on input change     | ✅ Pass |
-| Successful login redirects to /dashboard | ✅ Pass |
+| Successful login redirects to /crm/dashboard | ✅ Pass |
 | Validates required email field           | ✅ Pass |
 | Validates required password field        | ✅ Pass |
 
