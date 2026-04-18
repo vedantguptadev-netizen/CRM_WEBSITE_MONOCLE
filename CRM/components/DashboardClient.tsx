@@ -17,7 +17,9 @@ import {
 interface DashboardStats {
   totalEnquiries: number;
   totalApplications: number;
-  activeApplications: number;
+  pipelineInProcess: number;
+  pipelinePendingInfo: number;
+  pipelineSubmitted: number;
   pendingPayments: number;
   upcomingFollowUps: number;
   overdueApplications: number;
@@ -31,8 +33,7 @@ interface DashboardClientProps {
 // ─── Component ──────────────────────────────────────────────────
 
 export default function DashboardClient({ stats }: DashboardClientProps) {
-  const pendingActions =
-    stats.pendingPayments + stats.overdueApplications + stats.upcomingFollowUps;
+  const needsAttention = stats.overdueApplications + stats.upcomingFollowUps;
 
   return (
     <div className="space-y-8">
@@ -83,7 +84,7 @@ export default function DashboardClient({ stats }: DashboardClientProps) {
             {stats.totalApplications}
           </p>
           <p className="text-xs text-gray-400 mt-1">
-            {stats.activeApplications} currently active
+            {stats.pipelineInProcess} in process
           </p>
         </div>
 
@@ -105,26 +106,26 @@ export default function DashboardClient({ stats }: DashboardClientProps) {
 
         {/* Pending Actions */}
         <div
-          className={`bg-white rounded-xl border p-5 shadow-sm ${pendingActions > 0 ? "border-red-200" : "border-gray-200"}`}
+          className={`bg-white rounded-xl border p-5 shadow-sm ${needsAttention > 0 ? "border-red-200" : "border-gray-200"}`}
         >
           <div className="flex items-center justify-between mb-3">
             <p
-              className={`text-sm font-medium ${pendingActions > 0 ? "text-red-600" : "text-gray-500"}`}
+              className={`text-sm font-medium ${needsAttention > 0 ? "text-red-600" : "text-gray-500"}`}
             >
               Needs Attention
             </p>
             <div
-              className={`flex items-center justify-center w-8 h-8 rounded-lg ${pendingActions > 0 ? "bg-red-50" : "bg-gray-50"}`}
+              className={`flex items-center justify-center w-8 h-8 rounded-lg ${needsAttention > 0 ? "bg-red-50" : "bg-gray-50"}`}
             >
               <AlertTriangle
-                className={`w-4 h-4 ${pendingActions > 0 ? "text-red-600" : "text-gray-400"}`}
+                className={`w-4 h-4 ${needsAttention > 0 ? "text-red-600" : "text-gray-400"}`}
               />
             </div>
           </div>
           <p
-            className={`text-3xl font-bold ${pendingActions > 0 ? "text-red-600" : "text-gray-900"}`}
+            className={`text-3xl font-bold ${needsAttention > 0 ? "text-red-600" : "text-gray-900"}`}
           >
-            {pendingActions}
+            {needsAttention}
           </p>
           <p className="text-xs text-gray-400 mt-1">
             {stats.overdueApplications} overdue · {stats.upcomingFollowUps}{" "}
@@ -145,7 +146,7 @@ export default function DashboardClient({ stats }: DashboardClientProps) {
               <CircleDot className="w-5 h-5 text-blue-600 shrink-0" />
               <div>
                 <p className="text-xl font-bold text-gray-900">
-                  {stats.activeApplications}
+                  {stats.pipelineInProcess}
                 </p>
                 <p className="text-xs text-gray-500">In Process</p>
               </div>
@@ -154,23 +155,16 @@ export default function DashboardClient({ stats }: DashboardClientProps) {
               <Timer className="w-5 h-5 text-amber-600 shrink-0" />
               <div>
                 <p className="text-xl font-bold text-gray-900">
-                  {stats.pendingPayments}
+                  {stats.pipelinePendingInfo}
                 </p>
-                <p className="text-xs text-gray-500">Pending Info / Payment</p>
+                <p className="text-xs text-gray-500">Pending Info</p>
               </div>
             </div>
             <div className="flex items-center gap-3 rounded-lg bg-emerald-50/50 border border-emerald-100 p-4">
               <CheckCircle2 className="w-5 h-5 text-emerald-600 shrink-0" />
               <div>
                 <p className="text-xl font-bold text-gray-900">
-                  {stats.totalApplications -
-                    stats.activeApplications -
-                    stats.pendingPayments >
-                  0
-                    ? stats.totalApplications -
-                      stats.activeApplications -
-                      stats.pendingPayments
-                    : 0}
+                  {stats.pipelineSubmitted}
                 </p>
                 <p className="text-xs text-gray-500">Submitted</p>
               </div>

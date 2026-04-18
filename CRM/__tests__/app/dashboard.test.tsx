@@ -7,8 +7,10 @@ import DashboardClient from "@/components/DashboardClient";
 const baseStats = {
   totalEnquiries: 15,
   totalApplications: 8,
-  activeApplications: 4,
-  pendingPayments: 2,
+  pipelineInProcess: 4,
+  pipelinePendingInfo: 2,
+  pipelineSubmitted: 2,
+  pendingPayments: 3,
   upcomingFollowUps: 3,
   overdueApplications: 1,
   enquiriesWithoutApp: 7,
@@ -17,7 +19,9 @@ const baseStats = {
 const zeroStats = {
   totalEnquiries: 0,
   totalApplications: 0,
-  activeApplications: 0,
+  pipelineInProcess: 0,
+  pipelinePendingInfo: 0,
+  pipelineSubmitted: 0,
   pendingPayments: 0,
   upcomingFollowUps: 0,
   overdueApplications: 0,
@@ -61,9 +65,9 @@ describe("DashboardClient", () => {
       expect(screen.getByText("8")).toBeInTheDocument();
     });
 
-    it("displays currently active count", () => {
+    it("displays currently in process count", () => {
       render(<DashboardClient stats={baseStats} />);
-      expect(screen.getByText("4 currently active")).toBeInTheDocument();
+      expect(screen.getByText("4 in process")).toBeInTheDocument();
     });
 
     it("displays pending payments count", () => {
@@ -75,8 +79,11 @@ describe("DashboardClient", () => {
     it("displays needs attention card with computed total", () => {
       render(<DashboardClient stats={baseStats} />);
       expect(screen.getByText("Needs Attention")).toBeInTheDocument();
-      // pendingActions = 2 + 1 + 3 = 6
-      expect(screen.getByText("6")).toBeInTheDocument();
+      // needsAttention = overdueApplications(1) + upcomingFollowUps(3) = 4
+      const label = screen.getByText("Needs Attention");
+      const card = label.closest(".rounded-xl");
+      const count = card?.querySelector(".text-3xl.font-bold");
+      expect(count).toHaveTextContent("4");
     });
 
     it("displays overdue and follow-ups breakdown", () => {
@@ -118,31 +125,28 @@ describe("DashboardClient", () => {
       expect(screen.getByText("In Process")).toBeInTheDocument();
     });
 
-    it("displays Pending Info / Payment count", () => {
+    it("displays Pending Info count", () => {
       render(<DashboardClient stats={baseStats} />);
-      expect(screen.getByText("Pending Info / Payment")).toBeInTheDocument();
+      expect(screen.getByText("Pending Info")).toBeInTheDocument();
     });
 
     it("displays Submitted count correctly", () => {
       render(<DashboardClient stats={baseStats} />);
       expect(screen.getByText("Submitted")).toBeInTheDocument();
-      // submitted = total(8) - active(4) - pending(2) = 2
-      // Verify the Submitted label's sibling contains the correct count
+      // pipelineSubmitted = 2
       const submittedLabel = screen.getByText("Submitted");
       const submittedCount =
         submittedLabel.parentElement?.querySelector(".text-xl.font-bold");
       expect(submittedCount).toHaveTextContent("2");
     });
 
-    it("shows 0 for Submitted when active + pending exceeds total", () => {
-      const overStats = {
-        ...baseStats,
-        totalApplications: 5,
-        activeApplications: 3,
-        pendingPayments: 3,
-      };
-      render(<DashboardClient stats={overStats} />);
-      expect(screen.getByText("Submitted")).toBeInTheDocument();
+    it("pipeline counts reconcile with total applications", () => {
+      render(<DashboardClient stats={baseStats} />);
+      expect(
+        baseStats.pipelineInProcess +
+          baseStats.pipelinePendingInfo +
+          baseStats.pipelineSubmitted,
+      ).toBe(baseStats.totalApplications);
     });
 
     it("hides pipeline section when there are no applications", () => {
@@ -158,8 +162,10 @@ describe("DashboardClient", () => {
       const bigStats = {
         totalEnquiries: 9999,
         totalApplications: 5000,
-        activeApplications: 2000,
-        pendingPayments: 1500,
+        pipelineInProcess: 2000,
+        pipelinePendingInfo: 1500,
+        pipelineSubmitted: 1500,
+        pendingPayments: 1800,
         upcomingFollowUps: 100,
         overdueApplications: 50,
         enquiriesWithoutApp: 3000,

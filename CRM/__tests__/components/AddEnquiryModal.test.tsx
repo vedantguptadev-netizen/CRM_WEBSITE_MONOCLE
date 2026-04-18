@@ -257,7 +257,10 @@ describe("AddEnquiryModal Component", () => {
         />,
       );
 
-      await user.type(screen.getByPlaceholderText("Enter client name"), "John Doe");
+      await user.type(
+        screen.getByPlaceholderText("Enter client name"),
+        "John Doe",
+      );
       await user.selectOptions(screen.getByLabelText(/Enquiry Type/i), "visa");
       fireEvent.change(screen.getByLabelText(/Date of Birth/i), {
         target: { value: "2999-01-01" },

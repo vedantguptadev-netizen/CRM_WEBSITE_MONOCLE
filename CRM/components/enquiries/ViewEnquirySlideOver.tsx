@@ -93,7 +93,10 @@ export default function ViewEnquirySlideOver({
                 </h3>
                 <div className="space-y-3">
                   <div className="flex items-center gap-3">
-                    <Calendar size={16} className="flex-shrink-0 text-gray-400" />
+                    <Calendar
+                      size={16}
+                      className="flex-shrink-0 text-gray-400"
+                    />
                     <div>
                       <p className="text-xs font-medium text-gray-500">
                         Date of Birth

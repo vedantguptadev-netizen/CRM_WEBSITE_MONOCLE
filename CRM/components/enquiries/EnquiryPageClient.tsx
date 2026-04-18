@@ -22,12 +22,14 @@ const formatSearchableDate = (date: Date | string | null | undefined) => {
 
   return [
     parsed.toISOString().slice(0, 10),
-    parsed.toLocaleDateString("en-US", {
-      year: "numeric",
-      month: "short",
-      day: "numeric",
-      timeZone: "America/Denver",
-    }).toLowerCase(),
+    parsed
+      .toLocaleDateString("en-US", {
+        year: "numeric",
+        month: "short",
+        day: "numeric",
+        timeZone: "America/Denver",
+      })
+      .toLowerCase(),
   ].join(" ");
 };
 

@@ -13,15 +13,23 @@ const optionalPastDate = z
   .string()
   .optional()
   .or(z.literal(""))
-  .refine((value) => value === "" || (typeof value === "string" && !Number.isNaN(Date.parse(value))), {
-    message: "Invalid date",
-  })
-  .refine((value) => {
-    if (!value) return true;
-    return new Date(value) <= today;
-  }, {
-    message: "Date of Birth cannot be in the future",
-  });
+  .refine(
+    (value) =>
+      value === "" ||
+      (typeof value === "string" && !Number.isNaN(Date.parse(value))),
+    {
+      message: "Invalid date",
+    },
+  )
+  .refine(
+    (value) => {
+      if (!value) return true;
+      return new Date(value) <= today;
+    },
+    {
+      message: "Date of Birth cannot be in the future",
+    },
+  );
 
 const CreateEnquirySchema = z.object({
   clientName: z.string().min(1, "Client name is required").max(200),
@@ -114,8 +122,7 @@ export async function POST(request: NextRequest) {
       enquiryType,
       notes,
       followUpDate,
-    } =
-      parsed.data;
+    } = parsed.data;
 
     const enquiry = await prisma.enquiry.create({
       data: {

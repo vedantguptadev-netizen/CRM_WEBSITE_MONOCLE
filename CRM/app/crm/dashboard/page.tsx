@@ -26,8 +26,17 @@ export default async function DashboardPage() {
   const now = new Date();
   const sevenDaysFromNow = new Date(now.getTime() + 7 * 24 * 60 * 60 * 1000);
 
-  const activeApplications = applications.filter(
+  // Pipeline counts — based on currentStatus (workflow stage)
+  const pipelineInProcess = applications.filter(
     (a) => a.currentStatus === "IN_PROCESS",
+  ).length;
+
+  const pipelinePendingInfo = applications.filter(
+    (a) => a.currentStatus === "PENDING_INFO",
+  ).length;
+
+  const pipelineSubmitted = applications.filter(
+    (a) => a.currentStatus === "SUBMITTED",
   ).length;
 
   const pendingPayments = applications.filter(
@@ -36,8 +45,12 @@ export default async function DashboardPage() {
       a.paymentStatus === "PARTIAL_PAYMENT_DONE",
   ).length;
 
+  // Overdue: only count non-submitted applications (submitted = done)
   const overdueApplications = applications.filter(
-    (a) => a.dueDate && new Date(a.dueDate) < now,
+    (a) =>
+      a.dueDate &&
+      new Date(a.dueDate) < now &&
+      a.currentStatus !== "SUBMITTED",
   ).length;
 
   const upcomingFollowUps = enquiries.filter(
@@ -52,7 +65,9 @@ export default async function DashboardPage() {
   const stats = {
     totalEnquiries: enquiries.length,
     totalApplications: applications.length,
-    activeApplications,
+    pipelineInProcess,
+    pipelinePendingInfo,
+    pipelineSubmitted,
     pendingPayments,
     upcomingFollowUps,
     overdueApplications,

@@ -20,15 +20,18 @@ const optionalPastDate = z
       value === "" ||
       (typeof value === "string" && !Number.isNaN(Date.parse(value))),
     {
-    message: "Invalid date",
+      message: "Invalid date",
     },
   )
-  .refine((value) => {
-    if (!value) return true;
-    return new Date(value) <= today;
-  }, {
-    message: "Date of Birth cannot be in the future",
-  });
+  .refine(
+    (value) => {
+      if (!value) return true;
+      return new Date(value) <= today;
+    },
+    {
+      message: "Date of Birth cannot be in the future",
+    },
+  );
 
 const UpdateEnquirySchema = z.object({
   clientName: z.string().min(1, "Client name is required").max(200).optional(),
