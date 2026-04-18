@@ -56,7 +56,9 @@ export default function MarketingLayout({
     <div className={`${GeistSans.variable} ${GeistMono.variable} antialiased`}>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessJsonLd) }}
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(localBusinessJsonLd),
+        }}
       />
       <div className="flex min-h-screen flex-col">
         <Header />

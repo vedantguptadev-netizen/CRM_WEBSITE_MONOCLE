@@ -234,11 +234,7 @@ export default function Home() {
                 immigration processes with confidence and clarity.
               </p>
               <div className="flex flex-col gap-4 sm:flex-row">
-                <Button
-                  asChild
-                  size="lg"
-                  className="w-full sm:w-auto"
-                >
+                <Button asChild size="lg" className="w-full sm:w-auto">
                   <a
                     href="https://calendly.com/monocle_immigration"
                     target="_blank"
