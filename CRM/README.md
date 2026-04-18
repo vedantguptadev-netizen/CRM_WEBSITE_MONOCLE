@@ -52,29 +52,29 @@ Open **[http://localhost:3000/crm](http://localhost:3000/crm)** — CRM dashboar
 
 ### Marketing (Public)
 
-| Route       | Purpose              |
-| ----------- | -------------------- |
-| `/`         | Homepage             |
-| `/about`    | About page           |
-| `/services` | Services page        |
-| `/contact`  | Contact page         |
+| Route       | Purpose       |
+| ----------- | ------------- |
+| `/`         | Homepage      |
+| `/about`    | About page    |
+| `/services` | Services page |
+| `/contact`  | Contact page  |
 
 ### CRM (Protected — requires login)
 
-| Route                  | Purpose                 |
-| ---------------------- | ----------------------- |
-| `/crm/login`           | Authentication page     |
-| `/crm/dashboard`       | Main dashboard          |
-| `/crm/enquiries`       | Manage client enquiries |
-| `/crm/applications`    | Manage applications     |
-| `/crm/applications/[id]` | Application detail    |
+| Route                    | Purpose                 |
+| ------------------------ | ----------------------- |
+| `/crm/login`             | Authentication page     |
+| `/crm/dashboard`         | Main dashboard          |
+| `/crm/enquiries`         | Manage client enquiries |
+| `/crm/applications`      | Manage applications     |
+| `/crm/applications/[id]` | Application detail      |
 
 ## 🚀 Database Schema
 
 **Company**: Organization (multi-tenant)
 **User**: Team member with JWT auth
 **Enquiry**: Client inquiry/request with optional Application link
-**Application**: Immigration application, created from Enquiry or manually
+**Application**: Immigration application, created from Enquiry or manually (includes optional Drive Folder Link for shared team documents)
 
 ```
 Company 1-N Users

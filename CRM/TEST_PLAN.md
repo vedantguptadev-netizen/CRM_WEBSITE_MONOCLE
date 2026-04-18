@@ -6,15 +6,15 @@ Comprehensive testing strategy with 200 passing tests across Jest and React Test
 
 ## Current Status
 
-✅ **217 Tests Passing** | 18 test suites, all green
+✅ **219 Tests Passing** | 18 test suites, all green
 
 | Category       | Tests   | Status      |
 | -------------- | ------- | ----------- |
 | Authentication | 49      | ✅ Pass     |
-| API Endpoints  | 35      | ✅ Pass     |
+| API Endpoints  | 37      | ✅ Pass     |
 | Components     | 99      | ✅ Pass     |
 | Pages          | 35      | ✅ Pass     |
-| **Total**      | **217** | **✅ Pass** |
+| **Total**      | **219** | **✅ Pass** |
 
 ## Test Areas
 
@@ -24,22 +24,22 @@ Comprehensive testing strategy with 200 passing tests across Jest and React Test
 
 **File**: `__tests__/app/login.test.tsx` (14 tests)
 
-| Test Case                                | Status  |
-| ---------------------------------------- | ------- |
-| Page renders login form                  | ✅ Pass |
-| Email input field renders                | ✅ Pass |
-| Password input field renders             | ✅ Pass |
-| Login button renders                     | ✅ Pass |
-| Email input accepts value changes        | ✅ Pass |
-| Password input accepts value changes     | ✅ Pass |
-| Form submission calls API endpoint       | ✅ Pass |
-| Loading spinner shows during submission  | ✅ Pass |
-| Submit button is disabled during loading | ✅ Pass |
-| Error message displays on failed login   | ✅ Pass |
-| Error message clears on input change     | ✅ Pass |
+| Test Case                                    | Status  |
+| -------------------------------------------- | ------- |
+| Page renders login form                      | ✅ Pass |
+| Email input field renders                    | ✅ Pass |
+| Password input field renders                 | ✅ Pass |
+| Login button renders                         | ✅ Pass |
+| Email input accepts value changes            | ✅ Pass |
+| Password input accepts value changes         | ✅ Pass |
+| Form submission calls API endpoint           | ✅ Pass |
+| Loading spinner shows during submission      | ✅ Pass |
+| Submit button is disabled during loading     | ✅ Pass |
+| Error message displays on failed login       | ✅ Pass |
+| Error message clears on input change         | ✅ Pass |
 | Successful login redirects to /crm/dashboard | ✅ Pass |
-| Validates required email field           | ✅ Pass |
-| Validates required password field        | ✅ Pass |
+| Validates required email field               | ✅ Pass |
+| Validates required password field            | ✅ Pass |
 
 #### Login API Endpoint
 
@@ -162,17 +162,19 @@ Mocks `cookies()` + `verifyToken()` for JWT authentication. CompanyId derived fr
 
 #### Applications API (JWT-authenticated)
 
-**File**: `__tests__/app/api/applications.test.ts` (5 tests)
+**File**: `__tests__/app/api/applications.test.ts` (7 tests)
 
 Mocks `cookies()` + `verifyToken()` for JWT authentication. CompanyId derived from token, never from request body.
 
-| Test Case                                | Status  |
-| ---------------------------------------- | ------- |
-| POST returns 401 if no token provided    | ✅ Pass |
-| POST returns 400 for validation errors   | ✅ Pass |
-| POST creates an application successfully | ✅ Pass |
-| GET returns 401 if no token provided     | ✅ Pass |
-| GET fetches all applications for company | ✅ Pass |
+| Test Case                                           | Status  |
+| --------------------------------------------------- | ------- |
+| POST returns 401 if no token provided               | ✅ Pass |
+| POST returns 400 for validation errors              | ✅ Pass |
+| POST creates an application successfully            | ✅ Pass |
+| POST returns 400 for invalid driveFolderLink URL    | ✅ Pass |
+| POST creates application with valid driveFolderLink | ✅ Pass |
+| GET returns 401 if no token provided                | ✅ Pass |
+| GET fetches all applications for company            | ✅ Pass |
 
 #### Applications From-Enquiry API (JWT-authenticated)
 
@@ -324,7 +326,7 @@ __tests__/
 │   ├── api/
 │   │   ├── companies.test.ts                    (9 tests) ✅
 │   │   ├── enquiries.test.ts                   (15 tests) ✅
-│   │   ├── applications.test.ts                 (5 tests) ✅
+│   │   ├── applications.test.ts                 (7 tests) ✅
 │   │   ├── applications-from-enquiry.test.ts    (6 tests) ✅
 │   │   └── auth/
 │   │       ├── login.test.ts                   (17 tests) ✅
@@ -344,7 +346,7 @@ __tests__/
     ├── jwt.test.ts                             (18 tests) ✅
     └── auth-context.test.tsx                    (6 tests) ✅
 
-Total: 217 tests across 18 suites ✅
+Total: 219 tests across 18 suites ✅
 ```
 
 ## Running Tests
@@ -356,7 +358,7 @@ npm test -- --coverage                     # Coverage report
 npm test -- --testPathPattern="pattern"   # Specific test
 ```
 
-Success output: ✅ 217 tests pass, 0 fail
+Success output: ✅ 219 tests pass, 0 fail
 
 ## Test File Naming Convention
 

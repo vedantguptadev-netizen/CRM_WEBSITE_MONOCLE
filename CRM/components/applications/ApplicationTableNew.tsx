@@ -23,6 +23,7 @@ export interface Application {
   currentStatus: string;
   dueDate?: Date | string | null;
   assignedEmployeeId?: string | null;
+  driveFolderLink?: string | null;
   companyId: string;
   enquiryId?: string | null;
   enquiry?: { id: string; clientName: string; enquiryType: string } | null;

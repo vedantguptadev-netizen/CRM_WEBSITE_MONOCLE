@@ -149,6 +149,9 @@ export async function PUT(
         ...(data.assignedEmployeeId !== undefined && {
           assignedEmployeeId: data.assignedEmployeeId?.trim() || null,
         }),
+        ...(data.driveFolderLink !== undefined && {
+          driveFolderLink: data.driveFolderLink?.trim() || null,
+        }),
       },
       include: {
         enquiry: {

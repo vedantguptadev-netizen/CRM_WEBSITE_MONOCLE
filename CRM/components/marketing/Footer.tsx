@@ -13,9 +13,9 @@ export function Footer() {
               <Image
                 src="/Monocle_immigration_logo.png"
                 alt="Monocle Immigration"
-                width={96}
-                height={96}
-                className="h-24 w-24 rounded-lg object-contain"
+                width={48}
+                height={48}
+                className="h-12 w-12 rounded-lg object-contain"
               />
               <span className="text-lg font-semibold text-gray-900">
                 Monocle Immigration

@@ -118,6 +118,7 @@ describe("POST /api/applications", () => {
       currentStatus: "IN_PROCESS",
       dueDate: null,
       assignedEmployeeId: null,
+      driveFolderLink: null,
       companyId: "company-1",
       enquiryId: null,
       createdAt: new Date(),
@@ -147,6 +148,71 @@ describe("POST /api/applications", () => {
     expect(json.success).toBe(true);
     expect(json.data.clientFullName).toBe("John Doe");
     expect(json.data.companyId).toBe("company-1");
+  });
+
+  it("should return 400 for invalid driveFolderLink URL", async () => {
+    authenticateAs();
+
+    const request = new NextRequest("http://localhost:3000/api/applications", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        clientFullName: "Jane Doe",
+        driveFolderLink: "not-a-valid-url",
+      }),
+    });
+
+    const response = await POST(request);
+    expect(response.status).toBe(400);
+
+    const json = await response.json();
+    expect(json.success).toBe(false);
+  });
+
+  it("should create application with valid driveFolderLink", async () => {
+    authenticateAs();
+
+    const mockApplication = {
+      id: "app-2",
+      clientFullName: "Jane Doe",
+      applicationType: null,
+      email: null,
+      phone: null,
+      notes: null,
+      paymentStatus: "PENDING",
+      currentStatus: "IN_PROCESS",
+      dueDate: null,
+      assignedEmployeeId: null,
+      driveFolderLink: "https://drive.google.com/drive/folders/abc123",
+      companyId: "company-1",
+      enquiryId: null,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    };
+
+    mockPrisma.application.create.mockResolvedValue(mockApplication as any);
+
+    const request = new NextRequest("http://localhost:3000/api/applications", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        clientFullName: "Jane Doe",
+        driveFolderLink: "https://drive.google.com/drive/folders/abc123",
+      }),
+    });
+
+    const response = await POST(request);
+    expect(response.status).toBe(201);
+
+    const json = await response.json();
+    expect(json.success).toBe(true);
+    expect(json.data.driveFolderLink).toBe(
+      "https://drive.google.com/drive/folders/abc123",
+    );
   });
 });
 

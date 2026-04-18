@@ -233,7 +233,7 @@ export default function Services() {
                         </div>
 
                         <div className="border-t pt-6">
-                          <div className="flex items-start justify-between gap-4">
+                          <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
                             <div>
                               <div className="mb-1 text-xs font-semibold uppercase tracking-wider text-gray-500">
                                 Ideal For
@@ -279,7 +279,7 @@ export default function Services() {
             </p>
           </div>
 
-          <div className="grid gap-6 md:grid-cols-5">
+          <div className="grid gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 lg:gap-6">
             {process.map((item, index) => (
               <div key={index} className="relative">
                 <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-red-600 to-red-700 text-2xl font-bold text-white">
@@ -290,7 +290,7 @@ export default function Services() {
                 </h3>
                 <p className="text-sm text-gray-600">{item.description}</p>
                 {index < process.length - 1 && (
-                  <div className="absolute right-0 top-8 hidden h-0.5 w-full -translate-y-1/2 bg-red-200 md:block" />
+                  <div className="absolute right-0 top-8 hidden h-0.5 w-full -translate-y-1/2 bg-red-200 lg:block" />
                 )}
               </div>
             ))}

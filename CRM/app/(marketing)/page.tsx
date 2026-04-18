@@ -96,7 +96,7 @@ export default function Home() {
         {testimonials.map((t, idx) => (
           <div
             key={idx}
-            className={`rounded-xl bg-white p-8 shadow-lg transition-opacity duration-700 ${active === idx ? "opacity-100" : "opacity-0 absolute inset-0 pointer-events-none"}`}
+            className={`rounded-xl bg-white p-5 shadow-lg transition-opacity duration-700 sm:p-8 ${active === idx ? "opacity-100" : "opacity-0 absolute inset-0 pointer-events-none"}`}
           >
             <div className="flex justify-center mb-4">
               {[...Array(5)].map((_, starIdx) => (
@@ -216,19 +216,19 @@ export default function Home() {
     <div>
       {/* Hero Section */}
       <section className="relative overflow-hidden bg-gradient-to-br from-red-50 via-white to-slate-50">
-        <div className="mx-auto max-w-7xl px-4 py-24 sm:px-6 lg:px-8 lg:py-32">
+        <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-24 lg:px-8 lg:py-32">
           <div className="grid gap-12 lg:grid-cols-2 lg:gap-16">
             <div className="flex flex-col justify-center">
-              <Badge className="mb-8 w-fit bg-red-100 text-red-700 text-base shadow-sm animate-fade-in">
+              <Badge className="mb-6 w-fit bg-red-100 text-red-700 text-sm shadow-sm animate-fade-in sm:mb-8 sm:text-base">
                 RCIC Regulated • Trusted Immigration Partner
               </Badge>
-              <h1 className="mb-8 text-5xl font-extrabold tracking-tight text-gray-900 sm:text-6xl lg:text-7xl animate-slide-up">
+              <h1 className="mb-8 text-3xl font-extrabold tracking-tight text-gray-900 sm:text-5xl lg:text-7xl animate-slide-up">
                 Your Trusted Path to
                 <span className="block bg-gradient-to-r from-red-600 to-red-700 bg-clip-text text-transparent">
                   Canadian Immigration
                 </span>
               </h1>
-              <p className="mb-10 text-xl text-gray-700 animate-fade-in">
+              <p className="mb-10 text-base text-gray-700 sm:text-xl animate-fade-in">
                 Expert guidance from licensed immigration consultants to help
                 you study, work, and live in Canada. Navigate complex
                 immigration processes with confidence and clarity.
@@ -248,18 +248,17 @@ export default function Home() {
                     <ArrowRight className="ml-2 h-4 w-4" />
                   </a>
                 </Button>
-                <Link href="/services">
-                  <Button
-                    size="lg"
-                    variant="outline"
-                    className="w-full sm:w-auto animate-fade-in"
-                  >
-                    Explore Services
-                  </Button>
-                </Link>
+                <Button
+                  asChild
+                  size="lg"
+                  variant="outline"
+                  className="w-full sm:w-auto animate-fade-in"
+                >
+                  <Link href="/services">Explore Services</Link>
+                </Button>
               </div>
             </div>
-            <div className="relative">
+            <div className="relative sm:pb-8">
               <div className="aspect-[4/3] overflow-hidden rounded-2xl shadow-2xl">
                 <ImageWithFallback
                   src="https://images.unsplash.com/photo-1758691736975-9f7f643d178e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwcm9mZXNzaW9uYWwlMjBkaXZlcnNlJTIwdGVhbSUyMG9mZmljZXxlbnwxfHx8fDE3NzEwOTc5NDZ8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
@@ -270,7 +269,7 @@ export default function Home() {
                 <div className="absolute inset-0 bg-black/20 pointer-events-none rounded-2xl" />
               </div>
               {/* Floating Stats Card */}
-              <div className="absolute -bottom-6 -left-6 rounded-xl bg-white p-6 shadow-xl lg:p-8 animate-slide-up">
+              <div className="relative -mt-4 mx-auto w-fit rounded-xl bg-white p-5 shadow-xl sm:absolute sm:-bottom-6 sm:-left-6 sm:mt-0 sm:mx-0 sm:p-6 lg:p-8 animate-slide-up">
                 <div className="flex items-center gap-4">
                   <div className="flex h-12 w-12 items-center justify-center rounded-full bg-green-100">
                     <CheckCircle className="h-6 w-6 text-green-600" />
@@ -356,12 +355,12 @@ export default function Home() {
           </div>
 
           <div className="mt-12 text-center">
-            <Link href="/services">
-              <Button size="lg" variant="outline">
+            <Button asChild size="lg" variant="outline">
+              <Link href="/services">
                 View All Services
                 <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
-            </Link>
+              </Link>
+            </Button>
           </div>
         </div>
       </section>

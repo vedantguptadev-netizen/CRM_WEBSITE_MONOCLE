@@ -17,6 +17,11 @@ export const CreateApplicationSchema = z.object({
     .refine((val) => val === "" || !isNaN(Date.parse(val)), "Invalid date")
     .optional(),
   assignedEmployeeId: z.string().optional(),
+  driveFolderLink: z
+    .string()
+    .url("Please enter a valid URL")
+    .optional()
+    .or(z.literal("")),
   enquiryId: z.string().optional(),
 });
 

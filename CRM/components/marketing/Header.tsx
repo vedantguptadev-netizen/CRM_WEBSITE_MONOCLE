@@ -24,15 +24,15 @@ export function Header() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-20 items-center justify-between py-2">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-3 shrink-0">
+          <Link href="/" className="flex items-center gap-2 shrink-0">
             <Image
               src="/Monocle_immigration_logo.png"
               alt="Monocle Immigration"
-              width={128}
-              height={128}
-              className="h-32 w-32 rounded-lg object-contain"
+              width={48}
+              height={48}
+              className="h-12 w-12 rounded-lg object-contain"
             />
-            <span className="text-xl font-semibold text-gray-900">
+            <span className="hidden text-xl font-semibold text-gray-900 sm:inline">
               Monocle Immigration
             </span>
           </Link>
@@ -74,8 +74,10 @@ export function Header() {
 
           {/* Mobile menu button */}
           <button
-            className="inline-flex items-center justify-center rounded-md p-2 text-gray-700 hover:bg-gray-100 md:hidden"
+            className="inline-flex h-10 w-10 items-center justify-center rounded-md text-gray-700 hover:bg-gray-100 md:hidden"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            aria-expanded={mobileMenuOpen}
+            aria-label="Toggle navigation menu"
           >
             {mobileMenuOpen ? (
               <X className="h-5 w-5" />

@@ -12,6 +12,7 @@ import {
   User,
   FileText,
   ExternalLink,
+  FolderOpen,
   Trash2,
 } from "lucide-react";
 import EditApplicationModal from "./EditApplicationModal";
@@ -239,6 +240,25 @@ export default function ApplicationDetailClient({
                   {application.notes || "—"}
                 </dd>
               </div>
+              {application.driveFolderLink && (
+                <div className="sm:col-span-2">
+                  <dt className="text-xs font-medium text-gray-500">
+                    Drive Folder Link
+                  </dt>
+                  <dd className="mt-1">
+                    <a
+                      href={application.driveFolderLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 rounded-lg border border-blue-200 bg-blue-50 px-3 py-2 text-sm font-medium text-blue-700 transition-colors hover:bg-blue-100"
+                    >
+                      <FolderOpen size={16} />
+                      Open Drive Folder
+                      <ExternalLink size={14} />
+                    </a>
+                  </dd>
+                </div>
+              )}
             </div>
           </div>
 

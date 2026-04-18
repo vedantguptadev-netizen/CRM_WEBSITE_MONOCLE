@@ -85,6 +85,7 @@ export async function POST(request: NextRequest) {
         currentStatus: data.currentStatus,
         dueDate: data.dueDate ? new Date(data.dueDate + "T12:00:00") : null,
         assignedEmployeeId: data.assignedEmployeeId?.trim() || null,
+        driveFolderLink: data.driveFolderLink?.trim() || null,
         companyId,
         enquiryId: data.enquiryId || null,
       },

@@ -10,48 +10,48 @@
 
 ### 1.1 Login — Valid Credentials
 
-| #     | Test Case                           | Steps                                                                                          | Expected Result                                                                      | Status  |
-| ----- | ----------------------------------- | ---------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------ | ------- |
-| 1.1.1 | Login with valid email and password | 1. Navigate to `/crm/login` 2. Enter registered email 3. Enter correct password 4. Click "Sign In" | User is redirected to `/crm/dashboard`. No error message shown.                          | ✅ Pass |
-| 1.1.2 | Password visibility toggle          | 1. Go to`/crm/login` 2. Enter password 3. Click the show/hide password icon                       | Password text toggles between hidden (dots) and visible (plain text).                | ✅ Pass |
-| 1.1.3 | Login button shows loading state    | 1. Enter valid credentials 2. Click "Sign In" 3. Observe button during request                 | Button displays a loading indicator or is disabled while the request is in progress. | ✅ Pass |
+| #     | Test Case                           | Steps                                                                                              | Expected Result                                                                      | Status  |
+| ----- | ----------------------------------- | -------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------ | ------- |
+| 1.1.1 | Login with valid email and password | 1. Navigate to `/crm/login` 2. Enter registered email 3. Enter correct password 4. Click "Sign In" | User is redirected to `/crm/dashboard`. No error message shown.                      | ✅ Pass |
+| 1.1.2 | Password visibility toggle          | 1. Go to`/crm/login` 2. Enter password 3. Click the show/hide password icon                        | Password text toggles between hidden (dots) and visible (plain text).                | ✅ Pass |
+| 1.1.3 | Login button shows loading state    | 1. Enter valid credentials 2. Click "Sign In" 3. Observe button during request                     | Button displays a loading indicator or is disabled while the request is in progress. | ✅ Pass |
 
 ### 1.2 Login — Invalid Credentials
 
-| #     | Test Case                     | Steps                                                                                                           | Expected Result                                                         | Status  |
-| ----- | ----------------------------- | --------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------- | ------- |
+| #     | Test Case                     | Steps                                                                                                               | Expected Result                                                         | Status  |
+| ----- | ----------------------------- | ------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------- | ------- |
 | 1.2.1 | Login with incorrect password | 1. Navigate to `/crm/login` 2. Enter valid email 3. Enter wrong password 4. Click "Sign In"                         | Red error box displays "Invalid credentials". User stays on login page. | ✅ Pass |
 | 1.2.2 | Login with non-existent email | 1. Navigate to `/crm/login` 2. Enter an email that doesn't exist in the DB 3. Enter any password 4. Click "Sign In" | Error message displayed (e.g., "Invalid credentials"). No crash.        | ✅ Pass |
-| 1.2.3 | Login with empty email        | 1. Leave email field blank 2. Enter a password 3. Click "Sign In"                                               | Validation error shown. Form does not submit.                           | ✅ Pass |
-| 1.2.4 | Login with empty password     | 1. Enter email 2. Leave password blank 3. Click "Sign In"                                                       | Validation error shown. Form does not submit.                           | ✅ Pass |
-| 1.2.5 | Login with both fields empty  | 1. Leave both email and password blank 2. Click "Sign In"                                                       | Validation errors shown for both fields.                                | ✅ Pass |
+| 1.2.3 | Login with empty email        | 1. Leave email field blank 2. Enter a password 3. Click "Sign In"                                                   | Validation error shown. Form does not submit.                           | ✅ Pass |
+| 1.2.4 | Login with empty password     | 1. Enter email 2. Leave password blank 3. Click "Sign In"                                                           | Validation error shown. Form does not submit.                           | ✅ Pass |
+| 1.2.5 | Login with both fields empty  | 1. Leave both email and password blank 2. Click "Sign In"                                                           | Validation errors shown for both fields.                                | ✅ Pass |
 
 ### 1.3 Session Persistence
 
-| #     | Test Case                         | Steps                                                                    | Expected Result                                                      | Status  |
-| ----- | --------------------------------- | ------------------------------------------------------------------------ | -------------------------------------------------------------------- | ------- |
-| 1.3.1 | Session survives page refresh     | 1. Login successfully 2. Press F5 or Cmd+R to refresh page               | User remains authenticated on `/crm/dashboard`. Not redirected to login. | ✅ Pass |
-| 1.3.2 | Session survives new tab          | 1. Login in tab A 2. Open new tab B 3. Navigate to `/crm/dashboard` in tab B | User is authenticated in tab B without re-login.                     | ✅ Pass |
-| 1.3.3 | Session cookie exists after login | 1. Login successfully 2. Open browser DevTools → Application → Cookies   | `authToken` cookie is present, httpOnly, SameSite=Lax.               | ✅ Pass |
-| 1.3.4 | `/api/auth/me` returns user info  | 1. Login successfully 2. Call `GET /api/auth/me` in browser or DevTools  | Returns `{ userId, email, companyId }` with 200 status.              | ✅ Pass |
+| #     | Test Case                         | Steps                                                                        | Expected Result                                                          | Status  |
+| ----- | --------------------------------- | ---------------------------------------------------------------------------- | ------------------------------------------------------------------------ | ------- |
+| 1.3.1 | Session survives page refresh     | 1. Login successfully 2. Press F5 or Cmd+R to refresh page                   | User remains authenticated on `/crm/dashboard`. Not redirected to login. | ✅ Pass |
+| 1.3.2 | Session survives new tab          | 1. Login in tab A 2. Open new tab B 3. Navigate to `/crm/dashboard` in tab B | User is authenticated in tab B without re-login.                         | ✅ Pass |
+| 1.3.3 | Session cookie exists after login | 1. Login successfully 2. Open browser DevTools → Application → Cookies       | `authToken` cookie is present, httpOnly, SameSite=Lax.                   | ✅ Pass |
+| 1.3.4 | `/api/auth/me` returns user info  | 1. Login successfully 2. Call `GET /api/auth/me` in browser or DevTools      | Returns `{ userId, email, companyId }` with 200 status.                  | ✅ Pass |
 
 ### 1.4 Logout
 
-| #     | Test Case                                  | Steps                                                               | Expected Result                                                | Status  |
-| ----- | ------------------------------------------ | ------------------------------------------------------------------- | -------------------------------------------------------------- | ------- |
+| #     | Test Case                                  | Steps                                                               | Expected Result                                                    | Status  |
+| ----- | ------------------------------------------ | ------------------------------------------------------------------- | ------------------------------------------------------------------ | ------- |
 | 1.4.1 | Logout from sidebar                        | 1. Login successfully 2. Click "Logout" button at bottom of sidebar | User is redirected to `/crm/login`. `authToken` cookie is cleared. | ✅ Pass |
-| 1.4.2 | Cannot access protected route after logout | 1. Logout 2. Manually navigate to `/crm/dashboard`                      | User is redirected to `/crm/login`.                                | ✅ Pass |
-| 1.4.3 | `/api/auth/me` returns 401 after logout    | 1. Logout 2. Call `GET /api/auth/me` in DevTools                    | Returns 401 Unauthorized.                                      | ✅ Pass |
+| 1.4.2 | Cannot access protected route after logout | 1. Logout 2. Manually navigate to `/crm/dashboard`                  | User is redirected to `/crm/login`.                                | ✅ Pass |
+| 1.4.3 | `/api/auth/me` returns 401 after logout    | 1. Logout 2. Call `GET /api/auth/me` in DevTools                    | Returns 401 Unauthorized.                                          | ✅ Pass |
 
 ### 1.5 Unauthorized Access / Middleware Protection
 
-| #     | Test Case                                 | Steps                                                                              | Expected Result                            | Status  |
-| ----- | ----------------------------------------- | ---------------------------------------------------------------------------------- | ------------------------------------------ | ------- |
-| 1.5.1 | Access `/crm/dashboard` without login         | 1. Clear cookies 2. Navigate directly to `/crm/dashboard`                              | Redirected to `/crm/login`.                    | ✅ Pass |
-| 1.5.2 | Access `/crm/enquiries` without login         | 1. Clear cookies 2. Navigate directly to `/crm/enquiries`                              | Redirected to `/crm/login`.                    | ✅ Pass |
-| 1.5.3 | Access `/crm/applications` without login      | 1. Clear cookies 2. Navigate directly to `/crm/applications`                           | Redirected to `/crm/login`.                    | ✅ Pass |
-| 1.5.4 | Access `/applications/[id]` without login | 1. Clear cookies 2. Navigate to any `/applications/<id>` URL                       | Redirected to `/crm/login`.                    | ✅ Pass |
-| 1.5.5 | Access API endpoints without auth token   | 1. Clear cookies 2. Call `GET /api/enquiries` via fetch/Postman                    | Returns 401 Unauthorized.                  | ✅ Pass |
+| #     | Test Case                                 | Steps                                                                                  | Expected Result                               | Status  |
+| ----- | ----------------------------------------- | -------------------------------------------------------------------------------------- | --------------------------------------------- | ------- |
+| 1.5.1 | Access `/crm/dashboard` without login     | 1. Clear cookies 2. Navigate directly to `/crm/dashboard`                              | Redirected to `/crm/login`.                   | ✅ Pass |
+| 1.5.2 | Access `/crm/enquiries` without login     | 1. Clear cookies 2. Navigate directly to `/crm/enquiries`                              | Redirected to `/crm/login`.                   | ✅ Pass |
+| 1.5.3 | Access `/crm/applications` without login  | 1. Clear cookies 2. Navigate directly to `/crm/applications`                           | Redirected to `/crm/login`.                   | ✅ Pass |
+| 1.5.4 | Access `/applications/[id]` without login | 1. Clear cookies 2. Navigate to any `/applications/<id>` URL                           | Redirected to `/crm/login`.                   | ✅ Pass |
+| 1.5.5 | Access API endpoints without auth token   | 1. Clear cookies 2. Call `GET /api/enquiries` via fetch/Postman                        | Returns 401 Unauthorized.                     | ✅ Pass |
 | 1.5.6 | Access API with expired/tampered token    | 1. Manually set `authToken` cookie to a garbage string 2. Navigate to `/crm/dashboard` | Redirected to`/crm/login` or error displayed. | ✅ Pass |
 
 ---
@@ -60,26 +60,26 @@
 
 ### 2.1 Sidebar Navigation (Desktop)
 
-| #     | Test Case                                | Steps                                             | Expected Result                                                                   | Status  |
-| ----- | ---------------------------------------- | ------------------------------------------------- | --------------------------------------------------------------------------------- | ------- |
-| 2.1.1 | Navigate to Dashboard                    | 1. Login 2. Click "Dashboard" in sidebar          | Page transitions to `/crm/dashboard`. Dashboard content loads.                        | ✅ Pass |
-| 2.1.2 | Navigate to Enquiries                    | 1. Click "Enquiries" in sidebar                   | Page transitions to `/crm/enquiries`. Enquiry table loads.                            | ✅ Pass |
-| 2.1.3 | Navigate to Applications                 | 1. Click "Applications" in sidebar                | Page transitions to `/crm/applications`. Applications table loads.                    | ✅ Pass |
+| #     | Test Case                                | Steps                                                 | Expected Result                                                                   | Status  |
+| ----- | ---------------------------------------- | ----------------------------------------------------- | --------------------------------------------------------------------------------- | ------- |
+| 2.1.1 | Navigate to Dashboard                    | 1. Login 2. Click "Dashboard" in sidebar              | Page transitions to `/crm/dashboard`. Dashboard content loads.                    | ✅ Pass |
+| 2.1.2 | Navigate to Enquiries                    | 1. Click "Enquiries" in sidebar                       | Page transitions to `/crm/enquiries`. Enquiry table loads.                        | ✅ Pass |
+| 2.1.3 | Navigate to Applications                 | 1. Click "Applications" in sidebar                    | Page transitions to `/crm/applications`. Applications table loads.                | ✅ Pass |
 | 2.1.4 | Active state highlighting — Dashboard    | 1. Navigate to `/crm/dashboard` 2. Observe sidebar    | "Dashboard" item has red background + left border indicator. Others are unstyled. | ✅ Pass |
 | 2.1.5 | Active state highlighting — Enquiries    | 1. Navigate to `/crm/enquiries` 2. Observe sidebar    | "Enquiries" item is highlighted. Others are not.                                  | ✅ Pass |
 | 2.1.6 | Active state highlighting — Applications | 1. Navigate to `/crm/applications` 2. Observe sidebar | "Applications" item is highlighted. Others are not.                               | ✅ Pass |
-| 2.1.7 | Sidebar logo and company info            | 1. Login 2. Observe sidebar header                | Logo (36×36), company name, and "CRM Dashboard" subtitle are visible.             | ✅ Pass |
-| 2.1.8 | Sidebar version info                     | 1. Scroll to bottom of sidebar                    | Version info section is visible.                                                  | ✅ Pass |
+| 2.1.7 | Sidebar logo and company info            | 1. Login 2. Observe sidebar header                    | Logo (36×36), company name, and "CRM Dashboard" subtitle are visible.             | ✅ Pass |
+| 2.1.8 | Sidebar version info                     | 1. Scroll to bottom of sidebar                        | Version info section is visible.                                                  | ✅ Pass |
 
 ### 2.2 Direct URL Access
 
-| #     | Test Case                        | Steps                                               | Expected Result                         | Status  |
-| ----- | -------------------------------- | --------------------------------------------------- | --------------------------------------- | ------- |
-| 2.2.1 | Direct URL to `/crm/dashboard`       | 1. Type `/crm/dashboard` in address bar while logged in | Dashboard loads correctly.              | ✅ Pass |
-| 2.2.2 | Direct URL to `/crm/enquiries`       | 1. Type `/crm/enquiries` directly                       | Enquiries page loads with data.         | ✅ Pass |
-| 2.2.3 | Direct URL to `/crm/applications`    | 1. Type `/crm/applications` directly                    | Applications page loads with data.      | ✅ Pass |
-| 2.2.4 | Direct URL to non-existent route | 1. Navigate to `/nonexistent`                       | 404 page or redirect (not crash).       | ✅ Pass |
-| 2.2.5 | Root path `/`                    | 1. Navigate to `/` while logged in                  | Home page loads with quick-start cards. | ✅ Pass |
+| #     | Test Case                         | Steps                                                   | Expected Result                         | Status  |
+| ----- | --------------------------------- | ------------------------------------------------------- | --------------------------------------- | ------- |
+| 2.2.1 | Direct URL to `/crm/dashboard`    | 1. Type `/crm/dashboard` in address bar while logged in | Dashboard loads correctly.              | ✅ Pass |
+| 2.2.2 | Direct URL to `/crm/enquiries`    | 1. Type `/crm/enquiries` directly                       | Enquiries page loads with data.         | ✅ Pass |
+| 2.2.3 | Direct URL to `/crm/applications` | 1. Type `/crm/applications` directly                    | Applications page loads with data.      | ✅ Pass |
+| 2.2.4 | Direct URL to non-existent route  | 1. Navigate to `/nonexistent`                           | 404 page or redirect (not crash).       | ✅ Pass |
+| 2.2.5 | Root path `/`                     | 1. Navigate to `/` while logged in                      | Home page loads with quick-start cards. | ✅ Pass |
 
 ### 2.3 Mobile Navigation
 
@@ -89,8 +89,8 @@
 | 2.3.2 | Open mobile sidebar                    | 1. On mobile view 2. Click hamburger icon                      | Slide-in sidebar opens from the left with navigation items + backdrop overlay.   | ✅ Pass |
 | 2.3.3 | Close mobile sidebar via X button      | 1. Open mobile sidebar 2. Click X button (top right)           | Sidebar closes.                                                                  | ✅ Pass |
 | 2.3.4 | Close mobile sidebar via backdrop      | 1. Open mobile sidebar 2. Tap outside the sidebar (on overlay) | Sidebar closes.                                                                  | ✅ Pass |
-| 2.3.5 | Navigate via mobile sidebar            | 1. Open mobile sidebar 2. Tap "Enquiries"                      | Sidebar closes, navigates to `/crm/enquiries`.                                       | ✅ Pass |
-| 2.3.6 | Logout from mobile sidebar             | 1. Open mobile sidebar 2. Tap "Logout"                         | User is logged out and redirected to `/crm/login`.                                   | ✅ Pass |
+| 2.3.5 | Navigate via mobile sidebar            | 1. Open mobile sidebar 2. Tap "Enquiries"                      | Sidebar closes, navigates to `/crm/enquiries`.                                   | ✅ Pass |
+| 2.3.6 | Logout from mobile sidebar             | 1. Open mobile sidebar 2. Tap "Logout"                         | User is logged out and redirected to `/crm/login`.                               | ✅ Pass |
 
 ---
 
@@ -100,7 +100,7 @@
 
 | #     | Test Case                                | Steps                                                                                                                                                                                           | Expected Result                                                                        | Status  |
 | ----- | ---------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- | ------- |
-| 3.1.1 | Open "New Enquiry" modal                 | 1. Go to `/crm/enquiries` 2. Click "New Enquiry" button                                                                                                                                             | Modal opens with empty form. Title says "Add Enquiry" or similar.                      | ✅ Pass |
+| 3.1.1 | Open "New Enquiry" modal                 | 1. Go to `/crm/enquiries` 2. Click "New Enquiry" button                                                                                                                                         | Modal opens with empty form. Title says "Add Enquiry" or similar.                      | ✅ Pass |
 | 3.1.2 | Create enquiry with all fields           | 1. Fill: Client Name = "John Doe" 2. Email = "john@example.com" 3. Phone = "+61 400 111 222" 4. Type = "Visa" 5. Notes = "Student visa enquiry" 6. Follow-Up Date = future date 7. Click Submit | Modal closes. Page reloads. "John Doe" appears in the enquiry table with correct data. | ✅ Pass |
 | 3.1.3 | Create enquiry with only required fields | 1. Fill: Client Name = "Jane Smith" 2. Type = "General" 3. Leave all other fields blank 4. Submit                                                                                               | Enquiry created successfully. Email, Phone, Notes, Follow-Up show as "—" in table.     | ✅ Pass |
 | 3.1.4 | Cancel enquiry creation                  | 1. Open "New Enquiry" modal 2. Fill some fields 3. Click "Cancel"                                                                                                                               | Modal closes. No new enquiry created. Form is cleared.                                 | ✅ Pass |
@@ -192,28 +192,31 @@
 
 | #     | Test Case                                    | Steps                                                                                                                                                         | Expected Result                                                                    | Status |
 | ----- | -------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- | ------ |
-| 4.1.1 | Open "New Application" modal                 | 1. Go to `/crm/applications` 2. Click "New Application" button                                                                                                    | Modal opens with empty form. Default Payment = "PENDING", Status = "IN_PROCESS".   | 🔲     |
+| 4.1.1 | Open "New Application" modal                 | 1. Go to `/crm/applications` 2. Click "New Application" button                                                                                                | Modal opens with empty form. Default Payment = "PENDING", Status = "IN_PROCESS".   | 🔲     |
 | 4.1.2 | Create application with all fields           | 1. Fill: Client Full Name, Email, Phone, Application Type, Payment Status = PAID, Current Status = SUBMITTED, Due Date, Assigned Employee ID, Notes 2. Submit | Application created. Appears in table with correct badges/data.                    | 🔲     |
 | 4.1.3 | Create application with only required fields | 1. Fill only Client Full Name 2. Submit                                                                                                                       | Application created with defaults (PENDING, IN_PROCESS). Optional fields show "—". | 🔲     |
 | 4.1.4 | Submit with empty Client Full Name           | 1. Leave Client Full Name blank 2. Submit                                                                                                                     | Validation error. Form does not submit.                                            | 🔲     |
 | 4.1.5 | Submit with invalid email format             | 1. Enter "bad-email" 2. Submit                                                                                                                                | Validation error below email field.                                                | 🔲     |
-| 4.1.6 | Cancel application creation                  | 1. Open modal 2. Fill fields 3. Click "Cancel"                                                                                                                | Modal closes. No application created.                                              | 🔲     |
+| 4.1.6 | Submit with valid Drive Folder Link          | 1. Fill required fields 2. Enter "https://drive.google.com/drive/folders/abc" in Drive Folder Link 3. Submit                                                  | Application created. Drive link saved.                                             | 🔲     |
+| 4.1.7 | Submit with invalid Drive Folder Link        | 1. Fill required fields 2. Enter "not-a-url" in Drive Folder Link 3. Submit                                                                                   | Validation error: "Please enter a valid URL".                                      | 🔲     |
+| 4.1.8 | Submit with empty Drive Folder Link          | 1. Fill required fields 2. Leave Drive Folder Link empty 3. Submit                                                                                            | Application created. Field saved as null.                                          | 🔲     |
+| 4.1.9 | Cancel application creation                  | 1. Open modal 2. Fill fields 3. Click "Cancel"                                                                                                                | Modal closes. No application created.                                              | 🔲     |
 
 ### 4.2 Create Application from Enquiry
 
-| #     | Test Case                                | Steps                                                                                                        | Expected Result                                                                                                                            | Status |
-| ----- | ---------------------------------------- | ------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------ | ------ |
+| #     | Test Case                                | Steps                                                                                                            | Expected Result                                                                                                                            | Status |
+| ----- | ---------------------------------------- | ---------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ | ------ |
 | 4.2.1 | Create from enquiry action menu          | 1. Go to `/crm/enquiries` 2. Click "⋯" on an enquiry without a linked application 3. Select "Create Application" | Application is created and user is navigated to application detail page.                                                                   | 🔲     |
-| 4.2.2 | Auto-populated fields from enquiry       | 1. Create application from enquiry 2. Observe application details                                            | clientFullName = enquiry's clientName, applicationType = enquiry's type, email/phone/notes copied. Payment = PENDING, Status = IN_PROCESS. | 🔲     |
-| 4.2.3 | Create from enquiry slide-over           | 1. Open slide-over for unlinked enquiry 2. Click "Create Application"                                        | Application created. Enquiry now shows "Linked" badge.                                                                                     | 🔲     |
-| 4.2.4 | Attempt to create duplicate from enquiry | 1. Enquiry already has a linked application 2. Try to create again via API                                   | Error: enquiry already has an application linked. No duplicate created.                                                                    | 🔲     |
-| 4.2.5 | Enquiry badge updates after linking      | 1. Create application from enquiry 2. Go back to enquiries table                                             | Enquiry row shows green "Linked" badge.                                                                                                    | 🔲     |
+| 4.2.2 | Auto-populated fields from enquiry       | 1. Create application from enquiry 2. Observe application details                                                | clientFullName = enquiry's clientName, applicationType = enquiry's type, email/phone/notes copied. Payment = PENDING, Status = IN_PROCESS. | 🔲     |
+| 4.2.3 | Create from enquiry slide-over           | 1. Open slide-over for unlinked enquiry 2. Click "Create Application"                                            | Application created. Enquiry now shows "Linked" badge.                                                                                     | 🔲     |
+| 4.2.4 | Attempt to create duplicate from enquiry | 1. Enquiry already has a linked application 2. Try to create again via API                                       | Error: enquiry already has an application linked. No duplicate created.                                                                    | 🔲     |
+| 4.2.5 | Enquiry badge updates after linking      | 1. Create application from enquiry 2. Go back to enquiries table                                                 | Enquiry row shows green "Linked" badge.                                                                                                    | 🔲     |
 
 ### 4.3 View Application Detail
 
 | #      | Test Case                           | Steps                                                | Expected Result                                                                     | Status |
 | ------ | ----------------------------------- | ---------------------------------------------------- | ----------------------------------------------------------------------------------- | ------ |
-| 4.3.1  | Navigate to application detail page | 1. Click "View Details" from application action menu | Navigates to `/crm/applications/[id]`. Detail page loads.                               | 🔲     |
+| 4.3.1  | Navigate to application detail page | 1. Click "View Details" from application action menu | Navigates to `/crm/applications/[id]`. Detail page loads.                           | 🔲     |
 | 4.3.2  | Contact information section         | 1. Observe detail page                               | Email and Phone displayed correctly (or "—" if empty).                              | 🔲     |
 | 4.3.3  | Application details section         | 1. Observe                                           | Application type, assigned employee ID, notes shown.                                | 🔲     |
 | 4.3.4  | Linked enquiry section — linked     | 1. View app created from enquiry                     | Linked enquiry details shown (name, type, etc.).                                    | 🔲     |
@@ -222,21 +225,26 @@
 | 4.3.7  | Due date urgency — overdue          | 1. View application with past due date               | Due date styled in red / shows urgency.                                             | 🔲     |
 | 4.3.8  | Due date urgency — today            | 1. View application due today                        | Due date styled in amber.                                                           | 🔲     |
 | 4.3.9  | Due date urgency — upcoming         | 1. View application with future due date             | Due date styled in gray/normal.                                                     | 🔲     |
-| 4.3.10 | Back button                         | 1. Click "Back" on detail page                       | Navigates back to `/crm/applications` list.                                             | 🔲     |
+| 4.3.10 | Back button                         | 1. Click "Back" on detail page                       | Navigates back to `/crm/applications` list.                                         | 🔲     |
+| 4.3.11 | Drive Folder Link — with link       | 1. View app with driveFolderLink set                 | "Open Drive Folder" button shown as clickable link, opens in new tab.               | 🔲     |
+| 4.3.12 | Drive Folder Link — without link    | 1. View app without driveFolderLink                  | No Drive Folder Link section shown (no empty field displayed).                      | 🔲     |
 
 ### 4.4 Edit Application
 
-| #     | Test Case                             | Steps                                                                | Expected Result                                         | Status |
-| ----- | ------------------------------------- | -------------------------------------------------------------------- | ------------------------------------------------------- | ------ |
-| 4.4.1 | Open edit modal from list action menu | 1. Click "⋯" on application row 2. Select "Edit Application"         | Edit modal opens with pre-filled data.                  | 🔲     |
-| 4.4.2 | Open edit modal from detail page      | 1. On detail page 2. Click "Edit" button (header or footer)          | Edit modal opens with pre-filled data.                  | 🔲     |
-| 4.4.3 | Change Payment Status                 | 1. Edit application 2. Change Payment from PENDING to PAID 3. Submit | Badge updates to green "PAID" in table and detail page. | 🔲     |
-| 4.4.4 | Change Current Status                 | 1. Change status from IN_PROCESS to SUBMITTED 2. Submit              | Badge updates to green "SUBMITTED".                     | 🔲     |
-| 4.4.5 | Change Due Date                       | 1. Set or change due date 2. Submit                                  | Due date updates in table with correct urgency styling. | 🔲     |
-| 4.4.6 | Clear Due Date                        | 1. Remove due date 2. Submit                                         | Due date shows as "—" or empty.                         | 🔲     |
-| 4.4.7 | Edit Client Full Name                 | 1. Change name 2. Submit                                             | Name updates across table and detail page.              | 🔲     |
-| 4.4.8 | Edit preserves unmodified fields      | 1. Edit 2. Only change Notes 3. Submit                               | All other fields remain unchanged.                      | 🔲     |
-| 4.4.9 | Cancel edit                           | 1. Open edit 2. Change fields 3. Cancel                              | No changes saved.                                       | 🔲     |
+| #      | Test Case                             | Steps                                                                | Expected Result                                         | Status |
+| ------ | ------------------------------------- | -------------------------------------------------------------------- | ------------------------------------------------------- | ------ |
+| 4.4.1  | Open edit modal from list action menu | 1. Click "⋯" on application row 2. Select "Edit Application"         | Edit modal opens with pre-filled data.                  | 🔲     |
+| 4.4.2  | Open edit modal from detail page      | 1. On detail page 2. Click "Edit" button (header or footer)          | Edit modal opens with pre-filled data.                  | 🔲     |
+| 4.4.3  | Change Payment Status                 | 1. Edit application 2. Change Payment from PENDING to PAID 3. Submit | Badge updates to green "PAID" in table and detail page. | 🔲     |
+| 4.4.4  | Change Current Status                 | 1. Change status from IN_PROCESS to SUBMITTED 2. Submit              | Badge updates to green "SUBMITTED".                     | 🔲     |
+| 4.4.5  | Change Due Date                       | 1. Set or change due date 2. Submit                                  | Due date updates in table with correct urgency styling. | 🔲     |
+| 4.4.6  | Clear Due Date                        | 1. Remove due date 2. Submit                                         | Due date shows as "—" or empty.                         | 🔲     |
+| 4.4.7  | Edit Client Full Name                 | 1. Change name 2. Submit                                             | Name updates across table and detail page.              | 🔲     |
+| 4.4.8  | Edit preserves unmodified fields      | 1. Edit 2. Only change Notes 3. Submit                               | All other fields remain unchanged.                      | 🔲     |
+| 4.4.9  | Cancel edit                           | 1. Open edit 2. Change fields 3. Cancel                              | No changes saved.                                       | 🔲     |
+| 4.4.10 | Add Drive Folder Link via edit        | 1. Edit app 2. Add valid URL to Drive Folder Link 3. Submit          | Link saved. Detail page shows clickable link.           | 🔲     |
+| 4.4.11 | Edit with invalid Drive Folder Link   | 1. Edit app 2. Enter "bad-url" in Drive Folder Link 3. Submit        | Validation error shown. Form does not submit.           | 🔲     |
+| 4.4.12 | Remove Drive Folder Link via edit     | 1. Edit app 2. Clear Drive Folder Link field 3. Submit               | Link removed. Detail page no longer shows drive link.   | 🔲     |
 
 ### 4.5 Delete Application
 
@@ -294,7 +302,7 @@
 | 5.2 | Enquiry shows "Linked" after creating application | 1. Create application from enquiry 2. Check enquiries table                                  | Enquiry row has green "Linked" badge.                              | 🔲     |
 | 5.3 | Application detail shows linked enquiry info      | 1. View application created from enquiry                                                     | Linked Enquiry section displays enquiry name, type.                | 🔲     |
 | 5.4 | "View Enquiry" action on linked application       | 1. In applications table 2. Click "⋯" on linked app 3. Select "View Enquiry"                 | Navigates to the correct enquiry (or opens detail).                | 🔲     |
-| 5.5 | "View Application" action on linked enquiry       | 1. In enquiries table 2. Click "⋯" on linked enquiry 3. Select "View Application"            | Navigates to `/crm/applications/[id]` for the correct application.     | 🔲     |
+| 5.5 | "View Application" action on linked enquiry       | 1. In enquiries table 2. Click "⋯" on linked enquiry 3. Select "View Application"            | Navigates to `/crm/applications/[id]` for the correct application. | 🔲     |
 | 5.6 | Editing enquiry does NOT auto-update application  | 1. Create app from enquiry 2. Edit the enquiry's name 3. Check application                   | Application retains original copied data (not auto-synced).        | 🔲     |
 | 5.7 | Company isolation                                 | 1. Login as User A (Company A) 2. Create enquiry 3. Login as User B (Company B, if testable) | User B cannot see User A's enquiries or applications.              | 🔲     |
 
@@ -306,8 +314,8 @@
 
 | #     | Test Case                         | Steps                                                     | Expected Result                                                                               | Status |
 | ----- | --------------------------------- | --------------------------------------------------------- | --------------------------------------------------------------------------------------------- | ------ |
-| 6.1.1 | Enquiry table columns aligned     | 1. Go to `/crm/enquiries`                                     | All columns are aligned, headers match data columns. No overflow or truncation unless styled. | 🔲     |
-| 6.1.2 | Application table columns aligned | 1. Go to `/crm/applications`                                  | Same alignment standards met.                                                                 | 🔲     |
+| 6.1.1 | Enquiry table columns aligned     | 1. Go to `/crm/enquiries`                                 | All columns are aligned, headers match data columns. No overflow or truncation unless styled. | 🔲     |
+| 6.1.2 | Application table columns aligned | 1. Go to `/crm/applications`                              | Same alignment standards met.                                                                 | 🔲     |
 | 6.1.3 | Consistent badge styling          | 1. Compare badge styles across enquiries and applications | Badges are consistently sized, colored, and positioned.                                       | 🔲     |
 | 6.1.4 | Action menu positioning           | 1. Click "⋯" on multiple rows                             | Dropdown menu is correctly positioned, not clipped by viewport.                               | 🔲     |
 | 6.1.5 | Table row hover state             | 1. Hover over table rows                                  | Rows show a subtle hover highlight.                                                           | 🔲     |
@@ -371,7 +379,7 @@
 | 8.2 | API failure on application create   | 1. Simulate error 2. Submit new application                          | Error message displayed.                                                  | 🔲     |
 | 8.3 | Network failure during login        | 1. Disable network 2. Attempt login                                  | Clear error message shown (e.g., "Network error" or "Failed to connect"). | 🔲     |
 | 8.4 | 404 for non-existent enquiry ID     | 1. Navigate to `/api/enquiries/nonexistent-id`                       | 404 response with message.                                                | 🔲     |
-| 8.5 | 404 for non-existent application ID | 1. Navigate to `/crm/applications/nonexistent-id`                        | "Application Not Found" message displayed.                                | 🔲     |
+| 8.5 | 404 for non-existent application ID | 1. Navigate to `/crm/applications/nonexistent-id`                    | "Application Not Found" message displayed.                                | 🔲     |
 | 8.6 | Validation errors display clearly   | 1. Submit form with multiple validation errors                       | All errors shown inline below respective fields.                          | 🔲     |
 | 8.7 | Server error (500) handling         | 1. Trigger unexpected server error via malformed request             | 500 response returned with generic message (no stack trace exposed).      | 🔲     |
 
@@ -408,9 +416,9 @@
 | 10.4 | Table readability on mobile       | 1. View enquiries/applications table on mobile | Table is horizontally scrollable or columns stack. Data is accessible.           | 🔲     |
 | 10.5 | Modal on mobile                   | 1. Open Add/Edit modal on mobile screen        | Modal fills available space, form is scrollable, buttons reachable.              | 🔲     |
 | 10.6 | Slide-over on mobile              | 1. Open enquiry detail on mobile               | Slide-over is usable, covers full width or nearly so. Can close it.              | 🔲     |
-| 10.7 | Application detail page on mobile | 1. Open `/crm/applications/[id]` on mobile         | Layout stacks from 3-col to 2-col to 1-col. All info visible.                    | 🔲     |
-| 10.8 | Dashboard on mobile               | 1. Open `/crm/dashboard` on mobile                 | Stat cards stack vertically. No horizontal overflow.                             | 🔲     |
-| 10.9 | Login page on mobile              | 1. Open`/crm/login` on mobile                     | Form is centered, inputs are full width, submit button accessible.               | 🔲     |
+| 10.7 | Application detail page on mobile | 1. Open `/crm/applications/[id]` on mobile     | Layout stacks from 3-col to 2-col to 1-col. All info visible.                    | 🔲     |
+| 10.8 | Dashboard on mobile               | 1. Open `/crm/dashboard` on mobile             | Stat cards stack vertically. No horizontal overflow.                             | 🔲     |
+| 10.9 | Login page on mobile              | 1. Open`/crm/login` on mobile                  | Form is centered, inputs are full width, submit button accessible.               | 🔲     |
 
 ---
 
@@ -418,8 +426,8 @@
 
 | #    | Test Case                      | Steps                                               | Expected Result                                                          | Status |
 | ---- | ------------------------------ | --------------------------------------------------- | ------------------------------------------------------------------------ | ------ |
-| 11.1 | Enquiries table load time      | 1. Navigate to `/crm/enquiries` with 50+ records        | Table renders within 2–3 seconds. No visible jank.                       | 🔲     |
-| 11.2 | Applications table load time   | 1. Navigate to `/crm/applications` with 50+ records     | Same under 2–3 seconds.                                                  | 🔲     |
+| 11.1 | Enquiries table load time      | 1. Navigate to `/crm/enquiries` with 50+ records    | Table renders within 2–3 seconds. No visible jank.                       | 🔲     |
+| 11.2 | Applications table load time   | 1. Navigate to `/crm/applications` with 50+ records | Same under 2–3 seconds.                                                  | 🔲     |
 | 11.3 | Slide-over open speed          | 1. Click on an enquiry row                          | Slide-over opens immediately with smooth animation.                      | 🔲     |
 | 11.4 | Filter responsiveness          | 1. Change filter dropdown                           | Table updates instantly (client-side filtering).                         | 🔲     |
 | 11.5 | Search debounce/responsiveness | 1. Type quickly in search box                       | Table filters smoothly without noticeable lag.                           | 🔲     |
@@ -431,25 +439,25 @@
 
 ## 12. Dashboard
 
-| #    | Test Case                   | Steps                                      | Expected Result                                                                                          | Status |
-| ---- | --------------------------- | ------------------------------------------ | -------------------------------------------------------------------------------------------------------- | ------ |
+| #    | Test Case                   | Steps                                          | Expected Result                                                                                          | Status |
+| ---- | --------------------------- | ---------------------------------------------- | -------------------------------------------------------------------------------------------------------- | ------ |
 | 12.1 | Dashboard loads after login | 1. Login 2. Observe `/crm/dashboard`           | Page header, stat cards visible. No errors.                                                              | 🔲     |
-| 12.2 | Stat cards display          | 1. Observe the 3 stat cards                | "Total Enquiries", "Active Applications", "Pending Actions" cards visible (may show "—" as placeholder). | 🔲     |
+| 12.2 | Stat cards display          | 1. Observe the 3 stat cards                    | "Total Enquiries", "Active Applications", "Pending Actions" cards visible (may show "—" as placeholder). | 🔲     |
 | 12.3 | Dashboard does not crash    | 1. Navigate to `/crm/dashboard` multiple times | Page renders consistently without errors.                                                                | 🔲     |
 
 ---
 
 ## 13. Home Page (`/`)
 
-| #    | Test Case                             | Steps                                  | Expected Result                                     | Status |
-| ---- | ------------------------------------- | -------------------------------------- | --------------------------------------------------- | ------ |
-| 13.1 | Marketing homepage loads              | 1. Navigate to `/`                     | Marketing website homepage with Header and Footer.  | 🔲     |
-| 13.2 | About page loads                      | 1. Navigate to `/about`                | About page renders with marketing layout.           | 🔲     |
-| 13.3 | Services page loads                   | 1. Navigate to `/services`             | Services page renders with marketing layout.        | 🔲     |
-| 13.4 | Contact page loads                    | 1. Navigate to `/contact`              | Contact page renders with marketing layout.         | 🔲     |
-| 13.5 | Marketing pages have no CRM sidebar   | 1. Visit `/`, `/about`, `/services`    | No CRM sidebar visible. Marketing Header + Footer.  | 🔲     |
-| 13.6 | CRM welcome page loads                | 1. Navigate to `/crm` while logged in  | CRM welcome page with quick-start cards rendered.   | 🔲     |
-| 13.7 | Quick-start cards are clickable       | 1. Click on a quick-start card on `/crm` | Navigates to the intended CRM route (if linked).  | 🔲     |
+| #    | Test Case                           | Steps                                    | Expected Result                                    | Status |
+| ---- | ----------------------------------- | ---------------------------------------- | -------------------------------------------------- | ------ |
+| 13.1 | Marketing homepage loads            | 1. Navigate to `/`                       | Marketing website homepage with Header and Footer. | 🔲     |
+| 13.2 | About page loads                    | 1. Navigate to `/about`                  | About page renders with marketing layout.          | 🔲     |
+| 13.3 | Services page loads                 | 1. Navigate to `/services`               | Services page renders with marketing layout.       | 🔲     |
+| 13.4 | Contact page loads                  | 1. Navigate to `/contact`                | Contact page renders with marketing layout.        | 🔲     |
+| 13.5 | Marketing pages have no CRM sidebar | 1. Visit `/`, `/about`, `/services`      | No CRM sidebar visible. Marketing Header + Footer. | 🔲     |
+| 13.6 | CRM welcome page loads              | 1. Navigate to `/crm` while logged in    | CRM welcome page with quick-start cards rendered.  | 🔲     |
+| 13.7 | Quick-start cards are clickable     | 1. Click on a quick-start card on `/crm` | Navigates to the intended CRM route (if linked).   | 🔲     |
 
 ---
 
