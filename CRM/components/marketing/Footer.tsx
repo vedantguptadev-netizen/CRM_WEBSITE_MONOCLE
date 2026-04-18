@@ -148,14 +148,54 @@ export function Footer() {
               Services
             </h3>
             <ul className="space-y-3">
-              <li className="text-sm text-gray-600">Express Entry</li>
-              <li className="text-sm text-gray-600">Study Permits</li>
-              <li className="text-sm text-gray-600">Work Permits</li>
-              <li className="text-sm text-gray-600">Family Sponsorship</li>
-              <li className="text-sm text-gray-600">
-                Provincial Nominee Program
+              <li>
+                <Link
+                  href="/services"
+                  className="text-sm text-gray-600 transition-colors hover:text-red-600"
+                >
+                  Express Entry
+                </Link>
               </li>
-              <li className="text-sm text-gray-600">Business Immigration</li>
+              <li>
+                <Link
+                  href="/services"
+                  className="text-sm text-gray-600 transition-colors hover:text-red-600"
+                >
+                  Study Permits
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/services"
+                  className="text-sm text-gray-600 transition-colors hover:text-red-600"
+                >
+                  Work Permits
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/services"
+                  className="text-sm text-gray-600 transition-colors hover:text-red-600"
+                >
+                  Family Sponsorship
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/services"
+                  className="text-sm text-gray-600 transition-colors hover:text-red-600"
+                >
+                  Provincial Nominee Program
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/services"
+                  className="text-sm text-gray-600 transition-colors hover:text-red-600"
+                >
+                  Business Immigration
+                </Link>
+              </li>
             </ul>
           </div>
 
@@ -205,20 +245,6 @@ export function Footer() {
             <p className="text-sm text-gray-600">
               © 2026 Monocle Immigration. All rights reserved.
             </p>
-            <div className="flex gap-6">
-              <a
-                href="#"
-                className="text-sm text-gray-600 transition-colors hover:text-red-600"
-              >
-                Privacy Policy
-              </a>
-              <a
-                href="#"
-                className="text-sm text-gray-600 transition-colors hover:text-red-600"
-              >
-                Terms of Service
-              </a>
-            </div>
           </div>
         </div>
       </div>

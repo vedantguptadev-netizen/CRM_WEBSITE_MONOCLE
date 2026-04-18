@@ -163,14 +163,14 @@ Safe to re-run — cleans up previous demo data first.
 
 All responses include the following headers:
 
-| Header                      | Value                                     | Purpose                              |
-| --------------------------- | ----------------------------------------- | ------------------------------------ |
-| `X-Content-Type-Options`    | `nosniff`                                 | Prevents MIME-type sniffing          |
-| `X-Frame-Options`           | `DENY`                                    | Blocks clickjacking via iframes      |
-| `Referrer-Policy`           | `strict-origin-when-cross-origin`         | Controls referrer leakage            |
-| `Strict-Transport-Security` | `max-age=63072000; includeSubDomains`     | Enforces HTTPS for 2 years           |
-| `X-DNS-Prefetch-Control`    | `on`                                      | Speeds up DNS resolution             |
-| `Permissions-Policy`        | `camera=(), microphone=(), geolocation=()` | Disables unused browser APIs         |
+| Header                      | Value                                      | Purpose                         |
+| --------------------------- | ------------------------------------------ | ------------------------------- |
+| `X-Content-Type-Options`    | `nosniff`                                  | Prevents MIME-type sniffing     |
+| `X-Frame-Options`           | `DENY`                                     | Blocks clickjacking via iframes |
+| `Referrer-Policy`           | `strict-origin-when-cross-origin`          | Controls referrer leakage       |
+| `Strict-Transport-Security` | `max-age=63072000; includeSubDomains`      | Enforces HTTPS for 2 years      |
+| `X-DNS-Prefetch-Control`    | `on`                                       | Speeds up DNS resolution        |
+| `Permissions-Policy`        | `camera=(), microphone=(), geolocation=()` | Disables unused browser APIs    |
 
 ### Authentication & Authorization
 
@@ -197,6 +197,44 @@ All responses include the following headers:
 DATABASE_URL=postgresql://user:password@host/db   # Required
 JWT_SECRET=your-secret-key-min-32-chars            # Required — app crashes if missing
 ```
+
+## 🔍 SEO & Discoverability
+
+### Server-Side Rendering for SEO
+
+All marketing pages use a **Server Component → Client Component** split pattern:
+
+- `page.tsx` (Server Component) — exports Next.js `Metadata` and renders the client component
+- `*Client.tsx` (Client Component) — contains the interactive UI (`"use client"`)
+
+This ensures Google receives fully-rendered HTML with proper `<title>` and `<meta>` tags on first load, while preserving client-side interactivity.
+
+### Per-Page Metadata
+
+Each marketing page exports unique, keyword-rich metadata via the Next.js Metadata API:
+
+| Page       | Title                                                          |
+| ---------- | -------------------------------------------------------------- |
+| `/`        | Immigration Consultant in Calgary & Brandon — Free Consultation |
+| `/services`| Canadian Immigration Services — Study, Work & PR Permits        |
+| `/about`   | About Rupinder Bhatti — RCIC Licensed Immigration Consultant    |
+| `/contact` | Contact Monocle Immigration — Calgary & Brandon Offices         |
+
+All pages follow the template pattern: `%s | Monocle Immigration`
+
+### Sitemap & Robots
+
+- **`app/sitemap.ts`** — Auto-generates `/sitemap.xml` listing all 4 public pages with priorities and change frequencies
+- **`app/robots.ts`** — Auto-generates `/robots.txt` that allows public pages, blocks `/crm/` and `/api/` from crawlers, and points to the sitemap
+
+### Structured Data (JSON-LD)
+
+- **LocalBusiness** (marketing layout) — Business name, two office addresses (Calgary AB + Brandon MB), phone, email, hours, and social media links (LinkedIn, X, Instagram, Facebook)
+- **FAQPage** (contact page) — 8 Q&A pairs eligible for Google rich snippets
+
+### Open Graph & Social Cards
+
+All pages include Open Graph metadata (`og:title`, `og:description`, `og:type`, `og:locale`) for proper previews when shared on LinkedIn, Facebook, X, and messaging apps.
 
 ### Authentication
 
