@@ -48,9 +48,7 @@ export default async function DashboardPage() {
   // Overdue: only count non-submitted applications (submitted = done)
   const overdueApplications = applications.filter(
     (a) =>
-      a.dueDate &&
-      new Date(a.dueDate) < now &&
-      a.currentStatus !== "SUBMITTED",
+      a.dueDate && new Date(a.dueDate) < now && a.currentStatus !== "SUBMITTED",
   ).length;
 
   const upcomingFollowUps = enquiries.filter(
