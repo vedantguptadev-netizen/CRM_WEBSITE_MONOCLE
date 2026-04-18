@@ -14,9 +14,18 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_CA",
     siteName: "Monocle Immigration",
+    images: [
+      {
+        url: "/Monocle_immigration_logo.png",
+        width: 1200,
+        height: 630,
+        alt: "Monocle Immigration — Licensed RCIC Consultants",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
+    images: ["/Monocle_immigration_logo.png"],
   },
 };
 

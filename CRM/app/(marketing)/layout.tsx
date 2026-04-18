@@ -3,9 +3,9 @@ import { Footer } from "@/components/marketing/Footer";
 import { GeistSans } from "geist/font/sans";
 import { GeistMono } from "geist/font/mono";
 
-const localBusinessJsonLd = {
+const organizationJsonLd = {
   "@context": "https://schema.org",
-  "@type": "LocalBusiness",
+  "@type": "ProfessionalService",
   "@id": "https://monocleimmigration.com",
   name: "Monocle Immigration",
   description:
@@ -15,23 +15,46 @@ const localBusinessJsonLd = {
   email: "info@monocleimmigration.com",
   image: "https://monocleimmigration.com/Monocle_immigration_logo.png",
   priceRange: "$$",
-  address: [
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: "421 7 Ave SW 30th FL",
+    addressLocality: "Calgary",
+    addressRegion: "AB",
+    postalCode: "T2P 4K9",
+    addressCountry: "CA",
+  },
+  location: [
     {
-      "@type": "PostalAddress",
-      streetAddress: "421 7 Ave SW 30th FL",
-      addressLocality: "Calgary",
-      addressRegion: "AB",
-      postalCode: "T2P 4K9",
-      addressCountry: "CA",
+      "@type": "Place",
+      name: "Monocle Immigration — Calgary Office",
+      address: {
+        "@type": "PostalAddress",
+        streetAddress: "421 7 Ave SW 30th FL",
+        addressLocality: "Calgary",
+        addressRegion: "AB",
+        postalCode: "T2P 4K9",
+        addressCountry: "CA",
+      },
     },
     {
-      "@type": "PostalAddress",
-      streetAddress: "Unit 205 244-10th Street",
-      addressLocality: "Brandon",
-      addressRegion: "MB",
-      postalCode: "R7A 4E8",
-      addressCountry: "CA",
+      "@type": "Place",
+      name: "Monocle Immigration — Brandon Office",
+      address: {
+        "@type": "PostalAddress",
+        streetAddress: "Unit 205 244-10th Street",
+        addressLocality: "Brandon",
+        addressRegion: "MB",
+        postalCode: "R7A 4E8",
+        addressCountry: "CA",
+      },
     },
+  ],
+  areaServed: [
+    { "@type": "City", name: "Calgary" },
+    { "@type": "City", name: "Brandon" },
+    { "@type": "AdministrativeArea", name: "Alberta" },
+    { "@type": "AdministrativeArea", name: "Manitoba" },
+    { "@type": "Country", name: "Canada" },
   ],
   openingHoursSpecification: {
     "@type": "OpeningHoursSpecification",
@@ -57,7 +80,7 @@ export default function MarketingLayout({
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify(localBusinessJsonLd),
+          __html: JSON.stringify(organizationJsonLd),
         }}
       />
       <div className="flex min-h-screen flex-col">

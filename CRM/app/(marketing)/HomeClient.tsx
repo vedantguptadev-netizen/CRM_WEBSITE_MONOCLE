@@ -78,7 +78,7 @@ export default function Home() {
         img: "https://randomuser.me/api/portraits/men/32.jpg",
       },
       {
-        text: "Thanks to Pathway Immigration, my family is together in Canada. The team was supportive every step of the way.",
+        text: "Thanks to Monocle Immigration, my family is together in Canada. The team was supportive every step of the way.",
         name: "Fatima A.",
         role: "Family Sponsorship",
         img: "https://randomuser.me/api/portraits/women/68.jpg",

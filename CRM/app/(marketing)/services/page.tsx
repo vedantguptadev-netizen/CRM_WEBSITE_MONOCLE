@@ -5,6 +5,9 @@ export const metadata: Metadata = {
   title: "Canadian Immigration Services — Study, Work & PR Permits",
   description:
     "Comprehensive immigration services including Express Entry, study permits, work permits, family sponsorship, business immigration, and citizenship applications. Licensed RCIC consultants in Calgary and Brandon.",
+  alternates: {
+    canonical: "https://monocleimmigration.com/services",
+  },
   openGraph: {
     title: "Our Immigration Services — Monocle Immigration",
     description:

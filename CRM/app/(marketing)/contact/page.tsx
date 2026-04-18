@@ -5,6 +5,9 @@ export const metadata: Metadata = {
   title: "Contact Us — Book a Free Immigration Consultation",
   description:
     "Get in touch with Monocle Immigration. Book a free consultation via Calendly, call (403) 991-3189, or visit our offices in Calgary, AB or Brandon, MB.",
+  alternates: {
+    canonical: "https://monocleimmigration.com/contact",
+  },
   openGraph: {
     title: "Contact Monocle Immigration — Calgary & Brandon Offices",
     description:
