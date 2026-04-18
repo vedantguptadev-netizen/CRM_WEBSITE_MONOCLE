@@ -11,6 +11,7 @@ const mockEnquiries: Enquiry[] = [
   {
     id: "1",
     clientName: "John Doe",
+    dateOfBirth: "1995-01-25T00:00:00Z",
     email: "john@example.com",
     phone: "+1234567890",
     enquiryType: "visa",
@@ -24,6 +25,7 @@ const mockEnquiries: Enquiry[] = [
   {
     id: "2",
     clientName: "Jane Smith",
+    dateOfBirth: null,
     email: null,
     phone: null,
     enquiryType: "consultation",
@@ -37,6 +39,7 @@ const mockEnquiries: Enquiry[] = [
   {
     id: "3",
     clientName: "Bob Johnson",
+    dateOfBirth: "1988-07-14T00:00:00Z",
     email: "bob@example.com",
     phone: "+9876543210",
     enquiryType: "documentation",
@@ -76,6 +79,7 @@ describe("EnquiryTable Component", () => {
     expect(screen.getByText("Client Name")).toBeInTheDocument();
     expect(screen.getByText("Email")).toBeInTheDocument();
     expect(screen.getByText("Phone")).toBeInTheDocument();
+    expect(screen.getByText("Date of Birth")).toBeInTheDocument();
     expect(screen.getByText("Type")).toBeInTheDocument();
     expect(screen.getByText("Application")).toBeInTheDocument();
     expect(screen.getByText("Follow-Up")).toBeInTheDocument();
@@ -171,8 +175,10 @@ describe("EnquiryTable Component", () => {
     renderTable();
     const row = screen.getByText("Jane Smith").closest("tr")!;
     const cells = within(row).getAllByRole("cell");
-    // Follow-Up is the 6th column (index 5)
-    expect(cells[5].textContent).toBe("\u2014");
+    // DOB is the 4th column (index 3)
+    expect(cells[3].textContent).toBe("\u2014");
+    // Follow-Up is the 7th column (index 6)
+    expect(cells[6].textContent).toBe("\u2014");
   });
 
   // ── Empty state ───────────────────────────────────────────

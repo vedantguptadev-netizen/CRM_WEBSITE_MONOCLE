@@ -12,6 +12,7 @@ interface AddEnquiryModalProps {
 
 interface FormData {
   clientName: string;
+  dateOfBirth: string;
   email: string;
   phone: string;
   enquiryType: string;
@@ -21,12 +22,15 @@ interface FormData {
 
 const emptyForm: FormData = {
   clientName: "",
+  dateOfBirth: "",
   email: "",
   phone: "",
   enquiryType: "",
   notes: "",
   followUpDate: "",
 };
+
+const getTodayDate = () => new Date().toISOString().slice(0, 10);
 
 export default function AddEnquiryModal({
   open,
@@ -47,6 +51,12 @@ export default function AddEnquiryModal({
       newErrors.enquiryType = "Enquiry type is required";
     if (formData.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email))
       newErrors.email = "Invalid email address";
+    if (
+      formData.dateOfBirth &&
+      new Date(formData.dateOfBirth) > new Date(getTodayDate())
+    ) {
+      newErrors.dateOfBirth = "Date of Birth cannot be in the future";
+    }
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -75,6 +85,7 @@ export default function AddEnquiryModal({
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           clientName: formData.clientName,
+          dateOfBirth: formData.dateOfBirth || undefined,
           email: formData.email || undefined,
           phone: formData.phone || undefined,
           enquiryType: formData.enquiryType,
@@ -223,6 +234,38 @@ export default function AddEnquiryModal({
                     className="w-full rounded-lg border border-gray-300 px-3.5 py-2.5 text-sm outline-none transition-colors focus:ring-2 focus:ring-red-500/20 focus:border-red-500"
                   />
                 </div>
+              </div>
+
+              {/* Date of Birth */}
+              <div>
+                <label
+                  htmlFor="dateOfBirth"
+                  className="block text-sm font-medium text-gray-700 mb-1.5"
+                >
+                  Date of Birth
+                </label>
+                <input
+                  id="dateOfBirth"
+                  name="dateOfBirth"
+                  type="date"
+                  max={getTodayDate()}
+                  value={formData.dateOfBirth}
+                  onChange={handleChange}
+                  className={`w-full rounded-lg border px-3.5 py-2.5 text-sm outline-none transition-colors focus:ring-2 focus:ring-red-500/20 focus:border-red-500 ${
+                    errors.dateOfBirth
+                      ? "border-red-300 bg-red-50"
+                      : "border-gray-300"
+                  }`}
+                />
+                {errors.dateOfBirth ? (
+                  <p className="mt-1 text-xs text-red-600">
+                    {errors.dateOfBirth}
+                  </p>
+                ) : (
+                  <p className="mt-1 text-xs text-gray-400">
+                    Optional. Helps distinguish clients with the same name.
+                  </p>
+                )}
               </div>
 
               {/* Enquiry Type */}

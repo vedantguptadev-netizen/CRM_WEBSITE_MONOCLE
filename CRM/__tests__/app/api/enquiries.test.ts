@@ -158,6 +158,24 @@ describe("POST /api/enquiries", () => {
       const json = await response.json();
       expect(json.success).toBe(false);
     });
+
+    it("should return 400 if dateOfBirth is in the future", async () => {
+      const request = new NextRequest("http://localhost:3000/api/enquiries", {
+        method: "POST",
+        body: JSON.stringify({
+          clientName: "John Doe",
+          enquiryType: "visa",
+          dateOfBirth: "2999-01-01",
+        }),
+      });
+
+      const response = await POST(request);
+      expect(response.status).toBe(400);
+
+      const json = await response.json();
+      expect(json.success).toBe(false);
+      expect(json.message).toBe("Date of Birth cannot be in the future");
+    });
   });
 
   describe("Success Cases", () => {
@@ -165,6 +183,7 @@ describe("POST /api/enquiries", () => {
       const mockEnquiry = {
         id: "enquiry-1",
         clientName: "John Doe",
+        dateOfBirth: new Date("1995-01-25T12:00:00"),
         email: "john@example.com",
         phone: "+1234567890",
         enquiryType: "visa",
@@ -181,6 +200,7 @@ describe("POST /api/enquiries", () => {
         method: "POST",
         body: JSON.stringify({
           clientName: "John Doe",
+          dateOfBirth: "1995-01-25",
           email: "john@example.com",
           phone: "+1234567890",
           enquiryType: "visa",
@@ -198,6 +218,13 @@ describe("POST /api/enquiries", () => {
         clientName: "John Doe",
         enquiryType: "visa",
       });
+      expect(mockPrisma.enquiry.create).toHaveBeenCalledWith(
+        expect.objectContaining({
+          data: expect.objectContaining({
+            dateOfBirth: new Date("1995-01-25T12:00:00"),
+          }),
+        }),
+      );
     });
 
     it("should create enquiry with only required fields", async () => {
@@ -328,6 +355,7 @@ describe("POST /api/enquiries", () => {
       const mockEnquiry = {
         id: "enquiry-1",
         clientName: "John Doe",
+        dateOfBirth: new Date("1990-05-10T12:00:00"),
         email: "john@example.com",
         phone: "+1234567890",
         enquiryType: "visa",
@@ -344,6 +372,7 @@ describe("POST /api/enquiries", () => {
         method: "POST",
         body: JSON.stringify({
           clientName: "John Doe",
+          dateOfBirth: "1990-05-10",
           email: "john@example.com",
           phone: "+1234567890",
           enquiryType: "visa",

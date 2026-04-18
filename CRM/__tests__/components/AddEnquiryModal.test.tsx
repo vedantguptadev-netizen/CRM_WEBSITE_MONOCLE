@@ -20,6 +20,7 @@ describe("AddEnquiryModal Component", () => {
         data: {
           id: "enquiry-1",
           clientName: "Test Client",
+          dateOfBirth: "1995-01-25T12:00:00.000Z",
           email: "test@example.com",
           phone: "+1234567890",
           enquiryType: "visa",
@@ -84,6 +85,7 @@ describe("AddEnquiryModal Component", () => {
       expect(screen.getByLabelText(/Client Name/i)).toBeInTheDocument();
       expect(screen.getByLabelText(/Email/i)).toBeInTheDocument();
       expect(screen.getByLabelText(/Phone/i)).toBeInTheDocument();
+      expect(screen.getByLabelText(/Date of Birth/i)).toBeInTheDocument();
       expect(screen.getByLabelText(/Enquiry Type/i)).toBeInTheDocument();
       expect(screen.getByLabelText(/Notes/i)).toBeInTheDocument();
     });
@@ -153,6 +155,21 @@ describe("AddEnquiryModal Component", () => {
       await user.type(phoneInput, "+1 (555) 123-4567");
 
       expect(phoneInput).toHaveValue("+1 (555) 123-4567");
+    });
+
+    it("should update date of birth input", async () => {
+      render(
+        <AddEnquiryModal
+          open={true}
+          onClose={mockOnClose}
+          companyId={testCompanyId}
+        />,
+      );
+
+      const dobInput = screen.getByLabelText(/Date of Birth/i);
+      fireEvent.change(dobInput, { target: { value: "1995-01-25" } });
+
+      expect(dobInput).toHaveValue("1995-01-25");
     });
 
     it("should update enquiry type select", async () => {
@@ -228,6 +245,30 @@ describe("AddEnquiryModal Component", () => {
       await user.click(saveButton);
 
       expect(screen.getByText("Enquiry type is required")).toBeInTheDocument();
+    });
+
+    it("should show error for future date of birth", async () => {
+      const user = userEvent.setup();
+      render(
+        <AddEnquiryModal
+          open={true}
+          onClose={mockOnClose}
+          companyId={testCompanyId}
+        />,
+      );
+
+      await user.type(screen.getByPlaceholderText("Enter client name"), "John Doe");
+      await user.selectOptions(screen.getByLabelText(/Enquiry Type/i), "visa");
+      fireEvent.change(screen.getByLabelText(/Date of Birth/i), {
+        target: { value: "2999-01-01" },
+      });
+
+      await user.click(screen.getByRole("button", { name: /Create Enquiry/i }));
+
+      expect(
+        screen.getByText("Date of Birth cannot be in the future"),
+      ).toBeInTheDocument();
+      expect(global.fetch).not.toHaveBeenCalled();
     });
 
     it("should allow save with required fields filled", async () => {
@@ -455,6 +496,7 @@ describe("AddEnquiryModal Component", () => {
       );
 
       expect(screen.getByLabelText(/Client Name/i)).toBeInTheDocument();
+      expect(screen.getByLabelText(/Date of Birth/i)).toBeInTheDocument();
       expect(screen.getByLabelText(/Email/i)).toBeInTheDocument();
       expect(screen.getByLabelText(/Phone/i)).toBeInTheDocument();
       expect(screen.getByLabelText(/Enquiry Type/i)).toBeInTheDocument();

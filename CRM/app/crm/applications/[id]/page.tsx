@@ -33,6 +33,7 @@ export default async function ApplicationDetailPage({
           enquiryType: true,
           notes: true,
           followUpDate: true,
+          dateOfBirth: true,
         },
       },
     },
@@ -81,6 +82,9 @@ export default async function ApplicationDetailPage({
           ...application.enquiry,
           followUpDate: application.enquiry.followUpDate
             ? application.enquiry.followUpDate.toISOString()
+            : null,
+          dateOfBirth: application.enquiry.dateOfBirth
+            ? application.enquiry.dateOfBirth.toISOString()
             : null,
         }
       : null,

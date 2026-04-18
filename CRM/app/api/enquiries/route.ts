@@ -6,8 +6,26 @@ import { cookies } from "next/headers";
 
 // ─── Zod Schemas ────────────────────────────────────────────────
 
+const today = new Date();
+today.setHours(0, 0, 0, 0);
+
+const optionalPastDate = z
+  .string()
+  .optional()
+  .or(z.literal(""))
+  .refine((value) => value === "" || (typeof value === "string" && !Number.isNaN(Date.parse(value))), {
+    message: "Invalid date",
+  })
+  .refine((value) => {
+    if (!value) return true;
+    return new Date(value) <= today;
+  }, {
+    message: "Date of Birth cannot be in the future",
+  });
+
 const CreateEnquirySchema = z.object({
   clientName: z.string().min(1, "Client name is required").max(200),
+  dateOfBirth: optionalPastDate,
   email: z
     .string()
     .email("Invalid email")
@@ -88,12 +106,21 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const { clientName, email, phone, enquiryType, notes, followUpDate } =
+    const {
+      clientName,
+      dateOfBirth,
+      email,
+      phone,
+      enquiryType,
+      notes,
+      followUpDate,
+    } =
       parsed.data;
 
     const enquiry = await prisma.enquiry.create({
       data: {
         clientName: clientName.trim(),
+        dateOfBirth: dateOfBirth ? new Date(dateOfBirth + "T12:00:00") : null,
         email: email?.trim() || null,
         phone: phone?.trim() || null,
         enquiryType: enquiryType.trim(),

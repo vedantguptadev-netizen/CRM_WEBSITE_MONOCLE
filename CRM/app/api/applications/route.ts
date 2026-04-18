@@ -128,6 +128,7 @@ export async function GET() {
             id: true,
             clientName: true,
             enquiryType: true,
+            dateOfBirth: true,
           },
         },
       },

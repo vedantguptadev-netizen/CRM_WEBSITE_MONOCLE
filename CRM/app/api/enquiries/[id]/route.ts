@@ -6,8 +6,33 @@ import { cookies } from "next/headers";
 
 // ─── Zod Schema ─────────────────────────────────────────────────
 
+const today = new Date();
+today.setHours(0, 0, 0, 0);
+
+const optionalPastDate = z
+  .string()
+  .optional()
+  .or(z.literal(""))
+  .nullable()
+  .refine(
+    (value) =>
+      value === null ||
+      value === "" ||
+      (typeof value === "string" && !Number.isNaN(Date.parse(value))),
+    {
+    message: "Invalid date",
+    },
+  )
+  .refine((value) => {
+    if (!value) return true;
+    return new Date(value) <= today;
+  }, {
+    message: "Date of Birth cannot be in the future",
+  });
+
 const UpdateEnquirySchema = z.object({
   clientName: z.string().min(1, "Client name is required").max(200).optional(),
+  dateOfBirth: optionalPastDate,
   email: z
     .string()
     .email("Invalid email")
@@ -143,6 +168,11 @@ export async function PUT(
       data: {
         ...(data.clientName !== undefined && {
           clientName: data.clientName.trim(),
+        }),
+        ...(data.dateOfBirth !== undefined && {
+          dateOfBirth: data.dateOfBirth
+            ? new Date(data.dateOfBirth + "T12:00:00")
+            : null,
         }),
         ...(data.email !== undefined && {
           email: data.email?.trim() || null,

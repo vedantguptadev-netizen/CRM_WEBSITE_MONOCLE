@@ -15,6 +15,22 @@ import ViewEnquirySlideOver from "./ViewEnquirySlideOver";
 import EditEnquiryModal from "./EditEnquiryModal";
 import AddEnquiryModal from "./AddEnquiryModal";
 
+const formatSearchableDate = (date: Date | string | null | undefined) => {
+  if (!date) return "";
+  const parsed = new Date(date);
+  if (Number.isNaN(parsed.getTime())) return "";
+
+  return [
+    parsed.toISOString().slice(0, 10),
+    parsed.toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+      timeZone: "America/Denver",
+    }).toLowerCase(),
+  ].join(" ");
+};
+
 // ─── Filters ────────────────────────────────────────────────────
 
 type TypeFilter = "" | "visa" | "consultation" | "documentation" | "general";
@@ -72,6 +88,7 @@ export default function EnquiryPageClient({ enquiries, companyId }: Props) {
       result = result.filter(
         (e) =>
           e.clientName.toLowerCase().includes(q) ||
+          formatSearchableDate(e.dateOfBirth).includes(q) ||
           (e.email && e.email.toLowerCase().includes(q)) ||
           (e.phone && e.phone.toLowerCase().includes(q)),
       );
@@ -226,7 +243,7 @@ export default function EnquiryPageClient({ enquiries, companyId }: Props) {
                   setSearchQuery(e.target.value);
                   setCurrentPage(1);
                 }}
-                placeholder="Search by name, email, or phone…"
+                placeholder="Search by name, DOB, email, or phone…"
                 className="w-full rounded-lg border border-gray-300 py-2.5 pl-9 pr-9 text-sm outline-none transition-colors focus:border-red-500 focus:ring-2 focus:ring-red-500/20"
               />
               {searchQuery && (

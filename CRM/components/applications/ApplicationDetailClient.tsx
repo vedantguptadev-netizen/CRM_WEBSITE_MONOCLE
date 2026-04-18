@@ -27,6 +27,7 @@ interface DetailApplication extends Application {
     enquiryType: string;
     notes?: string | null;
     followUpDate?: string | Date | null;
+    dateOfBirth?: string | Date | null;
   } | null;
 }
 
@@ -298,6 +299,14 @@ export default function ApplicationDetailClient({
                       </dt>
                       <dd className="mt-0.5 text-sm text-gray-900">
                         {application.enquiry.phone || "—"}
+                      </dd>
+                    </div>
+                    <div>
+                      <dt className="text-xs font-medium text-gray-500">
+                        Date of Birth
+                      </dt>
+                      <dd className="mt-0.5 text-sm text-gray-900">
+                        {formatDate(application.enquiry.dateOfBirth)}
                       </dd>
                     </div>
                     <div>

@@ -40,6 +40,7 @@ export async function GET(
             enquiryType: true,
             notes: true,
             followUpDate: true,
+            dateOfBirth: true,
           },
         },
       },

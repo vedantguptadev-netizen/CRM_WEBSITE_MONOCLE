@@ -26,7 +26,7 @@ export interface Application {
   driveFolderLink?: string | null;
   companyId: string;
   enquiryId?: string | null;
-  enquiry?: { id: string; clientName: string; enquiryType: string } | null;
+  enquiry?: { id: string; clientName: string; enquiryType: string; dateOfBirth?: Date | string | null } | null;
   createdAt: Date | string;
   updatedAt: Date | string;
 }

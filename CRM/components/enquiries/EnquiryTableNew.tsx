@@ -16,6 +16,7 @@ import {
 export interface Enquiry {
   id: string;
   clientName: string;
+  dateOfBirth?: Date | string | null;
   email?: string | null;
   phone?: string | null;
   enquiryType: string;
@@ -203,7 +204,7 @@ function TableSkeleton() {
       <table className="w-full">
         <thead className="bg-gray-50">
           <tr>
-            {Array.from({ length: 7 }).map((_, i) => (
+            {Array.from({ length: 8 }).map((_, i) => (
               <th key={i} className="px-4 py-3">
                 <div className="h-3 w-20 animate-pulse rounded bg-gray-200" />
               </th>
@@ -213,7 +214,7 @@ function TableSkeleton() {
         <tbody>
           {Array.from({ length: 5 }).map((_, rowIdx) => (
             <tr key={rowIdx} className="border-t border-gray-100">
-              {Array.from({ length: 7 }).map((_, colIdx) => (
+              {Array.from({ length: 8 }).map((_, colIdx) => (
                 <td key={colIdx} className="px-4 py-3.5">
                   <div
                     className="h-4 animate-pulse rounded bg-gray-100"
@@ -292,6 +293,9 @@ export default function EnquiryTable({
             <th className="whitespace-nowrap px-4 py-3 text-xs font-semibold uppercase tracking-wider text-gray-500">
               Phone
             </th>
+            <th className="hidden whitespace-nowrap px-4 py-3 text-xs font-semibold uppercase tracking-wider text-gray-500 lg:table-cell">
+              Date of Birth
+            </th>
             <th className="whitespace-nowrap px-4 py-3 text-xs font-semibold uppercase tracking-wider text-gray-500">
               Type
             </th>
@@ -331,6 +335,11 @@ export default function EnquiryTable({
               {/* Phone */}
               <td className="whitespace-nowrap px-4 py-3.5 text-sm text-gray-600">
                 {enquiry.phone || "—"}
+              </td>
+
+              {/* Date of Birth */}
+              <td className="hidden whitespace-nowrap px-4 py-3.5 text-sm text-gray-600 lg:table-cell">
+                {formatDate(enquiry.dateOfBirth)}
               </td>
 
               {/* Type Badge */}

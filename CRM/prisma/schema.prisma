@@ -34,6 +34,7 @@ model Company {
 model Enquiry {
   id           String       @id @default(cuid())
   clientName   String
+  dateOfBirth  DateTime?
   email        String?
   phone        String?
   enquiryType  String
