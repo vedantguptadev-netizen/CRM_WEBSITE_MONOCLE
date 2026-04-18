@@ -1,7 +1,14 @@
 import jwt from "jsonwebtoken";
 
-const JWT_SECRET =
-  process.env.JWT_SECRET || "your-secret-key-change-in-production";
+function getJwtSecret(): string {
+  const secret = process.env.JWT_SECRET;
+  if (!secret) {
+    throw new Error(
+      "JWT_SECRET environment variable is required. Set it before starting the app.",
+    );
+  }
+  return secret;
+}
 
 export interface JWTPayload {
   userId: string;
@@ -13,8 +20,8 @@ export interface JWTPayload {
  * Sign a JWT token
  */
 export function signToken(payload: JWTPayload): string {
-  return jwt.sign(payload, JWT_SECRET, {
-    expiresIn: "7d", // Token expires in 7 days
+  return jwt.sign(payload, getJwtSecret(), {
+    expiresIn: "7d",
     algorithm: "HS256",
   });
 }
@@ -24,7 +31,7 @@ export function signToken(payload: JWTPayload): string {
  */
 export function verifyToken(token: string): JWTPayload | null {
   try {
-    const decoded = jwt.verify(token, JWT_SECRET) as JWTPayload;
+    const decoded = jwt.verify(token, getJwtSecret()) as JWTPayload;
     return decoded;
   } catch (error) {
     console.error("Token verification failed:", error);

@@ -128,10 +128,7 @@ See [TEST_PLAN.md](TEST_PLAN.md) for detailed test coverage.
 
 ### Environment Variables
 
-```
-DATABASE_URL=postgresql://user:password@host/db
-JWT_SECRET=your-secret-key-min-32-chars
-```
+See the [Security](#-security) section for required environment variables.
 
 ### Database Seeding
 
@@ -158,8 +155,48 @@ Safe to re-run — cleans up previous demo data first.
 - Expiration: 7 days
 - Storage: HTTP-only secure cookie
 - Payload: `{ id, email, companyId, iat }`
+- `JWT_SECRET` is required — the app will crash on startup if it's missing (no insecure fallback)
 
-## 🔍 API Endpoints
+## 🛡️ Security
+
+### HTTP Security Headers (`next.config.js`)
+
+All responses include the following headers:
+
+| Header                      | Value                                     | Purpose                              |
+| --------------------------- | ----------------------------------------- | ------------------------------------ |
+| `X-Content-Type-Options`    | `nosniff`                                 | Prevents MIME-type sniffing          |
+| `X-Frame-Options`           | `DENY`                                    | Blocks clickjacking via iframes      |
+| `Referrer-Policy`           | `strict-origin-when-cross-origin`         | Controls referrer leakage            |
+| `Strict-Transport-Security` | `max-age=63072000; includeSubDomains`     | Enforces HTTPS for 2 years           |
+| `X-DNS-Prefetch-Control`    | `on`                                      | Speeds up DNS resolution             |
+| `Permissions-Policy`        | `camera=(), microphone=(), geolocation=()` | Disables unused browser APIs         |
+
+### Authentication & Authorization
+
+- JWT tokens are signed with `HS256` and stored as **HTTP-only cookies** (not accessible via JavaScript)
+- Middleware on `/crm/*` routes redirects unauthenticated users to login
+- Every API route independently verifies the JWT signature — middleware alone is not the security boundary
+- `companyId` is always extracted from the JWT (never from the frontend), enforcing **multi-tenant data isolation**
+
+### Input Validation
+
+- All API inputs validated with **Zod schemas** (shared from `lib/validation/`)
+- String fields have max-length limits to prevent abuse
+- Date of Birth validation uses a fresh `new Date()` per request (not a stale module-level value)
+
+### Database
+
+- `@@index([companyId])` on Enquiry and Application tables for query performance
+- All queries are company-scoped via JWT-derived `companyId`
+- Prisma ORM prevents SQL injection
+
+### Environment Variables
+
+```
+DATABASE_URL=postgresql://user:password@host/db   # Required
+JWT_SECRET=your-secret-key-min-32-chars            # Required — app crashes if missing
+```
 
 ### Authentication
 

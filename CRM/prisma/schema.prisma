@@ -45,6 +45,8 @@ model Enquiry {
   application  Application? @relation("EnquiryApplication")
   createdAt    DateTime     @default(now())
   updatedAt    DateTime     @updatedAt
+
+  @@index([companyId])
 }
 
 model Application {
@@ -65,4 +67,6 @@ model Application {
   enquiry            Enquiry?  @relation("EnquiryApplication", fields: [enquiryId], references: [id], onDelete: SetNull)
   createdAt          DateTime  @default(now())
   updatedAt          DateTime  @updatedAt
+
+  @@index([companyId])
 }

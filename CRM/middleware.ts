@@ -20,6 +20,7 @@ export function middleware(request: NextRequest) {
   }
 
   // Token exists, allow the request
+  // (JWT signature is verified in each API route handler)
   return NextResponse.next();
 }
 
