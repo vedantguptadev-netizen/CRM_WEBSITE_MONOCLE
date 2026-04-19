@@ -282,7 +282,8 @@ export default function ApplicationDetailClient({
                         {application.enquiry.clientName}
                       </p>
                       <p className="text-xs text-emerald-600">
-                        {enquiryTypeLabel(application.enquiry.enquiryType)} enquiry
+                        {enquiryTypeLabel(application.enquiry.enquiryType)}{" "}
+                        enquiry
                       </p>
                     </div>
                   </div>

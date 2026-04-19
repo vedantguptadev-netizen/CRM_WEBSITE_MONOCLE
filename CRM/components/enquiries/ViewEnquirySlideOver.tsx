@@ -146,7 +146,9 @@ export default function ViewEnquirySlideOver({
                   </div>
                   {enquiry.customEnquiryType && (
                     <div>
-                      <dt className="text-xs font-medium text-gray-500">Specific Details</dt>
+                      <dt className="text-xs font-medium text-gray-500">
+                        Specific Details
+                      </dt>
                       <dd className="mt-0.5 text-sm text-gray-900">
                         {enquiry.customEnquiryType}
                       </dd>

@@ -74,7 +74,12 @@ export const UpdateEnquirySchema = z.object({
     .min(1, "Enquiry type is required")
     .max(100)
     .optional(),
-  customEnquiryType: z.string().max(200).optional().or(z.literal("")).nullable(),
+  customEnquiryType: z
+    .string()
+    .max(200)
+    .optional()
+    .or(z.literal(""))
+    .nullable(),
   notes: z.string().max(2000).optional().or(z.literal("")),
   followUpDate: z.string().optional().or(z.literal("")).nullable(),
 });

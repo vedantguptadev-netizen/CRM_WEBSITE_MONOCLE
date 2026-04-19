@@ -49,33 +49,35 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-50 via-white to-red-50/30 px-4">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-50 via-white to-red-50/20 px-4 py-12">
       <div className="w-full max-w-md">
         {/* Card */}
-        <div className="bg-white rounded-2xl shadow-xl shadow-gray-200/60 border border-gray-100 p-8 sm:p-10">
+        <div className="bg-white rounded-2xl shadow-lg shadow-gray-200/50 p-8 sm:p-10">
           {/* Logo & Branding */}
-          <div className="flex flex-col items-center mb-8">
-            <Image
-              src="/images/logo.png"
-              alt={appConfig.companyName}
-              width={140}
-              height={40}
-              priority
-              className="h-auto w-[140px] object-contain mb-4"
-            />
+          <div className="flex flex-col items-center mb-10">
+            <div className="mb-5">
+              <Image
+                src="/images/logo.png"
+                alt={appConfig.companyName}
+                width={150}
+                height={44}
+                priority
+                className="h-auto w-[150px] object-contain border-0"
+              />
+            </div>
             <h1 className="text-2xl font-bold text-gray-900 tracking-tight">
               {appConfig.appName}
             </h1>
-            <p className="text-sm text-gray-500 mt-1">
+            <p className="text-sm text-gray-500 mt-1.5">
               Sign in to your account
             </p>
           </div>
 
           {/* Error Message */}
           {error && (
-            <div className="mb-6 flex items-start gap-3 p-3.5 bg-red-50 border border-red-200 rounded-lg">
-              <AlertCircle className="w-4 h-4 text-red-600 mt-0.5 shrink-0" />
-              <p className="text-red-700 text-sm leading-tight">{error}</p>
+            <div className="mb-6 flex items-start gap-3 p-3.5 bg-red-50/80 rounded-xl">
+              <AlertCircle className="w-4 h-4 text-red-500 mt-0.5 shrink-0" />
+              <p className="text-red-600 text-sm leading-snug">{error}</p>
             </div>
           )}
 
@@ -100,7 +102,7 @@ export default function LoginPage() {
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="you@company.com"
                   required
-                  className="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-red-500/20 focus:border-red-500 transition-all placeholder:text-gray-400"
+                  className="w-full pl-10 pr-4 py-2.5 bg-gray-50/60 border border-gray-200 rounded-xl text-sm outline-0 focus:outline-none focus:bg-white focus:ring-2 focus:ring-red-500/20 focus:border-red-400 transition-all placeholder:text-gray-400"
                 />
               </div>
             </div>
@@ -124,7 +126,7 @@ export default function LoginPage() {
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="••••••••"
                   required
-                  className="w-full pl-10 pr-10 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-red-500/20 focus:border-red-500 transition-all placeholder:text-gray-400"
+                  className="w-full pl-10 pr-10 py-2.5 bg-gray-50/60 border border-gray-200 rounded-xl text-sm outline-0 focus:outline-none focus:bg-white focus:ring-2 focus:ring-red-500/20 focus:border-red-400 transition-all placeholder:text-gray-400"
                 />
                 <button
                   type="button"
@@ -145,7 +147,7 @@ export default function LoginPage() {
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full flex items-center justify-center gap-2 bg-red-600 hover:bg-red-700 active:bg-red-800 disabled:bg-gray-300 disabled:cursor-not-allowed text-white font-semibold py-2.5 rounded-lg shadow-sm hover:shadow transition-all mt-2 cursor-pointer"
+              className="w-full flex items-center justify-center gap-2 bg-red-600 hover:bg-red-700 active:bg-red-800 disabled:bg-gray-300 disabled:cursor-not-allowed text-white font-semibold py-2.5 rounded-xl shadow-sm shadow-red-600/20 hover:shadow-md hover:shadow-red-600/25 outline-0 focus:outline-none focus:ring-2 focus:ring-red-500/30 transition-all mt-3 cursor-pointer"
             >
               {isLoading ? (
                 <>

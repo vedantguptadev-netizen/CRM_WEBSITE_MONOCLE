@@ -20,7 +20,6 @@ import {
   ChevronLeft,
   ChevronRight,
 } from "lucide-react";
-import { ImageWithFallback } from "@/components/figma/ImageWithFallback";
 
 export default function Home() {
   // Testimonial slider component
@@ -342,34 +341,18 @@ export default function Home() {
                 ))}
               </div>
             </div>
-            <div className="relative sm:pb-8">
-              <div className="aspect-[4/3] overflow-hidden rounded-2xl shadow-2xl ring-1 ring-black/5">
-                <ImageWithFallback
-                  src="https://images.unsplash.com/photo-1758691736975-9f7f643d178e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwcm9mZXNzaW9uYWwlMjBkaXZlcnNlJTIwdGVhbSUyMG9mZmljZXxlbnwxfHx8fDE3NzEwOTc5NDZ8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
-                  alt="Professional immigration consultants"
-                  className="h-full w-full object-cover"
+            <div className="relative">
+              <div className="relative h-full min-h-[300px] overflow-hidden rounded-2xl shadow-2xl ring-1 ring-black/5">
+                <Image
+                  src="/images/calgary.png"
+                  alt="Calgary skyline with Calgary Tower"
+                  width={1536}
+                  height={1024}
+                  priority
+                  className="absolute inset-0 h-full w-full object-cover object-center"
                 />
-                {/* Overlay for better contrast */}
-                <div className="absolute inset-0 bg-black/20 pointer-events-none rounded-2xl" />
-              </div>
-              {/* Floating Credential Card */}
-              <div className="relative -mt-4 mx-auto w-fit rounded-xl bg-white p-5 shadow-xl ring-1 ring-gray-100 sm:absolute sm:-bottom-6 sm:-left-6 sm:mt-0 sm:mx-0 sm:p-6">
-                <div className="flex items-center gap-3">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-full bg-red-50 ring-2 ring-red-100">
-                    <Shield className="h-6 w-6 text-red-600" />
-                  </div>
-                  <div>
-                    <div className="text-base font-extrabold text-gray-900">
-                      Licensed RCIC
-                    </div>
-                    <div className="text-sm font-medium text-gray-600">
-                      Regulated by CICC
-                    </div>
-                    <div className="mt-0.5 text-xs text-gray-400">
-                      College of Immigration & Citizenship
-                    </div>
-                  </div>
-                </div>
+                {/* Subtle warm overlay to blend with site theme */}
+                <div className="pointer-events-none absolute inset-0 rounded-2xl bg-gradient-to-t from-black/25 via-transparent to-transparent" />
               </div>
             </div>
           </div>
