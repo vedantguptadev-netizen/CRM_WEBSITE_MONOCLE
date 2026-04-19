@@ -1,7 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import React, { useState, useEffect } from "react";
+import Image from "next/image";
+import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -15,124 +16,147 @@ import {
   Shield,
   Users,
   Clock,
+  MapPin,
+  ChevronLeft,
+  ChevronRight,
 } from "lucide-react";
 import { ImageWithFallback } from "@/components/figma/ImageWithFallback";
 
 export default function Home() {
-  // Animated Counter component
-  function AnimatedCounter({
-    value,
-    suffix = "",
-    className = "",
-  }: {
-    value: number;
-    suffix?: string;
-    className?: string;
-  }) {
-    const [count, setCount] = useState<number>(0);
-    useEffect(() => {
-      let start = 0;
-      const end = value as number;
-      if (start === end) return;
-      let duration = 1200;
-      let increment = end / (duration / 16);
-      let raf: number;
-      function animate() {
-        start += increment;
-        if (start < end) {
-          setCount(Math.floor(start));
-          raf = requestAnimationFrame(animate);
-        } else {
-          setCount(end);
-        }
-      }
-      animate();
-      return () => cancelAnimationFrame(raf);
-    }, [value]);
-    return (
-      <span className={className}>
-        {count}
-        {suffix}
-      </span>
-    );
-  }
-
   // Testimonial slider component
   function TestimonialSlider() {
-    const testimonials: Array<{
-      text: string;
-      name: string;
-      role: string;
-      img: string;
-    }> = [
+    const testimonials: Array<{ name: string; text: string }> = [
       {
-        text: "Monocle Immigration made the process so easy and stress-free. I am now living my dream in Canada!",
-        name: "Priya S.",
-        role: "Permanent Resident",
-        img: "https://randomuser.me/api/portraits/women/44.jpg",
+        name: "Mehakpreet Singh",
+        text: "I always suggest everyone to choose Monocle Immigration for their best career and future. Nobody can guide us and take care of our profile like Rupinder ma'am during unmanageable circumstances. Rupinder filled us with hope and encouraged us to continue so we will be able to reach our desired goals. I am able to get the extension only due to her guidance.",
       },
       {
-        text: "The consultants were knowledgeable and always available. Highly recommend for anyone seeking Canadian immigration!",
-        name: "Carlos M.",
-        role: "Work Permit Holder",
-        img: "https://randomuser.me/api/portraits/men/32.jpg",
+        name: "Shilpa Kattekola",
+        text: "With my critical case, Rupinder was so calm and detail-oriented. She gave me the right advice at every turning point of my PR journey. 497 days was nothing but painful — if not for Rupinder I would have quit Canada. I have referred her to at least 5 people already, all of them very happy to have found a genuine consultant.",
       },
       {
-        text: "Thanks to Monocle Immigration, my family is together in Canada. The team was supportive every step of the way.",
-        name: "Fatima A.",
-        role: "Family Sponsorship",
-        img: "https://randomuser.me/api/portraits/women/68.jpg",
+        name: "Ximena G.",
+        text: "Rupinder was great! Our company hired a foreign worker using the LMIA process and everything went according to plan, exactly how she explained it would be. Very communicative and patient in answering all our questions. Any delays were on the government side — Rupinder was on top of everything. Would recommend her to anyone.",
+      },
+      {
+        name: "Nikunj Rabari",
+        text: "I had an amazing experience with Monocle Immigration for my open work permit application. They processed my application in just one day, which was truly impressive! A special thanks to Rupinder for the excellent support and guidance throughout. The team was professional, efficient, and very helpful. Highly recommend.",
+      },
+      {
+        name: "Asaba Richard",
+        text: "She helped me with my work permit and extension, which I thought could never happen while I was still in the country on a visitor's visa. She made the whole process seamless and efficient. Rupinder and her team were extremely responsive throughout. She truly cares about her clients and goes above and beyond to ensure their success.",
+      },
+      {
+        name: "Rupal Patel",
+        text: "Extremely good service. I had gotten a refusal for my son's study permit and was worried. Ms. Rupinder helped produce a proper application and I just got it in 6 weeks — unbelievable! Because of the study permit my son could start university on time. I truly suggest anyone to be assisted by Monocle Immigration Services.",
       },
     ];
-    const [active, setActive] = useState<number>(0);
-    useEffect(() => {
-      const timer = setInterval(() => {
-        setActive((prev: number) => (prev + 1) % testimonials.length);
-      }, 5000);
-      return () => clearInterval(timer);
-    }, [testimonials.length]);
-    return (
-      <div className="relative mx-auto max-w-2xl">
-        {testimonials.map((t, idx) => (
-          <div
-            key={idx}
-            className={`rounded-xl bg-white p-5 shadow-lg transition-opacity duration-700 sm:p-8 ${active === idx ? "opacity-100" : "opacity-0 absolute inset-0 pointer-events-none"}`}
-          >
-            <div className="flex justify-center mb-4">
-              {[...Array(5)].map((_, starIdx) => (
-                <svg
-                  key={starIdx}
-                  className="h-5 w-5 text-yellow-400"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                >
-                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.975a1 1 0 00.95.69h4.18c.969 0 1.371 1.24.588 1.81l-3.388 2.462a1 1 0 00-.364 1.118l1.286 3.975c.3.921-.755 1.688-1.538 1.118l-3.388-2.462a1 1 0 00-1.175 0l-3.388 2.462c-.783.57-1.838-.197-1.538-1.118l1.286-3.975a1 1 0 00-.364-1.118L2.045 9.402c-.783-.57-.38-1.81.588-1.81h4.18a1 1 0 00.95-.69l1.286-3.975z" />
-                </svg>
-              ))}
+
+    const total = testimonials.length;
+    const [index, setIndex] = useState(0);
+    const prev = () => setIndex((i) => (i - 1 + total) % total);
+    const next = () => setIndex((i) => (i + 1) % total);
+    const secondIndex = (index + 1) % total;
+
+    const avatarColors = [
+      "bg-red-100 text-red-700",
+      "bg-blue-100 text-blue-700",
+      "bg-emerald-100 text-emerald-700",
+      "bg-violet-100 text-violet-700",
+      "bg-amber-100 text-amber-700",
+      "bg-teal-100 text-teal-700",
+    ];
+
+    function getInitials(name: string): string {
+      const parts = name.trim().split(" ");
+      if (parts.length >= 2)
+        return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+      return parts[0].slice(0, 2).toUpperCase();
+    }
+
+    function renderCard(t: { name: string; text: string }, colorClass: string) {
+      return (
+        <div className="flex h-full flex-col rounded-2xl bg-white p-6 shadow-md ring-1 ring-gray-100 sm:p-8">
+          <div className="mb-4 flex gap-0.5">
+            {Array.from({ length: 5 }).map((_, i) => (
+              <svg
+                key={i}
+                className="h-4 w-4 text-yellow-400"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+              >
+                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.975a1 1 0 00.95.69h4.18c.969 0 1.371 1.24.588 1.81l-3.388 2.462a1 1 0 00-.364 1.118l1.286 3.975c.3.921-.755 1.688-1.538 1.118l-3.388-2.462a1 1 0 00-1.175 0l-3.388 2.462c-.783.57-1.838-.197-1.538-1.118l1.286-3.975a1 1 0 00-.364-1.118L2.045 9.402c-.783-.57-.38-1.81.588-1.81h4.18a1 1 0 00.95-.69l1.286-3.975z" />
+              </svg>
+            ))}
+          </div>
+          <p className="mb-6 flex-1 text-sm leading-relaxed text-gray-700 line-clamp-5 sm:text-base">
+            &ldquo;{t.text}&rdquo;
+          </p>
+          <div className="flex items-center gap-3">
+            <div
+              className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-sm font-bold ${colorClass}`}
+            >
+              {getInitials(t.name)}
             </div>
-            <p className="mb-6 text-lg text-gray-700">"{t.text}"</p>
-            <div className="flex items-center gap-4">
-              <img
-                src={t.img}
-                alt={t.name}
-                className="h-12 w-12 rounded-full object-cover"
-              />
-              <div>
-                <div className="font-semibold text-gray-900">{t.name}</div>
-                <div className="text-sm text-gray-500">{t.role}</div>
+            <div>
+              <div className="text-sm font-semibold text-gray-900">
+                {t.name}
+              </div>
+              <div className="text-xs text-gray-400">
+                Monocle Immigration Client
               </div>
             </div>
           </div>
-        ))}
-        <div className="mt-6 flex justify-center gap-2">
-          {testimonials.map((_, idx) => (
-            <button
-              key={idx}
-              className={`h-2 w-2 rounded-full ${active === idx ? "bg-red-600" : "bg-gray-300"}`}
-              onClick={() => setActive(idx)}
-              aria-label={`Show testimonial ${idx + 1}`}
-            />
-          ))}
+        </div>
+      );
+    }
+
+    return (
+      <div>
+        <div className="grid gap-6 md:grid-cols-2">
+          {renderCard(
+            testimonials[index],
+            avatarColors[index % avatarColors.length],
+          )}
+          <div className="hidden md:block">
+            {renderCard(
+              testimonials[secondIndex],
+              avatarColors[secondIndex % avatarColors.length],
+            )}
+          </div>
+        </div>
+
+        <div className="mt-8 flex items-center justify-center gap-4">
+          <button
+            onClick={prev}
+            className="flex h-10 w-10 items-center justify-center rounded-full border border-gray-200 bg-white text-gray-600 shadow-sm transition-colors hover:border-red-300 hover:bg-red-50 hover:text-red-600"
+            aria-label="Previous testimonials"
+          >
+            <ChevronLeft className="h-5 w-5" />
+          </button>
+
+          <div className="flex gap-2">
+            {testimonials.map((_, i) => (
+              <button
+                key={i}
+                onClick={() => setIndex(i)}
+                className={`h-2 rounded-full transition-all ${
+                  i === index
+                    ? "w-6 bg-red-600"
+                    : "w-2 bg-gray-300 hover:bg-gray-400"
+                }`}
+                aria-label={`Go to testimonial ${i + 1}`}
+              />
+            ))}
+          </div>
+
+          <button
+            onClick={next}
+            className="flex h-10 w-10 items-center justify-center rounded-full border border-gray-200 bg-white text-gray-600 shadow-sm transition-colors hover:border-red-300 hover:bg-red-50 hover:text-red-600"
+            aria-label="Next testimonials"
+          >
+            <ChevronRight className="h-5 w-5" />
+          </button>
         </div>
       </div>
     );
@@ -201,15 +225,55 @@ export default function Home() {
       icon: Clock,
       title: "Proven Track Record",
       description:
-        "Successfully helped over 1,000 clients achieve their Canadian immigration goals.",
+        "A consistent track record of successful applications across a wide range of immigration pathways.",
     },
   ];
 
-  const stats = [
-    { number: 98, suffix: "%", label: "Success Rate" },
-    { number: 1000, suffix: "+", label: "Clients Served" },
-    { number: 15, suffix: "+", label: "Years Experience" },
-    { number: 50, suffix: "+", label: "Countries" },
+  const team = [
+    {
+      name: "Rupinder Bhatti",
+      role: "Founder & Licensed RCIC",
+      bio: "Licensed immigration consultant helping individuals and families navigate study permits, PR pathways, family sponsorship, and long-term settlement in Canada.",
+      specialties: [
+        "Express Entry",
+        "Family Sponsorship",
+        "Provincial Nominees",
+      ],
+      languages: ["English", "Punjabi", "Hindi"],
+      location: "Calgary, AB",
+      img: "/rupinder.webp",
+    },
+    {
+      name: "Gurpreet Bhatti",
+      role: "Immigration Assistant",
+      bio: "Supports clients through document preparation, application steps, and clear communication to help make every immigration journey smoother and stress-free.",
+      specialties: ["Work Permits", "Client Support", "Documentation"],
+      languages: ["English", "Punjabi", "Hindi"],
+      location: "Calgary, AB",
+      img: "/images/guri.png",
+    },
+    {
+      name: "Majadur Rahman",
+      role: "Administrative Assistant",
+      bio: "Assists clients with case coordination, timelines, and day-to-day support while ensuring each file stays organized and on track.",
+      specialties: [
+        "Case Coordination",
+        "Application Support",
+        "Client Liaison",
+      ],
+      languages: ["Bangla", "Hindi", "Urdu", "English"],
+      location: "Brandon, MB",
+      img: "/images/Rehman.png",
+    },
+    {
+      name: "Varnika Pawar",
+      role: "Admin Assistant",
+      bio: "Provides friendly client support, handles enquiries efficiently, and helps create a smooth and welcoming experience throughout the process.",
+      specialties: ["Client Support", "Enquiries", "Office Assistance"],
+      languages: ["English", "Hindi"],
+      location: "Calgary, AB",
+      img: "/images/varnika.png",
+    },
   ];
 
   return (
@@ -219,22 +283,26 @@ export default function Home() {
         <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-24 lg:px-8 lg:py-32">
           <div className="grid gap-12 lg:grid-cols-2 lg:gap-16">
             <div className="flex flex-col justify-center">
-              <Badge className="mb-6 w-fit bg-red-100 text-red-700 text-sm shadow-sm animate-fade-in sm:mb-8 sm:text-base">
-                RCIC Regulated • Trusted Immigration Partner
+              <Badge className="mb-5 w-fit bg-red-100 text-red-700 text-sm font-medium shadow-sm sm:mb-6">
+                RCIC Regulated • Calgary &amp; Brandon Offices
               </Badge>
-              <h1 className="mb-8 text-3xl font-extrabold tracking-tight text-gray-900 sm:text-5xl lg:text-7xl animate-slide-up">
+              <h1 className="mb-6 text-3xl font-extrabold tracking-tight text-gray-900 sm:text-5xl lg:text-7xl">
                 Your Trusted Path to
                 <span className="block bg-gradient-to-r from-red-600 to-red-700 bg-clip-text text-transparent">
                   Canadian Immigration
                 </span>
               </h1>
-              <p className="mb-10 text-base text-gray-700 sm:text-xl animate-fade-in">
+              <p className="mb-8 max-w-lg text-base text-gray-600 sm:text-xl">
                 Expert guidance from licensed immigration consultants to help
                 you study, work, and live in Canada. Navigate complex
                 immigration processes with confidence and clarity.
               </p>
               <div className="flex flex-col gap-4 sm:flex-row">
-                <Button asChild size="lg" className="w-full sm:w-auto">
+                <Button
+                  asChild
+                  size="lg"
+                  className="w-full sm:w-auto bg-red-600 text-white hover:bg-red-700 shadow-md"
+                >
                   <a
                     href="https://calendly.com/monocle_immigration"
                     target="_blank"
@@ -248,14 +316,34 @@ export default function Home() {
                   asChild
                   size="lg"
                   variant="outline"
-                  className="w-full sm:w-auto animate-fade-in"
+                  className="w-full sm:w-auto border-gray-300 hover:border-gray-400"
                 >
-                  <Link href="/services">Explore Services</Link>
+                  <Link href="/services">
+                    Explore Services
+                    <ArrowRight className="ml-2 h-4 w-4" />
+                  </Link>
                 </Button>
+              </div>
+              {/* Trust signals */}
+              <div className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-2">
+                {[
+                  "Licensed RCIC",
+                  "Calgary & Brandon Offices",
+                  "Study, Work & PR Support",
+                  "Personalized Guidance",
+                ].map((signal) => (
+                  <span
+                    key={signal}
+                    className="flex items-center gap-1.5 text-sm text-gray-500"
+                  >
+                    <CheckCircle className="h-3.5 w-3.5 shrink-0 text-red-500" />
+                    {signal}
+                  </span>
+                ))}
               </div>
             </div>
             <div className="relative sm:pb-8">
-              <div className="aspect-[4/3] overflow-hidden rounded-2xl shadow-2xl">
+              <div className="aspect-[4/3] overflow-hidden rounded-2xl shadow-2xl ring-1 ring-black/5">
                 <ImageWithFallback
                   src="https://images.unsplash.com/photo-1758691736975-9f7f643d178e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwcm9mZXNzaW9uYWwlMjBkaXZlcnNlJTIwdGVhbSUyMG9mZmljZXxlbnwxfHx8fDE3NzEwOTc5NDZ8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
                   alt="Professional immigration consultants"
@@ -264,39 +352,26 @@ export default function Home() {
                 {/* Overlay for better contrast */}
                 <div className="absolute inset-0 bg-black/20 pointer-events-none rounded-2xl" />
               </div>
-              {/* Floating Stats Card */}
-              <div className="relative -mt-4 mx-auto w-fit rounded-xl bg-white p-5 shadow-xl sm:absolute sm:-bottom-6 sm:-left-6 sm:mt-0 sm:mx-0 sm:p-6 lg:p-8 animate-slide-up">
-                <div className="flex items-center gap-4">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-full bg-green-100">
-                    <CheckCircle className="h-6 w-6 text-green-600" />
+              {/* Floating Credential Card */}
+              <div className="relative -mt-4 mx-auto w-fit rounded-xl bg-white p-5 shadow-xl ring-1 ring-gray-100 sm:absolute sm:-bottom-6 sm:-left-6 sm:mt-0 sm:mx-0 sm:p-6">
+                <div className="flex items-center gap-3">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-full bg-red-50 ring-2 ring-red-100">
+                    <Shield className="h-6 w-6 text-red-600" />
                   </div>
                   <div>
-                    <div className="text-3xl font-extrabold text-gray-900">
-                      98%
+                    <div className="text-base font-extrabold text-gray-900">
+                      Licensed RCIC
                     </div>
-                    <div className="text-base text-gray-600">Success Rate</div>
+                    <div className="text-sm font-medium text-gray-600">
+                      Regulated by CICC
+                    </div>
+                    <div className="mt-0.5 text-xs text-gray-400">
+                      College of Immigration & Citizenship
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Stats Section */}
-      <section className="border-b bg-white py-12">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 gap-8 md:grid-cols-4">
-            {stats.map((stat, index) => (
-              <div key={index} className="text-center">
-                <AnimatedCounter
-                  value={stat.number}
-                  suffix={stat.suffix}
-                  className="text-3xl font-bold text-red-600 sm:text-4xl"
-                />
-                <div className="mt-2 text-sm text-gray-600">{stat.label}</div>
-              </div>
-            ))}
           </div>
         </div>
       </section>
@@ -318,7 +393,7 @@ export default function Home() {
           </div>
 
           <div className="grid gap-6 md:grid-cols-2 lg:gap-8">
-            {services.map((service, index) => {
+            {services.slice(0, 4).map((service, index) => {
               const Icon = service.icon;
               return (
                 <Card
@@ -361,7 +436,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Meet the Team Section */}
       {/* FAQ Section */}
       <section className="bg-white py-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -463,8 +537,80 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Meet the Team Section */}
+      <section className="bg-white py-20">
+        <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
+          <div className="mb-12 text-center">
+            <Badge className="mb-4 bg-red-100 text-red-700 hover:bg-red-100">
+              Meet the Team
+            </Badge>
+            <h2 className="mb-4 text-3xl font-bold text-gray-900 sm:text-4xl">
+              Meet the Team Behind Your Journey
+            </h2>
+            <p className="mx-auto max-w-2xl text-lg text-gray-600">
+              Work with real people who care about your success and guide you
+              through every step of your Canadian immigration journey.
+            </p>
+          </div>
+
+          <div className="grid gap-6 sm:grid-cols-2">
+            {team.map((member, index) => (
+              <div
+                key={index}
+                className="flex gap-5 rounded-2xl bg-white p-5 shadow-md ring-1 ring-gray-100 transition-shadow hover:shadow-lg"
+              >
+                {/* Photo */}
+                <div className="shrink-0">
+                  {member.img ? (
+                    <div className="relative h-20 w-20 overflow-hidden rounded-2xl ring-2 ring-red-50">
+                      <Image
+                        src={member.img}
+                        alt={member.name}
+                        fill
+                        className="object-cover object-top"
+                        sizes="80px"
+                      />
+                    </div>
+                  ) : (
+                    <div className="flex h-20 w-20 items-center justify-center rounded-2xl bg-red-50 ring-2 ring-red-100">
+                      <Users className="h-8 w-8 text-red-300" />
+                    </div>
+                  )}
+                </div>
+
+                {/* Content */}
+                <div className="flex min-w-0 flex-col">
+                  <h3 className="text-base font-bold text-gray-900 leading-snug">
+                    {member.name}
+                  </h3>
+                  <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-red-600">
+                    {member.role}
+                  </p>
+                  <p className="mb-3 text-sm leading-relaxed text-gray-600">
+                    {member.bio}
+                  </p>
+                  <div className="flex flex-wrap gap-1.5">
+                    {member.specialties.slice(0, 2).map((s) => (
+                      <span
+                        key={s}
+                        className="rounded-full bg-slate-100 px-2.5 py-0.5 text-xs font-medium text-slate-600"
+                      >
+                        {s}
+                      </span>
+                    ))}
+                  </div>
+                  <p className="mt-2 text-xs text-gray-400">
+                    {member.languages.join(" • ")}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Testimonials Section */}
-      <section className="bg-slate-50 py-20">
+      <section id="testimonials" className="scroll-mt-24 bg-slate-50 py-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mb-12 text-center">
             <Badge className="mb-4 bg-red-100 text-red-700 hover:bg-red-100">
@@ -474,7 +620,8 @@ export default function Home() {
               What Our Clients Say
             </h2>
             <p className="mx-auto max-w-2xl text-lg text-gray-600">
-              Hear from people who successfully immigrated with our help.
+              Real experiences from clients we&apos;ve guided through their
+              Canadian immigration journey.
             </p>
           </div>
           <TestimonialSlider />
@@ -502,6 +649,93 @@ export default function Home() {
                 <ArrowRight className="ml-2 h-4 w-4" />
               </a>
             </Button>
+
+            {/* Social divider */}
+            <div className="mx-auto mt-12 flex max-w-xs items-center gap-4">
+              <div className="h-px flex-1 bg-red-400/50" />
+              <span className="text-xs font-medium uppercase tracking-widest text-red-200">
+                Follow Us
+              </span>
+              <div className="h-px flex-1 bg-red-400/50" />
+            </div>
+
+            <div className="mt-5 flex items-center justify-center gap-3">
+              {/* Instagram */}
+              <a
+                href="https://www.instagram.com/monocle.img/"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Monocle Immigration on Instagram"
+                className="flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white/80 transition-all hover:bg-white hover:text-red-600"
+              >
+                <svg
+                  className="h-4 w-4"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                  aria-hidden="true"
+                >
+                  <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+                </svg>
+              </a>
+
+              {/* Facebook */}
+              <a
+                href="https://www.facebook.com/profile.php?id=61567351096994"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Monocle Immigration on Facebook"
+                className="flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white/80 transition-all hover:bg-white hover:text-red-600"
+              >
+                <svg
+                  className="h-4 w-4"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                  aria-hidden="true"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+              </a>
+
+              {/* LinkedIn */}
+              <a
+                href="https://www.linkedin.com/company/monocleimmigration/"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Monocle Immigration on LinkedIn"
+                className="flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white/80 transition-all hover:bg-white hover:text-red-600"
+              >
+                <svg
+                  className="h-4 w-4"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                  aria-hidden="true"
+                >
+                  <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+                </svg>
+              </a>
+
+              {/* X / Twitter */}
+              <a
+                href="https://x.com/monocle_imm"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Monocle Immigration on X (Twitter)"
+                className="flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white/80 transition-all hover:bg-white hover:text-red-600"
+              >
+                <svg
+                  className="h-3.5 w-3.5"
+                  fill="currentColor"
+                  viewBox="0 0 300 300"
+                  aria-hidden="true"
+                >
+                  <path d="M178.57 127.15L290.27 0h-26.46l-97.03 110.38L89.34 0H0l117.13 166.93L0 300.25h26.46l102.4-116.59 81.8 116.59h89.34M36.01 19.54H76.66l187.13 262.13h-40.66" />
+                </svg>
+              </a>
+            </div>
           </div>
         </div>
       </section>

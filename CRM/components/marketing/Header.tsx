@@ -15,38 +15,37 @@ export function Header() {
     { name: "Home", path: "/" },
     { name: "Services", path: "/services" },
     { name: "About", path: "/about" },
+    { name: "Testimonials", path: "/#testimonials" },
     { name: "Contact", path: "/contact" },
     { name: "FAQ", path: "/contact#faq" },
   ];
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-gray-200 bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/80">
+    <header className="sticky top-0 z-50 w-full border-b border-gray-100 bg-white/95 shadow-sm backdrop-blur supports-[backdrop-filter]:bg-white/80">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="flex h-20 items-center justify-between py-2">
+        <div className="flex h-24 items-center justify-between">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2 shrink-0">
+          <Link href="/" className="shrink-0">
             <Image
               src="/Monocle_immigration_logo.png"
               alt="Monocle Immigration"
-              width={48}
-              height={48}
-              className="h-12 w-12 rounded-lg object-contain"
+              width={348}
+              height={96}
+              className="h-12 w-auto object-contain sm:h-14"
+              priority
             />
-            <span className="hidden text-xl font-semibold text-gray-900 sm:inline">
-              Monocle Immigration
-            </span>
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex md:items-center md:gap-6 lg:gap-8">
+          <nav className="hidden md:flex md:items-center md:gap-1 lg:gap-2">
             {navLinks.map((link) => (
               <Link
                 key={link.path}
                 href={link.path}
-                className={`text-sm font-medium transition-colors hover:text-red-600 ${
+                className={`rounded-md px-3.5 py-2 text-sm font-medium transition-colors hover:bg-gray-50 hover:text-red-600 ${
                   pathname === link.path ||
                   (link.path === "/contact#faq" && pathname === "/contact")
-                    ? "text-red-600"
+                    ? "text-red-600 bg-red-50"
                     : "text-gray-600"
                 }`}
               >
@@ -59,8 +58,8 @@ export function Header() {
           <div className="hidden md:flex md:items-center">
             <Button
               asChild
-              size="sm"
-              className="bg-red-600 text-white hover:bg-red-700"
+              size="default"
+              className="bg-red-600 text-white hover:bg-red-700 font-semibold shadow-sm px-5"
             >
               <a
                 href="https://calendly.com/monocle_immigration"

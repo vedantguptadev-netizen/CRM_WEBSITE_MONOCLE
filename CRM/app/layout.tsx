@@ -3,6 +3,10 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://monocleimmigration.com"),
+  icons: {
+    icon: "/images/favicon.png",
+    shortcut: "/images/favicon.png",
+  },
   title: {
     template: "%s | Monocle Immigration",
     default:

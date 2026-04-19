@@ -14,6 +14,8 @@ import {
   FileText,
   CheckCircle,
   ArrowRight,
+  Plane,
+  HeartHandshake,
 } from "lucide-react";
 
 export default function Services() {
@@ -130,6 +132,38 @@ export default function Services() {
         "Document preparation & review",
       ],
       ideal: "Permanent residents, visitors, all applicants",
+    },
+    {
+      icon: Plane,
+      category: "Visitor",
+      title: "Visitor Visas & Temporary Entry",
+      description:
+        "Visit Canada for tourism, family visits, or short-term business purposes with the right temporary entry documents.",
+      services: [
+        "Tourist & family visit visas",
+        "Super Visa for parents & grandparents",
+        "Business visitor visas",
+        "Visitor record extensions",
+        "Electronic Travel Authorization (eTA)",
+        "Port of entry assistance",
+      ],
+      ideal: "Tourists, family visitors, short-term business travelers",
+    },
+    {
+      icon: HeartHandshake,
+      category: "Humanitarian",
+      title: "Humanitarian & Compassionate",
+      description:
+        "Apply for permanent residence on humanitarian and compassionate grounds when standard pathways are not available.",
+      services: [
+        "H&C permanent residence applications",
+        "Best interests of a child assessments",
+        "Exceptional hardship submissions",
+        "Deferral of removal requests",
+        "Pre-removal risk assessments (PRRA)",
+        "Case strategy & advocacy",
+      ],
+      ideal: "Individuals with compelling humanitarian circumstances",
     },
   ];
 
