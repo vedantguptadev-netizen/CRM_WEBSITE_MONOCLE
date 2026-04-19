@@ -344,7 +344,7 @@ export default function Home() {
             <div className="relative">
               <div className="relative h-full min-h-[300px] overflow-hidden rounded-2xl shadow-2xl ring-1 ring-black/5">
                 <Image
-                  src="/images/calgary.png"
+                  src="/images/calgary-hero.jpg"
                   alt="Calgary skyline with Calgary Tower"
                   width={1536}
                   height={1024}

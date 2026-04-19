@@ -350,7 +350,7 @@ export default function EditEnquiryModal({
                 </p>
               </div>
 
-              {/* Notes */}}
+              {/* Notes */}
               <div>
                 <label
                   htmlFor="edit-notes"
