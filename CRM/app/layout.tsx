@@ -13,7 +13,7 @@ export const metadata: Metadata = {
       "Monocle Immigration — Licensed Immigration Consultants in Calgary & Brandon",
   },
   description:
-    "Licensed RCIC immigration consultants helping you study, work, and settle in Canada. Offices in Calgary, AB and Brandon, MB. Book a free consultation today.",
+    "Licensed RCIC immigration consultants helping you study, work, and settle in Canada. Offices in Calgary, AB and Brandon, MB. Book a consultation today.",
   openGraph: {
     type: "website",
     locale: "en_CA",

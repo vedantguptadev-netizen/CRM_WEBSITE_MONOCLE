@@ -339,8 +339,8 @@ export default function Services() {
             Not Sure Which Service You Need?
           </h2>
           <p className="mb-8 text-base text-gray-600">
-            Book a free consultation and we'll help you identify the best
-            immigration pathway for your goals.
+            Book a consultation and we'll help you identify the best immigration
+            pathway for your goals.
           </p>
           <Button
             asChild
@@ -348,7 +348,7 @@ export default function Services() {
             className="bg-red-600 text-white hover:bg-red-700"
           >
             <Link href="/contact">
-              Schedule Free Consultation
+              Schedule Consultation
               <ArrowRight className="ml-2 h-4 w-4" />
             </Link>
           </Button>

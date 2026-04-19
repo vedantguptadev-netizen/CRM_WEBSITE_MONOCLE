@@ -11,6 +11,7 @@ import {
   Globe,
   CheckCircle,
   ArrowRight,
+  MapPin,
 } from "lucide-react";
 import { ImageWithFallback } from "@/components/figma/ImageWithFallback";
 
@@ -44,18 +45,35 @@ export default function About() {
 
   const credentials = [
     "Licensed RCIC (Regulated Canadian Immigration Consultant)",
-    "Member of College of Immigration and Citizenship Consultants",
-    "15+ years of immigration law experience",
-    "Multilingual support in 10+ languages",
-    "Certified in Express Entry, PNP, and Family Sponsorship",
-    "Active member of Canadian Immigration Lawyers Association",
+    "Member of the College of Immigration and Citizenship Consultants (CICC)",
+    "Expert in Express Entry, PNP, and Family Sponsorship",
+    "Serving clients in Calgary, AB and Brandon, MB",
+    "In-person and virtual consultations available",
+    "Multilingual team supporting diverse client needs",
   ];
 
-  const achievements = [
-    { number: "98%", label: "Application Success Rate" },
-    { number: "1000+", label: "Successful Applications" },
-    { number: "50+", label: "Countries Represented" },
-    { number: "15+", label: "Years of Experience" },
+  const trustHighlights = [
+    {
+      icon: Shield,
+      title: "RCIC Regulated",
+      subtitle:
+        "Licensed by the College of Immigration & Citizenship Consultants",
+    },
+    {
+      icon: Users,
+      title: "Client-Focused Approach",
+      subtitle: "Personalized strategies tailored to your unique situation",
+    },
+    {
+      icon: MapPin,
+      title: "Calgary & Brandon Offices",
+      subtitle: "In-person and virtual consultations available",
+    },
+    {
+      icon: Globe,
+      title: "Temporary & Permanent Pathways",
+      subtitle: "Study, work, PR, family sponsorship, and more",
+    },
   ];
 
   return (
@@ -92,13 +110,20 @@ export default function About() {
               </h2>
               <div className="space-y-4 text-gray-600">
                 <p>
-                  Monocle Immigration is a trusted agency led by Rupinder Bhatti, RCIC, and a member of ICCRC.
+                  Monocle Immigration is a trusted agency led by Rupinder
+                  Bhatti, RCIC, and a member of ICCRC.
                 </p>
                 <p>
-                  We assist individuals in coming to Canada on a temporary or permanent basis, offering services such as: Permanent Residence (Express Entry, PNP), Study & Work Permits, Business & Investor Visas, Canadian Citizenship & Family Sponsorship, Citizenship by Investment (Caribbean), Residency by Investment (Europe).
+                  We assist individuals in coming to Canada on a temporary or
+                  permanent basis, offering services such as: Permanent
+                  Residence (Express Entry, PNP), Study & Work Permits, Business
+                  & Investor Visas, Canadian Citizenship & Family Sponsorship,
+                  Citizenship by Investment (Caribbean), Residency by Investment
+                  (Europe).
                 </p>
                 <p>
-                  We provide expert guidance and personalised solutions to simplify your immigration journey.
+                  We provide expert guidance and personalised solutions to
+                  simplify your immigration journey.
                 </p>
               </div>
             </div>
@@ -115,18 +140,26 @@ export default function About() {
         </div>
       </section>
 
-      {/* Achievements */}
+      {/* Trust Highlights */}
       <section className="border-y border-gray-100 bg-slate-50 py-12 sm:py-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-2 gap-8 md:grid-cols-4">
-            {achievements.map((item, index) => (
-              <div key={index} className="text-center">
-                <div className="text-4xl font-bold text-red-600 sm:text-5xl">
-                  {item.number}
+            {trustHighlights.map((item, index) => {
+              const Icon = item.icon;
+              return (
+                <div key={index} className="text-center">
+                  <div className="mx-auto mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-red-100">
+                    <Icon className="h-6 w-6 text-red-600" />
+                  </div>
+                  <div className="text-sm font-semibold text-gray-900">
+                    {item.title}
+                  </div>
+                  <div className="mt-1 text-xs leading-snug text-gray-500">
+                    {item.subtitle}
+                  </div>
                 </div>
-                <div className="mt-2 text-sm text-gray-600">{item.label}</div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>
@@ -237,7 +270,7 @@ export default function About() {
               target="_blank"
               rel="noopener noreferrer"
             >
-              Book Free Consultation
+              Book Consultation
               <ArrowRight className="ml-2 h-4 w-4" />
             </a>
           </Button>

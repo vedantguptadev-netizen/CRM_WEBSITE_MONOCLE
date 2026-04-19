@@ -645,7 +645,7 @@ export default function Home() {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                Book Free Consultation
+                Book Consultation
                 <ArrowRight className="ml-2 h-4 w-4" />
               </a>
             </Button>
