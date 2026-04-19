@@ -78,6 +78,7 @@ export async function POST(request: NextRequest) {
       email,
       phone,
       enquiryType,
+      customEnquiryType,
       notes,
       followUpDate,
     } = parsed.data;
@@ -89,6 +90,7 @@ export async function POST(request: NextRequest) {
         email: email?.trim() || null,
         phone: phone?.trim() || null,
         enquiryType: enquiryType.trim(),
+        customEnquiryType: customEnquiryType?.trim() || null,
         notes: notes?.trim() || null,
         followUpDate: followUpDate
           ? new Date(followUpDate + "T12:00:00")

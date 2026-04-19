@@ -14,7 +14,8 @@ const mockEnquiries: Enquiry[] = [
     dateOfBirth: "1995-01-25T00:00:00Z",
     email: "john@example.com",
     phone: "+1234567890",
-    enquiryType: "visa",
+    enquiryType: "study_permit",
+    customEnquiryType: "SDS stream",
     notes: "Follow up regarding visa application status",
     followUpDate: "2026-03-15T00:00:00Z",
     createdAt: "2026-03-09T10:00:00Z",
@@ -28,7 +29,7 @@ const mockEnquiries: Enquiry[] = [
     dateOfBirth: null,
     email: null,
     phone: null,
-    enquiryType: "consultation",
+    enquiryType: "express_entry",
     notes: null,
     followUpDate: null,
     createdAt: "2026-03-08T14:30:00Z",
@@ -42,7 +43,7 @@ const mockEnquiries: Enquiry[] = [
     dateOfBirth: "1988-07-14T00:00:00Z",
     email: "bob@example.com",
     phone: "+9876543210",
-    enquiryType: "documentation",
+    enquiryType: "document_review",
     notes: "Pending document submission",
     followUpDate: "2026-03-20T00:00:00Z",
     createdAt: "2026-03-07T08:00:00Z",
@@ -137,16 +138,16 @@ describe("EnquiryTable Component", () => {
 
   it("should display human-readable type labels", () => {
     renderTable();
-    expect(screen.getByText("Visa Application")).toBeInTheDocument();
-    expect(screen.getByText("Consultation")).toBeInTheDocument();
-    expect(screen.getByText("Documentation")).toBeInTheDocument();
+    expect(screen.getByText("Study Permit")).toBeInTheDocument();
+    expect(screen.getByText("Express Entry")).toBeInTheDocument();
+    expect(screen.getByText("Document Review")).toBeInTheDocument();
   });
 
   it("should apply coloured badge to enquiry type", () => {
     renderTable();
-    const visaBadge = screen.getByText("Visa Application");
-    expect(visaBadge.className).toContain("ring-1");
-    expect(visaBadge.className).toContain("ring-inset");
+    const badge = screen.getByText("Study Permit");
+    expect(badge.className).toContain("ring-1");
+    expect(badge.className).toContain("ring-inset");
   });
 
   // ── Application linked status ─────────────────────────────
@@ -365,7 +366,7 @@ describe("EnquiryTable Component", () => {
     });
 
     expect(screen.getByText("Solo User")).toBeInTheDocument();
-    expect(screen.getByText("General Enquiry")).toBeInTheDocument();
+    expect(screen.getByText("General Immigration Advice")).toBeInTheDocument();
   });
 
   it("should handle special characters in client names", () => {
@@ -376,7 +377,7 @@ describe("EnquiryTable Component", () => {
           clientName: "José García-López",
           email: "jose@example.com",
           phone: null,
-          enquiryType: "visa",
+          enquiryType: "study_permit",
           notes: null,
           followUpDate: null,
           createdAt: "2026-03-09T10:00:00Z",

@@ -54,6 +54,7 @@ export const CreateEnquirySchema = z.object({
     .or(z.literal("")),
   phone: z.string().max(50).optional().or(z.literal("")),
   enquiryType: z.string().min(1, "Enquiry type is required").max(100),
+  customEnquiryType: z.string().max(200).optional().or(z.literal("")),
   notes: z.string().max(2000).optional().or(z.literal("")),
   followUpDate: z.string().optional().or(z.literal("")),
 });
@@ -73,6 +74,7 @@ export const UpdateEnquirySchema = z.object({
     .min(1, "Enquiry type is required")
     .max(100)
     .optional(),
+  customEnquiryType: z.string().max(200).optional().or(z.literal("")).nullable(),
   notes: z.string().max(2000).optional().or(z.literal("")),
   followUpDate: z.string().optional().or(z.literal("")).nullable(),
 });

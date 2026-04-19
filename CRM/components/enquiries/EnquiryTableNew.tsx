@@ -10,6 +10,7 @@ import {
   FilePlus,
   ExternalLink,
 } from "lucide-react";
+import { enquiryTypeLabel, enquiryTypeBadgeColor } from "@/lib/enquiry-types";
 
 // ─── Types ──────────────────────────────────────────────────────
 
@@ -20,6 +21,7 @@ export interface Enquiry {
   email?: string | null;
   phone?: string | null;
   enquiryType: string;
+  customEnquiryType?: string | null;
   notes?: string | null;
   followUpDate?: Date | string | null;
   createdAt: Date | string;
@@ -52,26 +54,6 @@ const formatDate = (date: Date | string | null | undefined): string => {
   } catch {
     return "—";
   }
-};
-
-const enquiryTypeLabel = (type: string): string => {
-  const map: Record<string, string> = {
-    visa: "Visa Application",
-    consultation: "Consultation",
-    documentation: "Documentation",
-    general: "General Enquiry",
-  };
-  return map[type] || type;
-};
-
-const enquiryTypeBadgeColor = (type: string): string => {
-  const map: Record<string, string> = {
-    visa: "bg-indigo-50 text-indigo-700 ring-indigo-600/20",
-    consultation: "bg-amber-50 text-amber-700 ring-amber-600/20",
-    documentation: "bg-cyan-50 text-cyan-700 ring-cyan-600/20",
-    general: "bg-gray-50 text-gray-700 ring-gray-600/20",
-  };
-  return map[type] || "bg-gray-50 text-gray-700 ring-gray-600/20";
 };
 
 // ─── Action Menu ────────────────────────────────────────────────

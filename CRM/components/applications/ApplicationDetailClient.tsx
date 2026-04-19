@@ -17,6 +17,7 @@ import {
 } from "lucide-react";
 import EditApplicationModal from "./EditApplicationModal";
 import type { Application } from "./ApplicationTableNew";
+import { enquiryTypeLabel } from "@/lib/enquiry-types";
 
 interface DetailApplication extends Application {
   enquiry?: {
@@ -25,6 +26,7 @@ interface DetailApplication extends Application {
     email?: string | null;
     phone?: string | null;
     enquiryType: string;
+    customEnquiryType?: string | null;
     notes?: string | null;
     followUpDate?: string | Date | null;
     dateOfBirth?: string | Date | null;
@@ -280,9 +282,17 @@ export default function ApplicationDetailClient({
                         {application.enquiry.clientName}
                       </p>
                       <p className="text-xs text-emerald-600">
-                        {application.enquiry.enquiryType} enquiry
+                        {enquiryTypeLabel(application.enquiry.enquiryType)} enquiry
                       </p>
                     </div>
+                  </div>
+                  <div>
+                    <dt className="text-xs font-medium text-gray-500">
+                      Specific Details
+                    </dt>
+                    <dd className="mt-0.5 text-sm text-gray-900">
+                      {application.enquiry.customEnquiryType || "—"}
+                    </dd>
                   </div>
                   <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                     <div>

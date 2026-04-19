@@ -14,6 +14,7 @@ import EnquiryTable, { EmptyState, type Enquiry } from "./EnquiryTableNew";
 import ViewEnquirySlideOver from "./ViewEnquirySlideOver";
 import EditEnquiryModal from "./EditEnquiryModal";
 import AddEnquiryModal from "./AddEnquiryModal";
+import { ENQUIRY_TYPES } from "@/lib/enquiry-types";
 
 const formatSearchableDate = (date: Date | string | null | undefined) => {
   if (!date) return "";
@@ -35,15 +36,12 @@ const formatSearchableDate = (date: Date | string | null | undefined) => {
 
 // ─── Filters ────────────────────────────────────────────────────
 
-type TypeFilter = "" | "visa" | "consultation" | "documentation" | "general";
+type TypeFilter = string;
 type AppFilter = "" | "linked" | "not-linked";
 
 const typeOptions: { value: TypeFilter; label: string }[] = [
   { value: "", label: "All Types" },
-  { value: "visa", label: "Visa Application" },
-  { value: "consultation", label: "Consultation" },
-  { value: "documentation", label: "Documentation" },
-  { value: "general", label: "General Enquiry" },
+  ...ENQUIRY_TYPES.map((t) => ({ value: t.value as string, label: t.label })),
 ];
 
 const appOptions: { value: AppFilter; label: string }[] = [

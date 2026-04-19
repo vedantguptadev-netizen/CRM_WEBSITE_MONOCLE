@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { X } from "lucide-react";
+import { ENQUIRY_TYPES } from "@/lib/enquiry-types";
 
 interface AddEnquiryModalProps {
   open: boolean;
@@ -16,6 +17,7 @@ interface FormData {
   email: string;
   phone: string;
   enquiryType: string;
+  customEnquiryType: string;
   notes: string;
   followUpDate: string;
 }
@@ -26,6 +28,7 @@ const emptyForm: FormData = {
   email: "",
   phone: "",
   enquiryType: "",
+  customEnquiryType: "",
   notes: "",
   followUpDate: "",
 };
@@ -89,6 +92,7 @@ export default function AddEnquiryModal({
           email: formData.email || undefined,
           phone: formData.phone || undefined,
           enquiryType: formData.enquiryType,
+          customEnquiryType: formData.customEnquiryType || undefined,
           notes: formData.notes || undefined,
           followUpDate: formData.followUpDate || undefined,
         }),
@@ -288,16 +292,40 @@ export default function AddEnquiryModal({
                   }`}
                 >
                   <option value="">Select type</option>
-                  <option value="visa">Visa Application</option>
-                  <option value="consultation">Consultation</option>
-                  <option value="documentation">Documentation</option>
-                  <option value="general">General Enquiry</option>
+                  {ENQUIRY_TYPES.map((t) => (
+                    <option key={t.value} value={t.value}>
+                      {t.label}
+                    </option>
+                  ))}
                 </select>
                 {errors.enquiryType && (
                   <p className="mt-1 text-xs text-red-600">
                     {errors.enquiryType}
                   </p>
                 )}
+              </div>
+
+              {/* Custom Enquiry Type */}
+              <div>
+                <label
+                  htmlFor="customEnquiryType"
+                  className="block text-sm font-medium text-gray-700 mb-1.5"
+                >
+                  Specific Details
+                </label>
+                <input
+                  type="text"
+                  id="customEnquiryType"
+                  name="customEnquiryType"
+                  value={formData.customEnquiryType}
+                  onChange={handleChange}
+                  maxLength={200}
+                  placeholder="e.g. SDS stream, PGWP extension, spousal sponsorship"
+                  className="w-full rounded-lg border border-gray-300 px-3.5 py-2.5 text-sm outline-none transition-colors focus:ring-2 focus:ring-red-500/20 focus:border-red-500"
+                />
+                <p className="mt-1 text-xs text-gray-400">
+                  Optional. Add specific details about the enquiry type.
+                </p>
               </div>
 
               {/* Notes */}

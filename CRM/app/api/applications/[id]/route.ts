@@ -38,6 +38,7 @@ export async function GET(
             email: true,
             phone: true,
             enquiryType: true,
+            customEnquiryType: true,
             notes: true,
             followUpDate: true,
             dateOfBirth: true,

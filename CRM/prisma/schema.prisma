@@ -37,7 +37,8 @@ model Enquiry {
   dateOfBirth  DateTime?
   email        String?
   phone        String?
-  enquiryType  String
+  enquiryType        String
+  customEnquiryType  String?
   notes        String?
   followUpDate DateTime?
   companyId    String

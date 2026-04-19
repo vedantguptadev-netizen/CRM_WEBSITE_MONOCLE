@@ -23,7 +23,8 @@ describe("AddEnquiryModal Component", () => {
           dateOfBirth: "1995-01-25T12:00:00.000Z",
           email: "test@example.com",
           phone: "+1234567890",
-          enquiryType: "visa",
+          enquiryType: "study_permit",
+          customEnquiryType: null,
           notes: "Test notes",
           companyId: testCompanyId,
           createdAt: new Date().toISOString(),
@@ -87,6 +88,7 @@ describe("AddEnquiryModal Component", () => {
       expect(screen.getByLabelText(/Phone/i)).toBeInTheDocument();
       expect(screen.getByLabelText(/Date of Birth/i)).toBeInTheDocument();
       expect(screen.getByLabelText(/Enquiry Type/i)).toBeInTheDocument();
+      expect(screen.getByLabelText(/Specific Details/i)).toBeInTheDocument();
       expect(screen.getByLabelText(/Notes/i)).toBeInTheDocument();
     });
 
@@ -183,9 +185,9 @@ describe("AddEnquiryModal Component", () => {
       );
 
       const enquiryTypeSelect = screen.getByLabelText(/Enquiry Type/i);
-      await user.selectOptions(enquiryTypeSelect, "visa");
+      await user.selectOptions(enquiryTypeSelect, "study_permit");
 
-      expect(enquiryTypeSelect).toHaveValue("visa");
+      expect(enquiryTypeSelect).toHaveValue("study_permit");
     });
 
     it("should update notes textarea", async () => {
@@ -261,7 +263,7 @@ describe("AddEnquiryModal Component", () => {
         screen.getByPlaceholderText("Enter client name"),
         "John Doe",
       );
-      await user.selectOptions(screen.getByLabelText(/Enquiry Type/i), "visa");
+      await user.selectOptions(screen.getByLabelText(/Enquiry Type/i), "study_permit");
       fireEvent.change(screen.getByLabelText(/Date of Birth/i), {
         target: { value: "2999-01-01" },
       });
@@ -289,7 +291,7 @@ describe("AddEnquiryModal Component", () => {
       const enquiryTypeSelect = screen.getByLabelText(/Enquiry Type/i);
 
       await user.type(clientNameInput, "John Doe");
-      await user.selectOptions(enquiryTypeSelect, "visa");
+      await user.selectOptions(enquiryTypeSelect, "study_permit");
 
       const saveButton = screen.getByRole("button", {
         name: /Create Enquiry/i,
@@ -375,7 +377,7 @@ describe("AddEnquiryModal Component", () => {
       const enquiryTypeSelect = screen.getByLabelText(/Enquiry Type/i);
 
       await user.type(clientNameInput, "John Doe");
-      await user.selectOptions(enquiryTypeSelect, "visa");
+      await user.selectOptions(enquiryTypeSelect, "study_permit");
 
       const saveButton = screen.getByRole("button", {
         name: /Create Enquiry/i,
@@ -474,7 +476,7 @@ describe("AddEnquiryModal Component", () => {
       const enquiryTypeSelect = screen.getByLabelText(/Enquiry Type/i);
 
       await user.type(clientNameInput, "John Doe");
-      await user.selectOptions(enquiryTypeSelect, "visa");
+      await user.selectOptions(enquiryTypeSelect, "study_permit");
 
       const saveButton = screen.getByRole("button", {
         name: /Create Enquiry/i,
@@ -503,6 +505,7 @@ describe("AddEnquiryModal Component", () => {
       expect(screen.getByLabelText(/Email/i)).toBeInTheDocument();
       expect(screen.getByLabelText(/Phone/i)).toBeInTheDocument();
       expect(screen.getByLabelText(/Enquiry Type/i)).toBeInTheDocument();
+      expect(screen.getByLabelText(/Specific Details/i)).toBeInTheDocument();
       expect(screen.getByLabelText(/Notes/i)).toBeInTheDocument();
     });
 

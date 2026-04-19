@@ -12,6 +12,7 @@ import {
   ScrollText,
 } from "lucide-react";
 import type { Enquiry } from "./EnquiryTableNew";
+import { enquiryTypeLabel } from "@/lib/enquiry-types";
 
 interface ViewEnquirySlideOverProps {
   open: boolean;
@@ -34,16 +35,6 @@ const formatDate = (date: Date | string | null | undefined): string => {
   } catch {
     return "—";
   }
-};
-
-const enquiryTypeLabel = (type: string): string => {
-  const map: Record<string, string> = {
-    visa: "Visa Application",
-    consultation: "Consultation",
-    documentation: "Documentation",
-    general: "General Enquiry",
-  };
-  return map[type] || type;
 };
 
 export default function ViewEnquirySlideOver({
@@ -153,6 +144,14 @@ export default function ViewEnquirySlideOver({
                       {enquiryTypeLabel(enquiry.enquiryType)}
                     </dd>
                   </div>
+                  {enquiry.customEnquiryType && (
+                    <div>
+                      <dt className="text-xs font-medium text-gray-500">Specific Details</dt>
+                      <dd className="mt-0.5 text-sm text-gray-900">
+                        {enquiry.customEnquiryType}
+                      </dd>
+                    </div>
+                  )}
                   <div>
                     <dt className="text-xs font-medium text-gray-500">Notes</dt>
                     <dd className="mt-0.5 whitespace-pre-wrap break-words text-sm text-gray-900">

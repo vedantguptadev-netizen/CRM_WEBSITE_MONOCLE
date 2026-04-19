@@ -138,6 +138,9 @@ export async function PUT(
         ...(data.enquiryType !== undefined && {
           enquiryType: data.enquiryType.trim(),
         }),
+        ...(data.customEnquiryType !== undefined && {
+          customEnquiryType: data.customEnquiryType?.trim() || null,
+        }),
         ...(data.notes !== undefined && {
           notes: data.notes?.trim() || null,
         }),

@@ -186,7 +186,8 @@ describe("POST /api/enquiries", () => {
         dateOfBirth: new Date("1995-01-25T12:00:00"),
         email: "john@example.com",
         phone: "+1234567890",
-        enquiryType: "visa",
+        enquiryType: "study_permit",
+        customEnquiryType: "SDS stream",
         notes: "Urgent case",
         companyId: "company-1",
         createdAt: new Date(),
@@ -203,7 +204,8 @@ describe("POST /api/enquiries", () => {
           dateOfBirth: "1995-01-25",
           email: "john@example.com",
           phone: "+1234567890",
-          enquiryType: "visa",
+          enquiryType: "study_permit",
+          customEnquiryType: "SDS stream",
           notes: "Urgent case",
         }),
       });
@@ -216,12 +218,13 @@ describe("POST /api/enquiries", () => {
       expect(json.data).toMatchObject({
         id: "enquiry-1",
         clientName: "John Doe",
-        enquiryType: "visa",
+        enquiryType: "study_permit",
       });
       expect(mockPrisma.enquiry.create).toHaveBeenCalledWith(
         expect.objectContaining({
           data: expect.objectContaining({
             dateOfBirth: new Date("1995-01-25T12:00:00"),
+            customEnquiryType: "SDS stream",
           }),
         }),
       );
@@ -233,7 +236,8 @@ describe("POST /api/enquiries", () => {
         clientName: "Jane Smith",
         email: null,
         phone: null,
-        enquiryType: "consultation",
+        enquiryType: "express_entry",
+        customEnquiryType: null,
         notes: null,
         companyId: "company-1",
         createdAt: new Date(),
@@ -247,7 +251,7 @@ describe("POST /api/enquiries", () => {
         method: "POST",
         body: JSON.stringify({
           clientName: "Jane Smith",
-          enquiryType: "consultation",
+          enquiryType: "express_entry",
         }),
       });
 
