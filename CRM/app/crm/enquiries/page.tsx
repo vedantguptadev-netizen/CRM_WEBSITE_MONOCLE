@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { prisma } from "@/lib/prisma";
 import { getCurrentUser } from "@/lib/auth-server";
 import EnquiryPageClient from "@/components/enquiries/EnquiryPageClient";
@@ -29,5 +30,9 @@ export default async function EnquiriesPage() {
   // Use the companyId from the user's JWT token
   const companyId = user.companyId;
 
-  return <EnquiryPageClient enquiries={enquiries} companyId={companyId} />;
+  return (
+    <Suspense>
+      <EnquiryPageClient enquiries={enquiries} companyId={companyId} />
+    </Suspense>
+  );
 }

@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useMemo } from "react";
-import { useRouter } from "next/navigation";
+import { useState, useMemo, useEffect } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import {
   ChevronLeft,
   ChevronRight,
@@ -63,11 +63,25 @@ const ITEMS_PER_PAGE = 5;
 
 export default function EnquiryPageClient({ enquiries, companyId }: Props) {
   const router = useRouter();
+  const searchParams = useSearchParams();
 
   // Modal / Slide‑over state
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [viewingEnquiry, setViewingEnquiry] = useState<Enquiry | null>(null);
   const [editingEnquiry, setEditingEnquiry] = useState<Enquiry | null>(null);
+
+  // Auto-open slide-over when navigated with ?view=<enquiryId>
+  useEffect(() => {
+    const viewId = searchParams.get("view");
+    if (viewId) {
+      const enquiry = enquiries.find((e) => e.id === viewId);
+      if (enquiry) {
+        setViewingEnquiry(enquiry);
+      }
+      // Clean up the URL param
+      router.replace("/crm/enquiries", { scroll: false });
+    }
+  }, [searchParams, enquiries, router]);
 
   // Filters
   const [searchQuery, setSearchQuery] = useState("");

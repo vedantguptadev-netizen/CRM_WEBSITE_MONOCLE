@@ -42,6 +42,7 @@ interface ApplicationTableProps {
   onView: (application: Application) => void;
   onEdit: (application: Application) => void;
   onDelete: (id: string) => void;
+  onViewEnquiry?: (enquiryId: string) => void;
 }
 
 // ─── Helpers ────────────────────────────────────────────────────
@@ -137,11 +138,13 @@ function ActionMenu({
   onView,
   onEdit,
   onDelete,
+  onViewEnquiry,
 }: {
   application: Application;
   onView: (application: Application) => void;
   onEdit: (application: Application) => void;
   onDelete: (id: string) => void;
+  onViewEnquiry?: (enquiryId: string) => void;
 }) {
   const [isOpen, setIsOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
@@ -216,7 +219,7 @@ function ActionMenu({
           {application.enquiry && (
             <>
               <button
-                onClick={() => act(() => {})}
+                onClick={() => act(() => onViewEnquiry?.(application.enquiry!.id))}
                 className="flex w-full items-center gap-2.5 px-3.5 py-2 text-sm text-purple-700 hover:bg-purple-50"
               >
                 <ExternalLink size={15} />
@@ -313,6 +316,7 @@ export default function ApplicationTable({
   onView,
   onEdit,
   onDelete,
+  onViewEnquiry,
 }: ApplicationTableProps) {
   if (isLoading) return <TableSkeleton />;
 
@@ -428,6 +432,7 @@ export default function ApplicationTable({
                   onView={onView}
                   onEdit={onEdit}
                   onDelete={onDelete}
+                  onViewEnquiry={onViewEnquiry}
                 />
               </td>
             </tr>
