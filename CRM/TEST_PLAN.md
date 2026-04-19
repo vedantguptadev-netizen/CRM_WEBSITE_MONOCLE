@@ -2,19 +2,30 @@
 
 ## Overview
 
-Comprehensive testing strategy with 200 passing tests across Jest and React Testing Library. Covers authentication, API endpoints (JWT-based), components, pages, and responsive behavior.
+Comprehensive testing strategy with 289 passing tests across Jest and React Testing Library. Covers authentication, API endpoints (JWT-based), components, pages, and responsive behavior.
 
 ## Current Status
 
-✅ **219 Tests Passing** | 18 test suites, all green
+✅ **289 Tests Passing** | 23 test suites, all green
 
 | Category       | Tests   | Status      |
 | -------------- | ------- | ----------- |
 | Authentication | 49      | ✅ Pass     |
-| API Endpoints  | 37      | ✅ Pass     |
-| Components     | 99      | ✅ Pass     |
+| API Endpoints  | 71      | ✅ Pass     |
+| Components     | 134     | ✅ Pass     |
 | Pages          | 35      | ✅ Pass     |
-| **Total**      | **219** | **✅ Pass** |
+| **Total**      | **289** | **✅ Pass** |
+
+## Coverage
+
+| Metric     | Percentage | Covered / Total |
+| ---------- | ---------- | --------------- |
+| Statements | 51.4%      | 686 / 1335      |
+| Branches   | 53.0%      | 356 / 672       |
+| Functions  | 36.4%      | 108 / 297       |
+| Lines      | 52.2%      | 640 / 1225      |
+
+> Coverage excludes `components/ui/` (shadcn), `components/figma/`, `components/marketing/`, `app/(marketing)/`, and `lib/generated/` (Prisma).
 
 ## Test Areas
 
@@ -118,7 +129,7 @@ Comprehensive testing strategy with 200 passing tests across Jest and React Test
 | Sets HttpOnly flag on cookie clear    | ✅ Pass |
 | Sets SameSite=Lax on cookie clear     | ✅ Pass |
 
-### 2. API Endpoint Tests (35 tests)
+### 2. API Endpoint Tests (71 tests)
 
 #### Companies API
 
@@ -191,7 +202,59 @@ Mocks `cookies()` + `verifyToken()` for JWT authentication. Validates enquiry ow
 | Returns 400 if enquiry already has application | ✅ Pass |
 | Creates application successfully from enquiry  | ✅ Pass |
 
-### 3. Component Tests (99 tests)
+#### Applications [id] API (JWT-authenticated)
+
+**File**: `__tests__/app/api/applications-id.test.ts` (17 tests)
+
+Tests individual application GET/PUT/DELETE with auth, ownership (403), not-found (404), validation (400), and error handling (500).
+
+| Test Case                                            | Status  |
+| ---------------------------------------------------- | ------- |
+| GET returns 401 when not authenticated                | ✅ Pass |
+| GET returns 404 when application not found            | ✅ Pass |
+| GET returns 403 when application belongs to other co  | ✅ Pass |
+| GET returns application for authorized user           | ✅ Pass |
+| GET returns 500 on database error                     | ✅ Pass |
+| PUT returns 401 when not authenticated                | ✅ Pass |
+| PUT returns 404 when application not found            | ✅ Pass |
+| PUT returns 403 when application belongs to other co  | ✅ Pass |
+| PUT returns 400 for invalid data                      | ✅ Pass |
+| PUT updates application successfully                  | ✅ Pass |
+| PUT updates status fields correctly                   | ✅ Pass |
+| PUT returns 500 on database error                     | ✅ Pass |
+| DELETE returns 401 when not authenticated              | ✅ Pass |
+| DELETE returns 404 when application not found          | ✅ Pass |
+| DELETE returns 403 when application belongs to other   | ✅ Pass |
+| DELETE deletes application successfully                | ✅ Pass |
+| DELETE returns 500 on database error                   | ✅ Pass |
+
+#### Enquiries [id] API (JWT-authenticated)
+
+**File**: `__tests__/app/api/enquiries-id.test.ts` (17 tests)
+
+Tests individual enquiry GET/PUT/DELETE with auth, ownership (403), not-found (404), validation (400), and error handling (500).
+
+| Test Case                                          | Status  |
+| -------------------------------------------------- | ------- |
+| GET returns 401 when not authenticated              | ✅ Pass |
+| GET returns 404 when enquiry not found              | ✅ Pass |
+| GET returns 403 when enquiry belongs to other co    | ✅ Pass |
+| GET returns enquiry for authorized user             | ✅ Pass |
+| GET returns 500 on database error                   | ✅ Pass |
+| PUT returns 401 when not authenticated              | ✅ Pass |
+| PUT returns 404 when enquiry not found              | ✅ Pass |
+| PUT returns 403 when enquiry belongs to other co    | ✅ Pass |
+| PUT returns 400 for invalid data                    | ✅ Pass |
+| PUT updates enquiry successfully                    | ✅ Pass |
+| PUT updates enquiry type and custom type            | ✅ Pass |
+| PUT returns 500 on database error                   | ✅ Pass |
+| DELETE returns 401 when not authenticated            | ✅ Pass |
+| DELETE returns 404 when enquiry not found            | ✅ Pass |
+| DELETE returns 403 when enquiry belongs to other co  | ✅ Pass |
+| DELETE deletes enquiry successfully                  | ✅ Pass |
+| DELETE returns 500 on database error                 | ✅ Pass |
+
+### 3. Component Tests (134 tests)
 
 #### EnquiryTable (EnquiryTableNew)
 
@@ -268,6 +331,70 @@ Tests the create enquiry modal with form validation, API integration, and modal 
 | Marks required fields with asterisk       | ✅ Pass |
 | Has a close button in header              | ✅ Pass |
 
+#### AddApplicationModal
+
+**File**: `__tests__/components/AddApplicationModal.test.tsx` (13 tests)
+
+Tests the create application modal with form validation, API integration, and modal behaviour.
+
+| Test Case                                    | Status  |
+| -------------------------------------------- | ------- |
+| Does not render when open is false            | ✅ Pass |
+| Renders when open is true                     | ✅ Pass |
+| Renders all form fields                       | ✅ Pass |
+| Renders Cancel and Create Application buttons | ✅ Pass |
+| Shows error when client name is empty         | ✅ Pass |
+| Shows error for invalid email                 | ✅ Pass |
+| Shows error for invalid drive folder link     | ✅ Pass |
+| Submits valid form and calls onSuccess        | ✅ Pass |
+| Shows API error when request fails            | ✅ Pass |
+| Shows generic error on network failure        | ✅ Pass |
+| Calls onClose when Cancel is clicked          | ✅ Pass |
+| Calls onClose when overlay is clicked         | ✅ Pass |
+| Form submission calls correct API endpoint    | ✅ Pass |
+
+#### EditApplicationModal
+
+**File**: `__tests__/components/EditApplicationModal.test.tsx` (10 tests)
+
+Tests the edit application modal with pre-filled form data, validation, and update API.
+
+| Test Case                                | Status  |
+| ---------------------------------------- | ------- |
+| Does not render when open is false        | ✅ Pass |
+| Renders when open is true                 | ✅ Pass |
+| Pre-fills form with application data      | ✅ Pass |
+| Shows error when client name is cleared   | ✅ Pass |
+| Shows error for invalid email             | ✅ Pass |
+| Submits updated data                      | ✅ Pass |
+| Shows API error on failure                | ✅ Pass |
+| Shows generic error on network failure    | ✅ Pass |
+| Calls onClose when Cancel is clicked      | ✅ Pass |
+| Calls correct PUT endpoint                | ✅ Pass |
+
+#### EditEnquiryModal
+
+**File**: `__tests__/components/EditEnquiryModal.test.tsx` (14 tests)
+
+Tests the edit enquiry modal with pre-filled form data, validation, and update API.
+
+| Test Case                                | Status  |
+| ---------------------------------------- | ------- |
+| Does not render when open is false        | ✅ Pass |
+| Renders when open is true                 | ✅ Pass |
+| Pre-fills form with enquiry data          | ✅ Pass |
+| Renders all form fields                   | ✅ Pass |
+| Shows error when client name is cleared   | ✅ Pass |
+| Shows error for invalid email             | ✅ Pass |
+| Shows error when enquiry type is cleared  | ✅ Pass |
+| Submits updated data                      | ✅ Pass |
+| Shows API error on failure                | ✅ Pass |
+| Shows generic error on network failure    | ✅ Pass |
+| Calls onClose when Cancel is clicked      | ✅ Pass |
+| Calls onClose when overlay is clicked     | ✅ Pass |
+| Calls correct PUT endpoint                | ✅ Pass |
+| Calls onSuccess after successful update   | ✅ Pass |
+
 #### Navigation Components
 
 **Sidebar** (`__tests__/components/Sidebar.test.tsx` - 7 tests)
@@ -326,7 +453,9 @@ __tests__/
 │   ├── api/
 │   │   ├── companies.test.ts                    (9 tests) ✅
 │   │   ├── enquiries.test.ts                   (15 tests) ✅
+│   │   ├── enquiries-id.test.ts                (17 tests) ✅  ← NEW
 │   │   ├── applications.test.ts                 (7 tests) ✅
+│   │   ├── applications-id.test.ts             (17 tests) ✅  ← NEW
 │   │   ├── applications-from-enquiry.test.ts    (6 tests) ✅
 │   │   └── auth/
 │   │       ├── login.test.ts                   (17 tests) ✅
@@ -341,12 +470,15 @@ __tests__/
 │   ├── MobileSidebar.test.tsx                  (11 tests) ✅
 │   ├── ResponsiveLayout.test.tsx                (9 tests) ✅
 │   ├── AddEnquiryModal.test.tsx                (23 tests) ✅
-│   └── EnquiryDataTable.test.tsx               (34 tests) ✅
+│   ├── EditEnquiryModal.test.tsx               (14 tests) ✅  ← NEW
+│   ├── EnquiryDataTable.test.tsx               (34 tests) ✅
+│   ├── AddApplicationModal.test.tsx            (13 tests) ✅  ← NEW
+│   └── EditApplicationModal.test.tsx           (10 tests) ✅  ← NEW
 └── lib/
     ├── jwt.test.ts                             (18 tests) ✅
     └── auth-context.test.tsx                    (6 tests) ✅
 
-Total: 219 tests across 18 suites ✅
+Total: 289 tests across 23 suites ✅
 ```
 
 ## Running Tests
@@ -358,7 +490,7 @@ npm test -- --coverage                     # Coverage report
 npm test -- --testPathPattern="pattern"   # Specific test
 ```
 
-Success output: ✅ 219 tests pass, 0 fail
+Success output: ✅ 289 tests pass, 0 fail
 
 ## Test File Naming Convention
 
@@ -437,7 +569,7 @@ jobs:
 - JWT tokens stored in HTTP-only cookies only
 - Cookies have HttpOnly, Secure, and SameSite flags
 - Company data scoping enforced (companyId from JWT, never client)
-- Token expiration after 7 days
+- Token expiration after 2 hours
 - Tampered tokens rejected
 - 401 returned for missing/invalid tokens on all protected routes
 
