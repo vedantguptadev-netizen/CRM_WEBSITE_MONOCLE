@@ -73,11 +73,17 @@ describe("EditEnquiryModal Component", () => {
           onSuccess={mockOnSuccess}
         />,
       );
-      expect(screen.getByLabelText(/Client Name/i)).toHaveValue("Alice Johnson");
+      expect(screen.getByLabelText(/Client Name/i)).toHaveValue(
+        "Alice Johnson",
+      );
       expect(screen.getByLabelText(/Email/i)).toHaveValue("alice@example.com");
       expect(screen.getByLabelText(/Phone/i)).toHaveValue("+1-555-0199");
-      expect(screen.getByLabelText(/Specific Details/i)).toHaveValue("SDS stream");
-      expect(screen.getByLabelText(/Notes/i)).toHaveValue("Interested in Fall 2026");
+      expect(screen.getByLabelText(/Specific Details/i)).toHaveValue(
+        "SDS stream",
+      );
+      expect(screen.getByLabelText(/Notes/i)).toHaveValue(
+        "Interested in Fall 2026",
+      );
     });
 
     it("should render all form fields", () => {

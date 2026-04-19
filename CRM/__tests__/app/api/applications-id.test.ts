@@ -106,7 +106,9 @@ describe("GET /api/applications/[id]", () => {
 
   it("returns 403 when application belongs to different company", async () => {
     authenticateAs("company-2");
-    (mockPrisma.application.findUnique as jest.Mock).mockResolvedValue(mockApplication);
+    (mockPrisma.application.findUnique as jest.Mock).mockResolvedValue(
+      mockApplication,
+    );
 
     const req = new NextRequest("http://localhost:3000/api/applications/app-1");
     const res = await GET(req, params);
@@ -117,7 +119,9 @@ describe("GET /api/applications/[id]", () => {
 
   it("returns application for authorized user", async () => {
     authenticateAs("company-1");
-    (mockPrisma.application.findUnique as jest.Mock).mockResolvedValue(mockApplication);
+    (mockPrisma.application.findUnique as jest.Mock).mockResolvedValue(
+      mockApplication,
+    );
 
     const req = new NextRequest("http://localhost:3000/api/applications/app-1");
     const res = await GET(req, params);
@@ -129,7 +133,9 @@ describe("GET /api/applications/[id]", () => {
 
   it("returns 500 on database error", async () => {
     authenticateAs();
-    (mockPrisma.application.findUnique as jest.Mock).mockRejectedValue(new Error("DB error"));
+    (mockPrisma.application.findUnique as jest.Mock).mockRejectedValue(
+      new Error("DB error"),
+    );
 
     const req = new NextRequest("http://localhost:3000/api/applications/app-1");
     const res = await GET(req, params);
@@ -146,11 +152,14 @@ describe("PUT /api/applications/[id]", () => {
 
   it("returns 401 when not authenticated", async () => {
     clearAuth();
-    const req = new NextRequest("http://localhost:3000/api/applications/app-1", {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ clientFullName: "Updated Name" }),
-    });
+    const req = new NextRequest(
+      "http://localhost:3000/api/applications/app-1",
+      {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ clientFullName: "Updated Name" }),
+      },
+    );
     const res = await PUT(req, params);
     expect(res.status).toBe(401);
   });
@@ -159,37 +168,50 @@ describe("PUT /api/applications/[id]", () => {
     authenticateAs();
     (mockPrisma.application.findUnique as jest.Mock).mockResolvedValue(null);
 
-    const req = new NextRequest("http://localhost:3000/api/applications/app-1", {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ clientFullName: "Updated" }),
-    });
+    const req = new NextRequest(
+      "http://localhost:3000/api/applications/app-1",
+      {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ clientFullName: "Updated" }),
+      },
+    );
     const res = await PUT(req, params);
     expect(res.status).toBe(404);
   });
 
   it("returns 403 when application belongs to different company", async () => {
     authenticateAs("company-2");
-    (mockPrisma.application.findUnique as jest.Mock).mockResolvedValue(mockApplication);
+    (mockPrisma.application.findUnique as jest.Mock).mockResolvedValue(
+      mockApplication,
+    );
 
-    const req = new NextRequest("http://localhost:3000/api/applications/app-1", {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ clientFullName: "Updated" }),
-    });
+    const req = new NextRequest(
+      "http://localhost:3000/api/applications/app-1",
+      {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ clientFullName: "Updated" }),
+      },
+    );
     const res = await PUT(req, params);
     expect(res.status).toBe(403);
   });
 
   it("returns 400 for invalid data", async () => {
     authenticateAs();
-    (mockPrisma.application.findUnique as jest.Mock).mockResolvedValue(mockApplication);
+    (mockPrisma.application.findUnique as jest.Mock).mockResolvedValue(
+      mockApplication,
+    );
 
-    const req = new NextRequest("http://localhost:3000/api/applications/app-1", {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ driveFolderLink: "not-a-url" }),
-    });
+    const req = new NextRequest(
+      "http://localhost:3000/api/applications/app-1",
+      {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ driveFolderLink: "not-a-url" }),
+      },
+    );
     const res = await PUT(req, params);
     expect(res.status).toBe(400);
     const json = await res.json();
@@ -198,15 +220,24 @@ describe("PUT /api/applications/[id]", () => {
 
   it("updates application successfully", async () => {
     authenticateAs();
-    (mockPrisma.application.findUnique as jest.Mock).mockResolvedValue(mockApplication);
-    const updated = { ...mockApplication, clientFullName: "Updated Name", enquiry: null };
+    (mockPrisma.application.findUnique as jest.Mock).mockResolvedValue(
+      mockApplication,
+    );
+    const updated = {
+      ...mockApplication,
+      clientFullName: "Updated Name",
+      enquiry: null,
+    };
     (mockPrisma.application.update as jest.Mock).mockResolvedValue(updated);
 
-    const req = new NextRequest("http://localhost:3000/api/applications/app-1", {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ clientFullName: "Updated Name" }),
-    });
+    const req = new NextRequest(
+      "http://localhost:3000/api/applications/app-1",
+      {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ clientFullName: "Updated Name" }),
+      },
+    );
     const res = await PUT(req, params);
     expect(res.status).toBe(200);
     const json = await res.json();
@@ -216,15 +247,28 @@ describe("PUT /api/applications/[id]", () => {
 
   it("updates status fields correctly", async () => {
     authenticateAs();
-    (mockPrisma.application.findUnique as jest.Mock).mockResolvedValue(mockApplication);
-    const updated = { ...mockApplication, paymentStatus: "PAID", currentStatus: "SUBMITTED", enquiry: null };
+    (mockPrisma.application.findUnique as jest.Mock).mockResolvedValue(
+      mockApplication,
+    );
+    const updated = {
+      ...mockApplication,
+      paymentStatus: "PAID",
+      currentStatus: "SUBMITTED",
+      enquiry: null,
+    };
     (mockPrisma.application.update as jest.Mock).mockResolvedValue(updated);
 
-    const req = new NextRequest("http://localhost:3000/api/applications/app-1", {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ paymentStatus: "PAID", currentStatus: "SUBMITTED" }),
-    });
+    const req = new NextRequest(
+      "http://localhost:3000/api/applications/app-1",
+      {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          paymentStatus: "PAID",
+          currentStatus: "SUBMITTED",
+        }),
+      },
+    );
     const res = await PUT(req, params);
     expect(res.status).toBe(200);
     const json = await res.json();
@@ -234,14 +278,21 @@ describe("PUT /api/applications/[id]", () => {
 
   it("returns 500 on database error", async () => {
     authenticateAs();
-    (mockPrisma.application.findUnique as jest.Mock).mockResolvedValue(mockApplication);
-    (mockPrisma.application.update as jest.Mock).mockRejectedValue(new Error("DB error"));
+    (mockPrisma.application.findUnique as jest.Mock).mockResolvedValue(
+      mockApplication,
+    );
+    (mockPrisma.application.update as jest.Mock).mockRejectedValue(
+      new Error("DB error"),
+    );
 
-    const req = new NextRequest("http://localhost:3000/api/applications/app-1", {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ clientFullName: "Updated" }),
-    });
+    const req = new NextRequest(
+      "http://localhost:3000/api/applications/app-1",
+      {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ clientFullName: "Updated" }),
+      },
+    );
     const res = await PUT(req, params);
     expect(res.status).toBe(500);
   });
@@ -254,9 +305,12 @@ describe("DELETE /api/applications/[id]", () => {
 
   it("returns 401 when not authenticated", async () => {
     clearAuth();
-    const req = new NextRequest("http://localhost:3000/api/applications/app-1", {
-      method: "DELETE",
-    });
+    const req = new NextRequest(
+      "http://localhost:3000/api/applications/app-1",
+      {
+        method: "DELETE",
+      },
+    );
     const res = await DELETE(req, params);
     expect(res.status).toBe(401);
   });
@@ -265,32 +319,47 @@ describe("DELETE /api/applications/[id]", () => {
     authenticateAs();
     (mockPrisma.application.findUnique as jest.Mock).mockResolvedValue(null);
 
-    const req = new NextRequest("http://localhost:3000/api/applications/app-1", {
-      method: "DELETE",
-    });
+    const req = new NextRequest(
+      "http://localhost:3000/api/applications/app-1",
+      {
+        method: "DELETE",
+      },
+    );
     const res = await DELETE(req, params);
     expect(res.status).toBe(404);
   });
 
   it("returns 403 when application belongs to different company", async () => {
     authenticateAs("company-2");
-    (mockPrisma.application.findUnique as jest.Mock).mockResolvedValue(mockApplication);
+    (mockPrisma.application.findUnique as jest.Mock).mockResolvedValue(
+      mockApplication,
+    );
 
-    const req = new NextRequest("http://localhost:3000/api/applications/app-1", {
-      method: "DELETE",
-    });
+    const req = new NextRequest(
+      "http://localhost:3000/api/applications/app-1",
+      {
+        method: "DELETE",
+      },
+    );
     const res = await DELETE(req, params);
     expect(res.status).toBe(403);
   });
 
   it("deletes application successfully", async () => {
     authenticateAs();
-    (mockPrisma.application.findUnique as jest.Mock).mockResolvedValue(mockApplication);
-    (mockPrisma.application.delete as jest.Mock).mockResolvedValue(mockApplication);
+    (mockPrisma.application.findUnique as jest.Mock).mockResolvedValue(
+      mockApplication,
+    );
+    (mockPrisma.application.delete as jest.Mock).mockResolvedValue(
+      mockApplication,
+    );
 
-    const req = new NextRequest("http://localhost:3000/api/applications/app-1", {
-      method: "DELETE",
-    });
+    const req = new NextRequest(
+      "http://localhost:3000/api/applications/app-1",
+      {
+        method: "DELETE",
+      },
+    );
     const res = await DELETE(req, params);
     expect(res.status).toBe(200);
     const json = await res.json();
@@ -300,12 +369,19 @@ describe("DELETE /api/applications/[id]", () => {
 
   it("returns 500 on database error", async () => {
     authenticateAs();
-    (mockPrisma.application.findUnique as jest.Mock).mockResolvedValue(mockApplication);
-    (mockPrisma.application.delete as jest.Mock).mockRejectedValue(new Error("DB error"));
+    (mockPrisma.application.findUnique as jest.Mock).mockResolvedValue(
+      mockApplication,
+    );
+    (mockPrisma.application.delete as jest.Mock).mockRejectedValue(
+      new Error("DB error"),
+    );
 
-    const req = new NextRequest("http://localhost:3000/api/applications/app-1", {
-      method: "DELETE",
-    });
+    const req = new NextRequest(
+      "http://localhost:3000/api/applications/app-1",
+      {
+        method: "DELETE",
+      },
+    );
     const res = await DELETE(req, params);
     expect(res.status).toBe(500);
   });

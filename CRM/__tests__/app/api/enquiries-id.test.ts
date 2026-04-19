@@ -126,7 +126,9 @@ describe("GET /api/enquiries/[id]", () => {
 
   it("returns 500 on database error", async () => {
     authenticateAs();
-    (mockPrisma.enquiry.findUnique as jest.Mock).mockRejectedValue(new Error("DB error"));
+    (mockPrisma.enquiry.findUnique as jest.Mock).mockRejectedValue(
+      new Error("DB error"),
+    );
 
     const req = new NextRequest("http://localhost:3000/api/enquiries/enq-1");
     const res = await GET(req, params);
@@ -196,7 +198,11 @@ describe("PUT /api/enquiries/[id]", () => {
   it("updates enquiry successfully", async () => {
     authenticateAs();
     (mockPrisma.enquiry.findUnique as jest.Mock).mockResolvedValue(mockEnquiry);
-    const updated = { ...mockEnquiry, clientName: "Updated Name", application: null };
+    const updated = {
+      ...mockEnquiry,
+      clientName: "Updated Name",
+      application: null,
+    };
     (mockPrisma.enquiry.update as jest.Mock).mockResolvedValue(updated);
 
     const req = new NextRequest("http://localhost:3000/api/enquiries/enq-1", {
@@ -225,7 +231,10 @@ describe("PUT /api/enquiries/[id]", () => {
     const req = new NextRequest("http://localhost:3000/api/enquiries/enq-1", {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ enquiryType: "work_permit", customEnquiryType: "LMIA-based" }),
+      body: JSON.stringify({
+        enquiryType: "work_permit",
+        customEnquiryType: "LMIA-based",
+      }),
     });
     const res = await PUT(req, params);
     expect(res.status).toBe(200);
@@ -237,7 +246,9 @@ describe("PUT /api/enquiries/[id]", () => {
   it("returns 500 on database error", async () => {
     authenticateAs();
     (mockPrisma.enquiry.findUnique as jest.Mock).mockResolvedValue(mockEnquiry);
-    (mockPrisma.enquiry.update as jest.Mock).mockRejectedValue(new Error("DB error"));
+    (mockPrisma.enquiry.update as jest.Mock).mockRejectedValue(
+      new Error("DB error"),
+    );
 
     const req = new NextRequest("http://localhost:3000/api/enquiries/enq-1", {
       method: "PUT",
@@ -303,7 +314,9 @@ describe("DELETE /api/enquiries/[id]", () => {
   it("returns 500 on database error", async () => {
     authenticateAs();
     (mockPrisma.enquiry.findUnique as jest.Mock).mockResolvedValue(mockEnquiry);
-    (mockPrisma.enquiry.delete as jest.Mock).mockRejectedValue(new Error("DB error"));
+    (mockPrisma.enquiry.delete as jest.Mock).mockRejectedValue(
+      new Error("DB error"),
+    );
 
     const req = new NextRequest("http://localhost:3000/api/enquiries/enq-1", {
       method: "DELETE",

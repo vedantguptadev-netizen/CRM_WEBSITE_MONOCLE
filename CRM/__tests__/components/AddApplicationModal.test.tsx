@@ -95,7 +95,9 @@ describe("AddApplicationModal Component", () => {
         />,
       );
 
-      await user.click(screen.getByRole("button", { name: /Create Application/i }));
+      await user.click(
+        screen.getByRole("button", { name: /Create Application/i }),
+      );
       expect(screen.getByText("Client name is required")).toBeInTheDocument();
       expect(global.fetch).not.toHaveBeenCalled();
     });
@@ -112,7 +114,9 @@ describe("AddApplicationModal Component", () => {
 
       await user.type(screen.getByLabelText(/Client Full Name/i), "John Doe");
       await user.type(screen.getByLabelText(/Email/i), "bad-email");
-      await user.click(screen.getByRole("button", { name: /Create Application/i }));
+      await user.click(
+        screen.getByRole("button", { name: /Create Application/i }),
+      );
       expect(screen.getByText("Invalid email address")).toBeInTheDocument();
     });
 
@@ -128,7 +132,9 @@ describe("AddApplicationModal Component", () => {
 
       await user.type(screen.getByLabelText(/Client Full Name/i), "John Doe");
       await user.type(screen.getByLabelText(/Drive Folder Link/i), "not-a-url");
-      await user.click(screen.getByRole("button", { name: /Create Application/i }));
+      await user.click(
+        screen.getByRole("button", { name: /Create Application/i }),
+      );
       expect(screen.getByText("Please enter a valid URL")).toBeInTheDocument();
     });
   });
@@ -146,7 +152,9 @@ describe("AddApplicationModal Component", () => {
       );
 
       await user.type(screen.getByLabelText(/Client Full Name/i), "John Doe");
-      await user.click(screen.getByRole("button", { name: /Create Application/i }));
+      await user.click(
+        screen.getByRole("button", { name: /Create Application/i }),
+      );
 
       await waitFor(() => {
         expect(global.fetch).toHaveBeenCalledWith(
@@ -177,7 +185,9 @@ describe("AddApplicationModal Component", () => {
       );
 
       await user.type(screen.getByLabelText(/Client Full Name/i), "John Doe");
-      await user.click(screen.getByRole("button", { name: /Create Application/i }));
+      await user.click(
+        screen.getByRole("button", { name: /Create Application/i }),
+      );
 
       await waitFor(() => {
         expect(screen.getByText("Server error")).toBeInTheDocument();
@@ -197,7 +207,9 @@ describe("AddApplicationModal Component", () => {
       );
 
       await user.type(screen.getByLabelText(/Client Full Name/i), "John Doe");
-      await user.click(screen.getByRole("button", { name: /Create Application/i }));
+      await user.click(
+        screen.getByRole("button", { name: /Create Application/i }),
+      );
 
       await waitFor(() => {
         expect(

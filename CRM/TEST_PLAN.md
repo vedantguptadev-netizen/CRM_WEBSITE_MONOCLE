@@ -210,23 +210,23 @@ Tests individual application GET/PUT/DELETE with auth, ownership (403), not-foun
 
 | Test Case                                            | Status  |
 | ---------------------------------------------------- | ------- |
-| GET returns 401 when not authenticated                | ✅ Pass |
-| GET returns 404 when application not found            | ✅ Pass |
-| GET returns 403 when application belongs to other co  | ✅ Pass |
-| GET returns application for authorized user           | ✅ Pass |
-| GET returns 500 on database error                     | ✅ Pass |
-| PUT returns 401 when not authenticated                | ✅ Pass |
-| PUT returns 404 when application not found            | ✅ Pass |
-| PUT returns 403 when application belongs to other co  | ✅ Pass |
-| PUT returns 400 for invalid data                      | ✅ Pass |
-| PUT updates application successfully                  | ✅ Pass |
-| PUT updates status fields correctly                   | ✅ Pass |
-| PUT returns 500 on database error                     | ✅ Pass |
-| DELETE returns 401 when not authenticated              | ✅ Pass |
-| DELETE returns 404 when application not found          | ✅ Pass |
-| DELETE returns 403 when application belongs to other   | ✅ Pass |
-| DELETE deletes application successfully                | ✅ Pass |
-| DELETE returns 500 on database error                   | ✅ Pass |
+| GET returns 401 when not authenticated               | ✅ Pass |
+| GET returns 404 when application not found           | ✅ Pass |
+| GET returns 403 when application belongs to other co | ✅ Pass |
+| GET returns application for authorized user          | ✅ Pass |
+| GET returns 500 on database error                    | ✅ Pass |
+| PUT returns 401 when not authenticated               | ✅ Pass |
+| PUT returns 404 when application not found           | ✅ Pass |
+| PUT returns 403 when application belongs to other co | ✅ Pass |
+| PUT returns 400 for invalid data                     | ✅ Pass |
+| PUT updates application successfully                 | ✅ Pass |
+| PUT updates status fields correctly                  | ✅ Pass |
+| PUT returns 500 on database error                    | ✅ Pass |
+| DELETE returns 401 when not authenticated            | ✅ Pass |
+| DELETE returns 404 when application not found        | ✅ Pass |
+| DELETE returns 403 when application belongs to other | ✅ Pass |
+| DELETE deletes application successfully              | ✅ Pass |
+| DELETE returns 500 on database error                 | ✅ Pass |
 
 #### Enquiries [id] API (JWT-authenticated)
 
@@ -234,8 +234,8 @@ Tests individual application GET/PUT/DELETE with auth, ownership (403), not-foun
 
 Tests individual enquiry GET/PUT/DELETE with auth, ownership (403), not-found (404), validation (400), and error handling (500).
 
-| Test Case                                          | Status  |
-| -------------------------------------------------- | ------- |
+| Test Case                                           | Status  |
+| --------------------------------------------------- | ------- |
 | GET returns 401 when not authenticated              | ✅ Pass |
 | GET returns 404 when enquiry not found              | ✅ Pass |
 | GET returns 403 when enquiry belongs to other co    | ✅ Pass |
@@ -248,11 +248,11 @@ Tests individual enquiry GET/PUT/DELETE with auth, ownership (403), not-found (4
 | PUT updates enquiry successfully                    | ✅ Pass |
 | PUT updates enquiry type and custom type            | ✅ Pass |
 | PUT returns 500 on database error                   | ✅ Pass |
-| DELETE returns 401 when not authenticated            | ✅ Pass |
-| DELETE returns 404 when enquiry not found            | ✅ Pass |
-| DELETE returns 403 when enquiry belongs to other co  | ✅ Pass |
-| DELETE deletes enquiry successfully                  | ✅ Pass |
-| DELETE returns 500 on database error                 | ✅ Pass |
+| DELETE returns 401 when not authenticated           | ✅ Pass |
+| DELETE returns 404 when enquiry not found           | ✅ Pass |
+| DELETE returns 403 when enquiry belongs to other co | ✅ Pass |
+| DELETE deletes enquiry successfully                 | ✅ Pass |
+| DELETE returns 500 on database error                | ✅ Pass |
 
 ### 3. Component Tests (134 tests)
 
@@ -337,8 +337,8 @@ Tests the create enquiry modal with form validation, API integration, and modal 
 
 Tests the create application modal with form validation, API integration, and modal behaviour.
 
-| Test Case                                    | Status  |
-| -------------------------------------------- | ------- |
+| Test Case                                     | Status  |
+| --------------------------------------------- | ------- |
 | Does not render when open is false            | ✅ Pass |
 | Renders when open is true                     | ✅ Pass |
 | Renders all form fields                       | ✅ Pass |
@@ -359,18 +359,18 @@ Tests the create application modal with form validation, API integration, and mo
 
 Tests the edit application modal with pre-filled form data, validation, and update API.
 
-| Test Case                                | Status  |
-| ---------------------------------------- | ------- |
-| Does not render when open is false        | ✅ Pass |
-| Renders when open is true                 | ✅ Pass |
-| Pre-fills form with application data      | ✅ Pass |
-| Shows error when client name is cleared   | ✅ Pass |
-| Shows error for invalid email             | ✅ Pass |
-| Submits updated data                      | ✅ Pass |
-| Shows API error on failure                | ✅ Pass |
-| Shows generic error on network failure    | ✅ Pass |
-| Calls onClose when Cancel is clicked      | ✅ Pass |
-| Calls correct PUT endpoint                | ✅ Pass |
+| Test Case                               | Status  |
+| --------------------------------------- | ------- |
+| Does not render when open is false      | ✅ Pass |
+| Renders when open is true               | ✅ Pass |
+| Pre-fills form with application data    | ✅ Pass |
+| Shows error when client name is cleared | ✅ Pass |
+| Shows error for invalid email           | ✅ Pass |
+| Submits updated data                    | ✅ Pass |
+| Shows API error on failure              | ✅ Pass |
+| Shows generic error on network failure  | ✅ Pass |
+| Calls onClose when Cancel is clicked    | ✅ Pass |
+| Calls correct PUT endpoint              | ✅ Pass |
 
 #### EditEnquiryModal
 
@@ -380,20 +380,20 @@ Tests the edit enquiry modal with pre-filled form data, validation, and update A
 
 | Test Case                                | Status  |
 | ---------------------------------------- | ------- |
-| Does not render when open is false        | ✅ Pass |
-| Renders when open is true                 | ✅ Pass |
-| Pre-fills form with enquiry data          | ✅ Pass |
-| Renders all form fields                   | ✅ Pass |
-| Shows error when client name is cleared   | ✅ Pass |
-| Shows error for invalid email             | ✅ Pass |
-| Shows error when enquiry type is cleared  | ✅ Pass |
-| Submits updated data                      | ✅ Pass |
-| Shows API error on failure                | ✅ Pass |
-| Shows generic error on network failure    | ✅ Pass |
-| Calls onClose when Cancel is clicked      | ✅ Pass |
-| Calls onClose when overlay is clicked     | ✅ Pass |
-| Calls correct PUT endpoint                | ✅ Pass |
-| Calls onSuccess after successful update   | ✅ Pass |
+| Does not render when open is false       | ✅ Pass |
+| Renders when open is true                | ✅ Pass |
+| Pre-fills form with enquiry data         | ✅ Pass |
+| Renders all form fields                  | ✅ Pass |
+| Shows error when client name is cleared  | ✅ Pass |
+| Shows error for invalid email            | ✅ Pass |
+| Shows error when enquiry type is cleared | ✅ Pass |
+| Submits updated data                     | ✅ Pass |
+| Shows API error on failure               | ✅ Pass |
+| Shows generic error on network failure   | ✅ Pass |
+| Calls onClose when Cancel is clicked     | ✅ Pass |
+| Calls onClose when overlay is clicked    | ✅ Pass |
+| Calls correct PUT endpoint               | ✅ Pass |
+| Calls onSuccess after successful update  | ✅ Pass |
 
 #### Navigation Components
 

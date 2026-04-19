@@ -73,10 +73,14 @@ describe("EditApplicationModal Component", () => {
           onSuccess={mockOnSuccess}
         />,
       );
-      expect(screen.getByLabelText(/Client Full Name/i)).toHaveValue("John Doe");
+      expect(screen.getByLabelText(/Client Full Name/i)).toHaveValue(
+        "John Doe",
+      );
       expect(screen.getByLabelText(/Email/i)).toHaveValue("john@example.com");
       expect(screen.getByLabelText(/Phone/i)).toHaveValue("+1-555-0101");
-      expect(screen.getByLabelText(/Application Type/i)).toHaveValue("Work Visa");
+      expect(screen.getByLabelText(/Application Type/i)).toHaveValue(
+        "Work Visa",
+      );
     });
   });
 
