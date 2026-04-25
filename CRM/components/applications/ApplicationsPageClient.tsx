@@ -365,7 +365,9 @@ export default function ApplicationsPageClient({
                 onView={(a) => router.push(`/crm/applications/${a.id}`)}
                 onEdit={(a) => setEditingApplication(a)}
                 onDelete={handleDelete}
-                onViewEnquiry={(enquiryId) => router.push(`/crm/enquiries?view=${enquiryId}`)}
+                onViewEnquiry={(enquiryId) =>
+                  router.push(`/crm/enquiries?view=${enquiryId}`)
+                }
               />
             )}
           </div>

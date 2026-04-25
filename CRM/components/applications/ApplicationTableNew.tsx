@@ -219,7 +219,9 @@ function ActionMenu({
           {application.enquiry && (
             <>
               <button
-                onClick={() => act(() => onViewEnquiry?.(application.enquiry!.id))}
+                onClick={() =>
+                  act(() => onViewEnquiry?.(application.enquiry!.id))
+                }
                 className="flex w-full items-center gap-2.5 px-3.5 py-2 text-sm text-purple-700 hover:bg-purple-50"
               >
                 <ExternalLink size={15} />
