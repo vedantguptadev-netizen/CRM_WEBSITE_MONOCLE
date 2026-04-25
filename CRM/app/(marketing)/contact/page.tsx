@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import ContactClient from "./ContactClient";
 
 export const metadata: Metadata = {
-  title: "Contact Us — Book a Free Immigration Consultation",
+  title: "Contact Us — Book an Immigration Consultation",
   description:
     "Get in touch with Monocle Immigration. Book a consultation via Calendly, call (403) 991-3189, or visit our offices in Calgary, AB or Brandon, MB.",
   alternates: {
@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Contact Monocle Immigration — Calgary & Brandon Offices",
     description:
-      "Book your free immigration consultation today. Two convenient office locations across Canada.",
+      "Book your immigration consultation today. Two convenient office locations across Canada.",
   },
 };
 
