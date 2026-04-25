@@ -619,7 +619,7 @@ export default function Home() {
               Ready to Start Your Journey?
             </h2>
             <p className="mb-8 text-lg text-red-100">
-              Book your free consultation today and let us help you achieve your
+              Book your consultation today and let us help you achieve your
               Canadian immigration goals.
             </p>
             <Button asChild size="lg" variant="secondary">

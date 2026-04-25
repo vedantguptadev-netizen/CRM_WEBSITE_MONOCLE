@@ -213,12 +213,12 @@ This ensures Google receives fully-rendered HTML with proper `<title>` and `<met
 
 Each marketing page exports unique, keyword-rich metadata via the Next.js Metadata API:
 
-| Page        | Title                                                           |
-| ----------- | --------------------------------------------------------------- |
-| `/`         | Immigration Consultant in Calgary & Brandon — Free Consultation |
-| `/services` | Canadian Immigration Services — Study, Work & PR Permits        |
-| `/about`    | About Rupinder Bhatti — RCIC Licensed Immigration Consultant    |
-| `/contact`  | Contact Monocle Immigration — Calgary & Brandon Offices         |
+| Page        | Title                                                        |
+| ----------- | ------------------------------------------------------------ |
+| `/`         | Immigration Consultant in Calgary & Brandon — Consultation   |
+| `/services` | Canadian Immigration Services — Study, Work & PR Permits     |
+| `/about`    | About Rupinder Bhatti — RCIC Licensed Immigration Consultant |
+| `/contact`  | Contact Monocle Immigration — Calgary & Brandon Offices      |
 
 All pages follow the template pattern: `%s | Monocle Immigration`
 
