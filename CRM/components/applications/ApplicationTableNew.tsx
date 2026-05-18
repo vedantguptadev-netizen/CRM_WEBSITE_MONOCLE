@@ -97,9 +97,9 @@ const currentStatusBadge = (status: string): string => {
   return map[status] || "bg-gray-50 text-gray-700 ring-gray-600/20";
 };
 
-/** Returns urgency class for due dates */
-const dueDateClass = (date: Date | string | null | undefined): string => {
-  if (!date) return "text-gray-600";
+/** Returns urgency class for due dates; skips urgency styling when status is SUBMITTED */
+const dueDateClass = (date: Date | string | null | undefined, status?: string | null): string => {
+  if (!date || status === "SUBMITTED") return "text-gray-600";
   try {
     const d = new Date(date);
     const now = new Date();
@@ -114,7 +114,7 @@ const dueDateClass = (date: Date | string | null | undefined): string => {
   }
 };
 
-const dueDateLabel = (date: Date | string | null | undefined): string => {
+const dueDateLabel = (date: Date | string | null | undefined, status?: string | null): string => {
   if (!date) return "—";
   try {
     const d = new Date(date);
@@ -123,6 +123,7 @@ const dueDateLabel = (date: Date | string | null | undefined): string => {
     const target = new Date(d.getFullYear(), d.getMonth(), d.getDate());
     const diff = target.getTime() - today.getTime();
     const formatted = formatDate(date);
+    if (status === "SUBMITTED") return formatted;
     if (diff < 0) return `${formatted} (Overdue)`;
     if (diff === 0) return `${formatted} (Today)`;
     return formatted;
@@ -399,9 +400,9 @@ export default function ApplicationTable({
 
               {/* Due Date */}
               <td
-                className={`whitespace-nowrap px-4 py-3.5 text-sm ${dueDateClass(app.dueDate)}`}
+                className={`whitespace-nowrap px-4 py-3.5 text-sm ${dueDateClass(app.dueDate, app.currentStatus)}`}
               >
-                {dueDateLabel(app.dueDate)}
+                {dueDateLabel(app.dueDate, app.currentStatus)}
               </td>
 
               {/* Assigned Employee */}

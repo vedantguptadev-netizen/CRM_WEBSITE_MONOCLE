@@ -142,7 +142,7 @@ export default function ApplicationsPageClient({
         const d = new Date(a.dueDate);
         const target = new Date(d.getFullYear(), d.getMonth(), d.getDate());
         const diff = target.getTime() - today.getTime();
-        if (dueDateFilter === "overdue") return diff < 0;
+        if (dueDateFilter === "overdue") return diff < 0 && a.currentStatus !== "SUBMITTED";
         if (dueDateFilter === "today") return diff === 0;
         if (dueDateFilter === "upcoming") return diff > 0;
         return true;
