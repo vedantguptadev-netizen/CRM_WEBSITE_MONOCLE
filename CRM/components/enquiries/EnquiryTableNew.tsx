@@ -275,9 +275,6 @@ export default function EnquiryTable({
             <th className="whitespace-nowrap px-4 py-3 text-xs font-semibold uppercase tracking-wider text-gray-500">
               Phone
             </th>
-            <th className="hidden whitespace-nowrap px-4 py-3 text-xs font-semibold uppercase tracking-wider text-gray-500 lg:table-cell">
-              Date of Birth
-            </th>
             <th className="whitespace-nowrap px-4 py-3 text-xs font-semibold uppercase tracking-wider text-gray-500">
               Type
             </th>
@@ -317,11 +314,6 @@ export default function EnquiryTable({
               {/* Phone */}
               <td className="whitespace-nowrap px-4 py-3.5 text-sm text-gray-600">
                 {enquiry.phone || "—"}
-              </td>
-
-              {/* Date of Birth */}
-              <td className="hidden whitespace-nowrap px-4 py-3.5 text-sm text-gray-600 lg:table-cell">
-                {formatDate(enquiry.dateOfBirth)}
               </td>
 
               {/* Type Badge */}

@@ -347,7 +347,7 @@ export default function ApplicationTable({
               Due Date
             </th>
             <th className="whitespace-nowrap px-4 py-3 text-xs font-semibold uppercase tracking-wider text-gray-500">
-              Enquiry
+              Employee
             </th>
             <th className="whitespace-nowrap px-4 py-3 text-xs font-semibold uppercase tracking-wider text-gray-500">
               Created
@@ -404,19 +404,9 @@ export default function ApplicationTable({
                 {dueDateLabel(app.dueDate)}
               </td>
 
-              {/* Enquiry Linked */}
-              <td className="whitespace-nowrap px-4 py-3.5">
-                {app.enquiry ? (
-                  <span className="inline-flex items-center gap-1 rounded-full bg-emerald-50 px-2.5 py-0.5 text-xs font-medium text-emerald-700 ring-1 ring-inset ring-emerald-600/20">
-                    <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
-                    Linked Enquiry
-                  </span>
-                ) : (
-                  <span className="inline-flex items-center gap-1 rounded-full bg-gray-50 px-2.5 py-0.5 text-xs font-medium text-gray-500 ring-1 ring-inset ring-gray-500/10">
-                    <span className="h-1.5 w-1.5 rounded-full bg-gray-400" />
-                    Manual
-                  </span>
-                )}
+              {/* Assigned Employee */}
+              <td className="whitespace-nowrap px-4 py-3.5 text-sm text-gray-600">
+                {app.assignedEmployeeId || "—"}
               </td>
 
               {/* Created At */}

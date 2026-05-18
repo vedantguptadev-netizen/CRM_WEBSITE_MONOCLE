@@ -59,7 +59,7 @@ interface Props {
   companyId: string;
 }
 
-const ITEMS_PER_PAGE = 5;
+const ITEMS_PER_PAGE = 25;
 
 // ─── Component ──────────────────────────────────────────────────
 
@@ -78,11 +78,21 @@ export default function ApplicationsPageClient({
   const [searchQuery, setSearchQuery] = useState("");
   const [paymentFilter, setPaymentFilter] = useState<PaymentFilter>("");
   const [statusFilter, setStatusFilter] = useState<StatusFilter>("");
-  const [enquiryFilter, setEnquiryFilter] = useState<EnquiryFilter>("");
+  const [employeeFilter, setEmployeeFilter] = useState<string>("");
   const [dueDateFilter, setDueDateFilter] = useState<DueDateFilter>("");
 
   // Pagination
   const [currentPage, setCurrentPage] = useState(1);
+
+  // ── Derived filter options ───────────────────────────────────
+
+  const employeeOptions = useMemo(() => {
+    const names = new Set<string>();
+    applications.forEach((a) => {
+      if (a.assignedEmployeeId?.trim()) names.add(a.assignedEmployeeId.trim());
+    });
+    return Array.from(names).sort();
+  }, [applications]);
 
   // ── Filtered data ─────────────────────────────────────────────
 
@@ -97,7 +107,9 @@ export default function ApplicationsPageClient({
           a.clientFullName.toLowerCase().includes(q) ||
           (a.email && a.email.toLowerCase().includes(q)) ||
           (a.phone && a.phone.toLowerCase().includes(q)) ||
-          (a.applicationType && a.applicationType.toLowerCase().includes(q)),
+          (a.applicationType && a.applicationType.toLowerCase().includes(q)) ||
+          (a.assignedEmployeeId &&
+            a.assignedEmployeeId.toLowerCase().includes(q)),
       );
     }
 
@@ -111,11 +123,13 @@ export default function ApplicationsPageClient({
       result = result.filter((a) => a.currentStatus === statusFilter);
     }
 
-    // Enquiry filter
-    if (enquiryFilter === "linked") {
-      result = result.filter((a) => a.enquiry?.id);
-    } else if (enquiryFilter === "manual") {
-      result = result.filter((a) => !a.enquiry?.id);
+    // Employee filter
+    if (employeeFilter) {
+      result = result.filter(
+        (a) =>
+          (a.assignedEmployeeId || "").toLowerCase() ===
+          employeeFilter.toLowerCase(),
+      );
     }
 
     // Due date filter
@@ -141,7 +155,7 @@ export default function ApplicationsPageClient({
     searchQuery,
     paymentFilter,
     statusFilter,
-    enquiryFilter,
+    employeeFilter,
     dueDateFilter,
   ]);
 
@@ -149,7 +163,7 @@ export default function ApplicationsPageClient({
     searchQuery ||
     paymentFilter ||
     statusFilter ||
-    enquiryFilter ||
+    employeeFilter ||
     dueDateFilter
   );
 
@@ -204,7 +218,7 @@ export default function ApplicationsPageClient({
     setSearchQuery("");
     setPaymentFilter("");
     setStatusFilter("");
-    setEnquiryFilter("");
+    setEmployeeFilter("");
     setDueDateFilter("");
     setCurrentPage(1);
   };
@@ -264,7 +278,7 @@ export default function ApplicationsPageClient({
                   setSearchQuery(e.target.value);
                   setCurrentPage(1);
                 }}
-                placeholder="Search by client name or application type…"
+                placeholder="Search by client name, type, or employee…"
                 className="w-full rounded-lg border border-gray-300 py-2.5 pl-9 pr-9 text-sm outline-none transition-colors focus:border-red-500 focus:ring-2 focus:ring-red-500/20"
               />
               {searchQuery && (
@@ -312,18 +326,19 @@ export default function ApplicationsPageClient({
               ))}
             </select>
 
-            {/* Enquiry filter */}
+            {/* Employee filter */}
             <select
-              value={enquiryFilter}
+              value={employeeFilter}
               onChange={(e) => {
-                setEnquiryFilter(e.target.value as EnquiryFilter);
+                setEmployeeFilter(e.target.value);
                 setCurrentPage(1);
               }}
               className="rounded-lg border border-gray-300 px-3 py-2.5 text-sm outline-none transition-colors focus:border-red-500 focus:ring-2 focus:ring-red-500/20"
             >
-              {enquiryOptions.map((opt) => (
-                <option key={opt.value} value={opt.value}>
-                  {opt.label}
+              <option value="">All Employees</option>
+              {employeeOptions.map((name) => (
+                <option key={name} value={name}>
+                  {name}
                 </option>
               ))}
             </select>
@@ -392,21 +407,46 @@ export default function ApplicationsPageClient({
                 </button>
 
                 <div className="flex items-center gap-1">
-                  {Array.from({ length: totalPages }, (_, i) => i + 1).map(
-                    (page) => (
-                      <button
-                        key={page}
-                        onClick={() => setCurrentPage(page)}
-                        className={`rounded-lg px-3 py-2 text-sm font-medium transition-colors ${
-                          safePage === page
-                            ? "bg-red-600 text-white"
-                            : "border border-gray-300 text-gray-700 hover:bg-gray-50"
-                        }`}
-                      >
-                        {page}
-                      </button>
-                    ),
-                  )}
+                  {(() => {
+                    const delta = 2;
+                    const pages: (number | "...")[] = [];
+                    if (totalPages <= 7) {
+                      for (let i = 1; i <= totalPages; i++) pages.push(i);
+                    } else {
+                      pages.push(1);
+                      if (safePage > delta + 2) pages.push("...");
+                      for (
+                        let i = Math.max(2, safePage - delta);
+                        i <= Math.min(totalPages - 1, safePage + delta);
+                        i++
+                      )
+                        pages.push(i);
+                      if (safePage < totalPages - delta - 1) pages.push("...");
+                      pages.push(totalPages);
+                    }
+                    return pages.map((page, idx) =>
+                      page === "..." ? (
+                        <span
+                          key={`ellipsis-${idx}`}
+                          className="px-2 py-2 text-sm text-gray-400"
+                        >
+                          …
+                        </span>
+                      ) : (
+                        <button
+                          key={page}
+                          onClick={() => setCurrentPage(page)}
+                          className={`rounded-lg px-3 py-2 text-sm font-medium transition-colors ${
+                            safePage === page
+                              ? "bg-red-600 text-white"
+                              : "border border-gray-300 text-gray-700 hover:bg-gray-50"
+                          }`}
+                        >
+                          {page}
+                        </button>
+                      ),
+                    );
+                  })()}
                 </div>
 
                 <button

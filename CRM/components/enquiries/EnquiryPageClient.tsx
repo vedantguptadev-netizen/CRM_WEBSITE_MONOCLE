@@ -3,6 +3,7 @@
 import { useState, useMemo, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import {
+  CalendarDays,
   ChevronLeft,
   ChevronRight,
   Search,
@@ -37,17 +38,10 @@ const formatSearchableDate = (date: Date | string | null | undefined) => {
 // ─── Filters ────────────────────────────────────────────────────
 
 type TypeFilter = string;
-type AppFilter = "" | "linked" | "not-linked";
 
 const typeOptions: { value: TypeFilter; label: string }[] = [
   { value: "", label: "All Types" },
   ...ENQUIRY_TYPES.map((t) => ({ value: t.value as string, label: t.label })),
-];
-
-const appOptions: { value: AppFilter; label: string }[] = [
-  { value: "", label: "All" },
-  { value: "linked", label: "With Application" },
-  { value: "not-linked", label: "No Application" },
 ];
 
 // ─── Constants ──────────────────────────────────────────────────
@@ -57,7 +51,7 @@ interface Props {
   companyId: string;
 }
 
-const ITEMS_PER_PAGE = 5;
+const ITEMS_PER_PAGE = 25;
 
 // ─── Component ──────────────────────────────────────────────────
 
@@ -86,7 +80,7 @@ export default function EnquiryPageClient({ enquiries, companyId }: Props) {
   // Filters
   const [searchQuery, setSearchQuery] = useState("");
   const [typeFilter, setTypeFilter] = useState<TypeFilter>("");
-  const [appFilter, setAppFilter] = useState<AppFilter>("");
+  const [dateFilter, setDateFilter] = useState<string>("");
 
   // Pagination
   const [currentPage, setCurrentPage] = useState(1);
@@ -113,17 +107,20 @@ export default function EnquiryPageClient({ enquiries, companyId }: Props) {
       result = result.filter((e) => e.enquiryType === typeFilter);
     }
 
-    // Application filter
-    if (appFilter === "linked") {
-      result = result.filter((e) => e.application?.id);
-    } else if (appFilter === "not-linked") {
-      result = result.filter((e) => !e.application?.id);
+    // Date filter (by created date)
+    if (dateFilter) {
+      result = result.filter((e) => {
+        const dateStr = new Date(e.createdAt).toLocaleDateString("en-CA", {
+          timeZone: "America/Denver",
+        });
+        return dateStr === dateFilter;
+      });
     }
 
     return result;
-  }, [enquiries, searchQuery, typeFilter, appFilter]);
+  }, [enquiries, searchQuery, typeFilter, dateFilter]);
 
-  const isFiltered = !!(searchQuery || typeFilter || appFilter);
+  const isFiltered = !!(searchQuery || typeFilter || dateFilter);
 
   // ── Pagination ────────────────────────────────────────────────
 
@@ -198,7 +195,7 @@ export default function EnquiryPageClient({ enquiries, companyId }: Props) {
   const clearFilters = () => {
     setSearchQuery("");
     setTypeFilter("");
-    setAppFilter("");
+    setDateFilter("");
     setCurrentPage(1);
   };
 
@@ -257,7 +254,7 @@ export default function EnquiryPageClient({ enquiries, companyId }: Props) {
                   setSearchQuery(e.target.value);
                   setCurrentPage(1);
                 }}
-                placeholder="Search by name, DOB, email, or phone…"
+                placeholder="Search by name, email, or phone…"
                 className="w-full rounded-lg border border-gray-300 py-2.5 pl-9 pr-9 text-sm outline-none transition-colors focus:border-red-500 focus:ring-2 focus:ring-red-500/20"
               />
               {searchQuery && (
@@ -289,21 +286,22 @@ export default function EnquiryPageClient({ enquiries, companyId }: Props) {
               ))}
             </select>
 
-            {/* Application filter */}
-            <select
-              value={appFilter}
-              onChange={(e) => {
-                setAppFilter(e.target.value as AppFilter);
-                setCurrentPage(1);
-              }}
-              className="rounded-lg border border-gray-300 px-3 py-2.5 text-sm outline-none transition-colors focus:border-red-500 focus:ring-2 focus:ring-red-500/20"
-            >
-              {appOptions.map((opt) => (
-                <option key={opt.value} value={opt.value}>
-                  {opt.label}
-                </option>
-              ))}
-            </select>
+            {/* Date filter */}
+            <div className="relative">
+              <CalendarDays
+                size={15}
+                className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
+              />
+              <input
+                type="date"
+                value={dateFilter}
+                onChange={(e) => {
+                  setDateFilter(e.target.value);
+                  setCurrentPage(1);
+                }}
+                className="rounded-lg border border-gray-300 py-2.5 pl-9 pr-3 text-sm outline-none transition-colors focus:border-red-500 focus:ring-2 focus:ring-red-500/20"
+              />
+            </div>
 
             {isFiltered && (
               <button
@@ -348,21 +346,46 @@ export default function EnquiryPageClient({ enquiries, companyId }: Props) {
                 </button>
 
                 <div className="flex items-center gap-1">
-                  {Array.from({ length: totalPages }, (_, i) => i + 1).map(
-                    (page) => (
-                      <button
-                        key={page}
-                        onClick={() => setCurrentPage(page)}
-                        className={`rounded-lg px-3 py-2 text-sm font-medium transition-colors ${
-                          safePage === page
-                            ? "bg-red-600 text-white"
-                            : "border border-gray-300 text-gray-700 hover:bg-gray-50"
-                        }`}
-                      >
-                        {page}
-                      </button>
-                    ),
-                  )}
+                  {(() => {
+                    const delta = 2;
+                    const pages: (number | "...")[] = [];
+                    if (totalPages <= 7) {
+                      for (let i = 1; i <= totalPages; i++) pages.push(i);
+                    } else {
+                      pages.push(1);
+                      if (safePage > delta + 2) pages.push("...");
+                      for (
+                        let i = Math.max(2, safePage - delta);
+                        i <= Math.min(totalPages - 1, safePage + delta);
+                        i++
+                      )
+                        pages.push(i);
+                      if (safePage < totalPages - delta - 1) pages.push("...");
+                      pages.push(totalPages);
+                    }
+                    return pages.map((page, idx) =>
+                      page === "..." ? (
+                        <span
+                          key={`ellipsis-${idx}`}
+                          className="px-2 py-2 text-sm text-gray-400"
+                        >
+                          …
+                        </span>
+                      ) : (
+                        <button
+                          key={page}
+                          onClick={() => setCurrentPage(page)}
+                          className={`rounded-lg px-3 py-2 text-sm font-medium transition-colors ${
+                            safePage === page
+                              ? "bg-red-600 text-white"
+                              : "border border-gray-300 text-gray-700 hover:bg-gray-50"
+                          }`}
+                        >
+                          {page}
+                        </button>
+                      ),
+                    );
+                  })()}
                 </div>
 
                 <button
